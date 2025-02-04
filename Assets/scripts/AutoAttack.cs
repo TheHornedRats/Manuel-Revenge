@@ -8,10 +8,11 @@ public class AutoAttack : MonoBehaviour
     public float attackDuration = 0.5f; // Duración del ataque
     public float delayBeforeDeactivation = 0.5f; // Espera antes de desactivar
     public float attackDelay = 2f; // Tiempo entre ataques
+    public int damage = 10; // Daño del ataque
+    public LayerMask enemyLayer; // Capa de los enemigos
 
     private float attackTimer = 0f; // Temporizador para el siguiente ataque
 
-    // Start is called before the first frame update
     void Start()
     {
         if (swordAttackCollider != null)
@@ -22,7 +23,6 @@ public class AutoAttack : MonoBehaviour
         attackTimer = attackDelay; // Inicializa el temporizador con el delay de ataque
     }
 
-    // Update is called once per frame
     void Update()
     {
         attackTimer -= Time.deltaTime; // Cuenta atrás para el próximo ataque
@@ -36,18 +36,27 @@ public class AutoAttack : MonoBehaviour
 
     private IEnumerator TimeToAttack()
     {
-        // Activa la colisión y el sprite del ataque
         swordAttackCollider.enabled = true;
         swordSpriteRenderer.enabled = true;
 
-        // Espera el tiempo de duración del ataque
         yield return new WaitForSeconds(attackDuration);
 
-        // Espera el tiempo antes de desactivar el ataque
-        yield return new WaitForSeconds(delayBeforeDeactivation);
-
-        // Desactiva el ataque
         swordAttackCollider.enabled = false;
         swordSpriteRenderer.enabled = false;
+
+        yield return new WaitForSeconds(delayBeforeDeactivation);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (((1 << other.gameObject.layer) & enemyLayer) != 0) // Verifica si el objeto pertenece a la capa de enemigos
+        {
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                Debug.Log("Golpeó a " + other.name);
+                enemyHealth.TakeDamage(damage);
+            }
+        }
     }
 }
