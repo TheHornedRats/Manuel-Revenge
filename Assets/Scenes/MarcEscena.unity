@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 2120756586}
   - component: {fileID: 2120756589}
   - component: {fileID: 2120756588}
-  - component: {fileID: 2120756587}
+  - component: {fileID: 2120756590}
   m_Layer: 0
   m_Name: ballestaAttack
   m_TagString: Untagged
@@ -734,25 +734,6 @@ Transform:
   m_Father: {fileID: 11165125}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2120756587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120756585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfcf9ea9f2d1afd4fb06d0f43fa4cae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ballestaAttackCollider: {fileID: 2120756588}
-  ballestaSpriteRenderer: {fileID: 2120756589}
-  attackDuration: 0.5
-  delayBeforeDeactivation: 0.5
-  attackDelay: 2
-  attackDistance: 2
-  moveSpeed: 5
 --- !u!61 &2120756588
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -850,6 +831,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2120756590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120756585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ccd8dad558cdf428f016ec9eee61dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballestaAttackCollider: {fileID: 2120756588}
+  ballestaSpriteRenderer: {fileID: 2120756589}
+  attackDuration: 2
+  delayBeforeDeactivation: 0.5
+  attackDelay: 2
+  attackDistance: 2
+  moveSpeed: 10
 --- !u!1 &2139365256
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,7 +990,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2139365256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dcea79389864cb4b95598fa7c278efa, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c563d801ae33b843ba088e4aa866626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   swordAttackCollider: {fileID: 2139365258}
