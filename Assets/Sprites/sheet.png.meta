@@ -44,11 +44,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 8
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 15
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -286,9 +286,9 @@ TextureImporter:
       name: sheet_7
       rect:
         serializedVersion: 2
-        x: 112
+        x: 113
         y: 176
-        width: 16
+        width: 15
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -393,7 +393,7 @@ TextureImporter:
         serializedVersion: 2
         x: 192
         y: 176
-        width: 16
+        width: 14
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -748,9 +748,9 @@ TextureImporter:
       name: sheet_29
       rect:
         serializedVersion: 2
-        x: 112
+        x: 113
         y: 160
-        width: 16
+        width: 15
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1189,9 +1189,9 @@ TextureImporter:
       name: sheet_50
       rect:
         serializedVersion: 2
-        x: 112
+        x: 113
         y: 144
-        width: 16
+        width: 15
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1609,9 +1609,9 @@ TextureImporter:
       name: sheet_70
       rect:
         serializedVersion: 2
-        x: 112
+        x: 113
         y: 128
-        width: 16
+        width: 15
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -2071,9 +2071,9 @@ TextureImporter:
       name: sheet_92
       rect:
         serializedVersion: 2
-        x: 112
+        x: 113
         y: 112
-        width: 16
+        width: 15
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
