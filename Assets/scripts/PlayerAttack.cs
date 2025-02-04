@@ -15,7 +15,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackInterval = 2f; // Tiempo entre ataques
     private float timeSinceLastAttack = 0f;
 
-    // Update se llama una vez por frame
+
     void Update()
     {
         timeSinceLastAttack += Time.deltaTime;

@@ -17,28 +17,26 @@ public class Attack : MonoBehaviour
 
     void Update()
     {
-        // Mover el ataque hacia la derecha
         transform.Translate(Vector3.right * speed * Time.deltaTime);
-
-        // Detectar colisiones con enemigos mientras se mueve
-        CheckCollisions();
     }
 
-    private void CheckCollisions()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Collider[] hitEnemies = Physics.OverlapSphere(transform.position,0.5f,  enemyLayer);
-
-        foreach (Collider enemy in hitEnemies)
+        if (((1 << other.gameObject.layer) & enemyLayer) != 0) // Verifica si el objeto pertenece a la capa de enemigos
         {
-            Debug.Log("Golpeó a " + enemy.name);
-            enemy.GetComponent<EnemyHealth>()?.TakeDamage(damage);
-            Destroy(gameObject); // Destruir el ataque tras golpear
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                Debug.Log("Golpeó a " + other.name);
+                enemyHealth.TakeDamage(damage);
+                Destroy(gameObject); // Destruir el ataque tras golpear
+            }
         }
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
 }
