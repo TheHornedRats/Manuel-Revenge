@@ -2,49 +2,50 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Prefab del enemigo a spawnear
-    public Transform player; // Referencia al jugador para que los enemigos puedan seguirlo
+    [Header("Spawner Settings")]
+    public GameObject enemyPrefab; // Prefab del enemigo
+    public Transform player; // Referencia al jugador
     public float spawnRadius = 20f; // Radio en el que aparecerán los enemigos fuera del mapa
-    public float initialSpawnInterval = 500f; // Intervalo inicial entre apariciones (en frames)
-    public float accelerationRate = 0.10f; // Tasa de aceleración (reduce el tiempo de spawn)
-    private float currentSpawnInterval; // Intervalo actual entre spawns
+    public float initialSpawnInterval = 5f; // Intervalo inicial entre apariciones (en segundos)
+    public float minSpawnInterval = 0.5f; // Tiempo mínimo entre spawns (evita que sea demasiado rápido)
+    public float accelerationRate = 0.95f; // Factor de reducción del tiempo de spawn (0.95 = se reduce un 5% cada spawn)
 
-    private int frameCounter = 0; // Contador de frames
+    private float currentSpawnInterval; // Intervalo actual entre spawns
+    private float spawnTimer; // Temporizador para controlar el spawn
 
     private void Start()
     {
-        // Inicializa el intervalo de spawn con el valor inicial
         currentSpawnInterval = initialSpawnInterval;
+        spawnTimer = currentSpawnInterval;
     }
 
     private void Update()
     {
-        frameCounter++;
+        spawnTimer -= Time.deltaTime;
 
-        if (frameCounter >= currentSpawnInterval)
+        if (spawnTimer <= 0f)
         {
             SpawnEnemy();
-            frameCounter = 0; // Reinicia el contador de frames
-
+            spawnTimer = currentSpawnInterval; // Reinicia el temporizador
 
             // Reduce el intervalo de spawn para acelerar la generación de enemigos
             currentSpawnInterval *= accelerationRate;
-            currentSpawnInterval = Mathf.Max(30f, currentSpawnInterval); // Limita el mínimo intervalo
+            currentSpawnInterval = Mathf.Max(minSpawnInterval, currentSpawnInterval); // Evita que sea menor al mínimo
         }
     }
 
     private void SpawnEnemy()
     {
-        // Genera una posición aleatoria en el círculo alrededor del mapa
+        // Genera una posición aleatoria en el círculo alrededor del mapa (sin aparecer en el centro)
         Vector2 randomPosition = Random.insideUnitCircle.normalized * spawnRadius;
-        Vector3 spawnPosition = new Vector3(randomPosition.x, randomPosition.y, 0);
+        Vector3 spawnPosition = new Vector3(randomPosition.x + player.position.x, randomPosition.y + player.position.y, 0);
 
-        // Instancia el enemigo y configura su objetivo
+        // Instancia el enemigo y asigna al jugador como objetivo
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         EnemyFollow enemyScript = enemy.GetComponent<EnemyFollow>();
         if (enemyScript != null && player != null)
         {
-            enemyScript.player = player; // Asigna al jugador como objetivo
+            enemyScript.player = player; // Asigna el jugador como objetivo
         }
     }
 }
