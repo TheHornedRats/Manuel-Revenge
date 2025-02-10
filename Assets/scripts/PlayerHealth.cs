@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Necesario para usar UI
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int hp = 100;
     public int damage;
+    public Slider healthSlider;   // Referencia al Slider de la barra de vida
+    public int maxHealth = 100;   // Vida máxima del jugador
+    private int currentHealth;    // Vida actual del jugador
 
     void Start()
     {
@@ -21,10 +24,10 @@ public class PlayerHealth : MonoBehaviour
     }
     public void TakeDamagePlayer(int damage)
     {
-        hp -= damage;
-        Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + hp);
+        maxHealth -= damage;
+        Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + maxHealth);
 
-        if (hp <= 0)
+        if (maxHealth <= 0)
         {
             Die();
         }
