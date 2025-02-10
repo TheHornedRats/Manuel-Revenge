@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6479020462234755427}
   - component: {fileID: 5520136425479942592}
   - component: {fileID: 7966989569596547175}
+  - component: {fileID: -5654087302299029089}
   m_Layer: 7
   m_Name: Manuel
   m_TagString: Player
@@ -118,7 +119,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -194,6 +195,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+--- !u!114 &-5654087302299029089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295698327950257503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620ccc42995e08e4590ad8222da19b91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  damage: 0
 --- !u!1 &1954576043372935537
 GameObject:
   m_ObjectHideFlags: 0
