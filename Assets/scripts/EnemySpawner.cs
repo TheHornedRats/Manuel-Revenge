@@ -9,6 +9,8 @@ public class EnemySpawner : MonoBehaviour
     public float initialSpawnInterval = 5f; // Intervalo inicial entre apariciones (en segundos)
     public float minSpawnInterval = 0.5f; // Tiempo mínimo entre spawns (evita que sea demasiado rápido)
     public float accelerationRate = 0.95f; // Factor de reducción del tiempo de spawn (0.95 = se reduce un 5% cada spawn)
+    public int minGroupSize = 2; // Tamaño mínimo del grupo de enemigos
+    public int maxGroupSize = 5; // Tamaño máximo del grupo de enemigos
 
     private float currentSpawnInterval; // Intervalo actual entre spawns
     private float spawnTimer; // Temporizador para controlar el spawn
@@ -25,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnTimer <= 0f)
         {
-            SpawnEnemy();
+            SpawnEnemyGroup();
             spawnTimer = currentSpawnInterval; // Reinicia el temporizador
 
             // Reduce el intervalo de spawn para acelerar la generación de enemigos
@@ -34,18 +36,28 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemyGroup()
     {
-        // Genera una posición aleatoria en el círculo alrededor del mapa (sin aparecer en el centro)
-        Vector2 randomPosition = Random.insideUnitCircle.normalized * spawnRadius;
-        Vector3 spawnPosition = new Vector3(randomPosition.x + player.position.x, randomPosition.y + player.position.y, 0);
+        int groupSize = Random.Range(minGroupSize, maxGroupSize + 1);
+        Vector3 baseSpawnPosition = GetSpawnPosition();
 
-        // Instancia el enemigo y asigna al jugador como objetivo
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        EnemyFollow enemyScript = enemy.GetComponent<EnemyFollow>();
-        if (enemyScript != null && player != null)
+        for (int i = 0; i < groupSize; i++)
         {
-            enemyScript.player = player; // Asigna el jugador como objetivo
+            Vector3 spawnOffset = new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
+            Vector3 spawnPosition = baseSpawnPosition + spawnOffset;
+
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            EnemyFollow enemyScript = enemy.GetComponent<EnemyFollow>();
+            if (enemyScript != null && player != null)
+            {
+                enemyScript.player = player; // Asigna el jugador como objetivo
+            }
         }
+    }
+
+    private Vector3 GetSpawnPosition()
+    {
+        Vector2 randomPosition = Random.insideUnitCircle.normalized * spawnRadius;
+        return new Vector3(randomPosition.x + player.position.x, randomPosition.y + player.position.y, 0);
     }
 }
