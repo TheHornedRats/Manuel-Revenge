@@ -11,6 +11,8 @@ public class EnemySpawner : MonoBehaviour
     public float accelerationRate = 0.95f; // Factor de reducción del tiempo de spawn (0.95 = se reduce un 5% cada spawn)
     public int minGroupSize = 2; // Tamaño mínimo del grupo de enemigos
     public int maxGroupSize = 5; // Tamaño máximo del grupo de enemigos
+    public Camera mainCamera; // Referencia a la cámara principal
+    public float spawnOutsideMargin = 5f; // Margen para asegurar que los enemigos aparecen fuera de la cámara
 
     private float currentSpawnInterval; // Intervalo actual entre spawns
     private float spawnTimer; // Temporizador para controlar el spawn
@@ -39,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemyGroup()
     {
         int groupSize = Random.Range(minGroupSize, maxGroupSize + 1);
-        Vector3 baseSpawnPosition = GetSpawnPosition();
+        Vector3 baseSpawnPosition = GetSpawnPositionOutsideCamera();
 
         for (int i = 0; i < groupSize; i++)
         {
@@ -55,9 +57,22 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private Vector3 GetSpawnPosition()
+    private Vector3 GetSpawnPositionOutsideCamera()
     {
-        Vector2 randomPosition = Random.insideUnitCircle.normalized * spawnRadius;
-        return new Vector3(randomPosition.x + player.position.x, randomPosition.y + player.position.y, 0);
+        Vector3 spawnPosition;
+        do
+        {
+            Vector2 randomPosition = Random.insideUnitCircle.normalized * spawnRadius;
+            spawnPosition = new Vector3(randomPosition.x + player.position.x, randomPosition.y + player.position.y, 0);
+        }
+        while (IsPositionInCameraView(spawnPosition));
+
+        return spawnPosition;
+    }
+
+    private bool IsPositionInCameraView(Vector3 position)
+    {
+        Vector3 viewportPoint = mainCamera.WorldToViewportPoint(position);
+        return viewportPoint.x > 0 && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 1;
     }
 }
