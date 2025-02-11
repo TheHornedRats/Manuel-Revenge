@@ -5,16 +5,17 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Ajustes de Ataque")]
-    public GameObject attackPrefab; // Prefab del ataque
-    public Transform attackSpawnPoint; // Punto de aparición del ataque
-    public float attackSpeed = 5f; // Velocidad del ataque
-    public int attackDamage = 10; // Daño del ataque
+    public GameObject fireballPrefab; // Prefab de la bola de fuego
+    public Transform firePoint; // Punto de aparición del ataque
+    public float fireballSpeed = 5f; // Velocidad de la bola de fuego
+    public int fireballDamage = 10; // Daño de la bola de fuego
+    public float fireballExplosionRadius = 2f; // Radio de la explosión
     public LayerMask enemyLayer; // Capa de los enemigos
-
+    public GameObject explosionEffect; // Prefab de la explosión
+    
     [Header("Cooldown del Ataque")]
     public float attackInterval = 2f; // Tiempo entre ataques
     private float timeSinceLastAttack = 0f;
-
 
     void Update()
     {
@@ -22,24 +23,29 @@ public class PlayerAttack : MonoBehaviour
 
         if (timeSinceLastAttack >= attackInterval)
         {
-            PerformAttack();
+            Shoot();
             timeSinceLastAttack = 0f;
         }
     }
 
-    void PerformAttack()
+    void Shoot()
     {
-        // Crear el objeto de ataque
-        GameObject attackObject = Instantiate(attackPrefab, attackSpawnPoint.position, Quaternion.identity);
-
-        // Configurar los parámetros del ataque
-        Attack attack = attackObject.GetComponent<Attack>();
+        if (fireballPrefab == null || firePoint == null)
+        {
+            Debug.LogError("Fireball Prefab o FirePoint no asignado en PlayerAttack!");
+            return;
+        }
+        
+        Debug.Log("Disparando bola de fuego!");
+        GameObject fireball = Instantiate(fireballPrefab, firePoint.position, firePoint.rotation);
+        Attack attack = fireball.GetComponent<Attack>();
         if (attack != null)
         {
-            attack.Initialize(attackSpeed, attackDamage, enemyLayer);
+            attack.speed = fireballSpeed;
+            attack.damage = fireballDamage;
+            attack.explosionRadius = fireballExplosionRadius;
+            attack.enemyLayer = enemyLayer;
+            attack.explosionEffect = explosionEffect;
         }
-
-        // Destruir el objeto de ataque después de 5 segundos
-        Destroy(attackObject, 5f);
     }
 }

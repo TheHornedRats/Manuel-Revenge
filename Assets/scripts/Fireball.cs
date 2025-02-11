@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class Fireball : MonoBehaviour
 {
     public float speed = 5f; // Velocidad de la bola de fuego
     public int damage = 10; // Daño que inflige la explosión
     public float explosionRadius = 2f; // Radio de la explosión
     public LayerMask enemyLayer; // Capa que define a los enemigos
     public GameObject explosionEffect; // Prefab del efecto de explosión
+
+    void Start()
+    {
+        // Destruir la bola de fuego después de 5 segundos si no colisiona
+        Destroy(gameObject, 5f);
+    }
 
     void Update()
     {
@@ -21,13 +27,6 @@ public class Attack : MonoBehaviour
         // Verificar si la colisión es con un objeto en la capa de enemigos
         if (((1 << collision.gameObject.layer) & enemyLayer) != 0)
         {
-            // Aplicar daño directo al enemigo
-            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(damage);
-            }
-
             // Llamar al método Explode para manejar la explosión
             Explode();
         }
@@ -39,14 +38,15 @@ public class Attack : MonoBehaviour
         if (explosionEffect != null)
         {
             GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            Destroy(explosion, 1f); // Destruir el efecto de explosión después de 1 segundo
+            // Destruir el efecto de explosión después de 1 segundo
+            Destroy(explosion, 1f);
         }
 
         // Detectar todos los enemigos en el radio de la explosión
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, enemyLayer);
         foreach (Collider2D enemy in enemies)
         {
-            // Aplicar daño a cada enemigo detectado en el área de explosión
+            // Aplicar daño a cada enemigo detectado
             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
