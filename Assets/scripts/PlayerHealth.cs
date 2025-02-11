@@ -12,9 +12,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;           // Inicializa la vida al máximo
-        healthSlider.maxValue = maxHealth;   // Configura el valor máximo del slider
-        healthSlider.value = currentHealth;  // Establece el valor actual del slider
+
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

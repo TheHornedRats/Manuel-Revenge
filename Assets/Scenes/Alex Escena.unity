@@ -328,11 +328,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0, b: 0.029372692, a: 0.5529412}
-    m_HighlightedColor: {r: 0.93333334, g: 0, b: 0.008365123, a: 0.5019608}
-    m_PressedColor: {r: 1, g: 0.033346012, b: 0, a: 0.6039216}
-    m_SelectedColor: {r: 1, g: 0, b: 0.054507256, a: 0.5019608}
-    m_DisabledColor: {r: 1, g: 0, b: 0.023768902, a: 0.34901962}
+    m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 0.9339623, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_DisabledColor: {r: 1, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 109770747}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -14771,7 +14771,7 @@ MonoBehaviour:
   accelerationRate: 0.5
   minGroupSize: 2
   maxGroupSize: 5
-  mainCamera: {fileID: 519420031}
+  mainCamera: {fileID: 0}
   spawnOutsideMargin: 5
 --- !u!4 &1031269706
 Transform:
@@ -14925,7 +14925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.023376703, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15083,7 +15083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.047002792, a: 0.7647059}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.7647059}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

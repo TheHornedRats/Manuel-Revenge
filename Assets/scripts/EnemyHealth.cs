@@ -15,7 +15,6 @@ public class EnemyHealth : MonoBehaviour
         if (collision.tag == "Atack")
         {
             TakeDamage(damage);
-   
         }
     }
     public void TakeDamage(int damage)
