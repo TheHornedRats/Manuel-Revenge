@@ -4,6 +4,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public int health = 100;
     public int damage;
+    public int puntuacion;
 
     void Start()
     {
@@ -32,5 +33,6 @@ public class EnemyHealth : MonoBehaviour
     {
         Debug.Log(name + " ha muerto.");
         Destroy(gameObject);
+        ScoreManager.instance.AddScore(20);
     }
 }
