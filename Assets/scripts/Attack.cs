@@ -9,11 +9,17 @@ public class Attack : MonoBehaviour
     public float explosionRadius = 2f; // Radio de la explosión
     public LayerMask enemyLayer; // Capa que define a los enemigos
     public GameObject explosionEffect; // Prefab del efecto de explosión
+    private Vector2 direction;
+
+    public void SetDirection(Vector2 dir)
+    {
+        direction = dir.normalized;
+    }
 
     void Update()
     {
-        // Mover la bola de fuego hacia adelante en cada frame
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        // Mover la bola de fuego en la dirección establecida
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

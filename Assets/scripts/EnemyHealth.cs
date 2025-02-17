@@ -33,6 +33,6 @@ public class EnemyHealth : MonoBehaviour
     {
         Debug.Log(name + " ha muerto.");
         Destroy(gameObject);
-        ScoreManager.instance.AddScore(20);
+        ScoreManager.instance.AddScore(5);
     }
 }
