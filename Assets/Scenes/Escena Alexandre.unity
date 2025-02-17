@@ -14988,6 +14988,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 27833069}
     - target: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
+      propertyPath: fireballSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
       propertyPath: fireballDamage
       value: 100
       objectReference: {fileID: 0}
