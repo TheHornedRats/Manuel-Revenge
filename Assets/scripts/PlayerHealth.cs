@@ -12,7 +12,9 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-
+        currentHealth = maxHealth;           // Inicializa la vida al máximo
+        healthSlider.maxValue = maxHealth;   // Configura el valor máximo del slider
+        healthSlider.value = currentHealth;  // Establece el valor actual del slider
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -25,6 +27,8 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamagePlayer(int damage)
     {
         maxHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Asegura que la vida no sea menor a 0
+        healthSlider.value = currentHealth;  // Actualiza la barra de vida
         Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + maxHealth);
 
         if (maxHealth <= 0)
