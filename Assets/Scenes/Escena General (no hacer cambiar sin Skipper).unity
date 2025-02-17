@@ -16083,9 +16083,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   level: 1
-  pointsPerLevel: 1000
+  pointsPerLevel: 300
   scoreText: {fileID: 439723843}
   levelText: {fileID: 1631031734}
+  playerAttack: {fileID: 3672655057767452114}
 --- !u!4 &1686880840
 Transform:
   m_ObjectHideFlags: 0
@@ -16480,6 +16481,14 @@ PrefabInstance:
       propertyPath: enemyLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
+      propertyPath: baseFireballDamage
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
+      propertyPath: baseFireballExplosionRadius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 295698327950257503, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
       propertyPath: m_Name
       value: Manuel
@@ -16556,3 +16565,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7563235014418319839, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
   m_PrefabInstance: {fileID: 3672655057767452112}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3672655057767452114 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
+  m_PrefabInstance: {fileID: 3672655057767452112}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244667593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb445eec5af87e14292ed9824ffcee9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

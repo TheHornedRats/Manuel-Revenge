@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -10,6 +12,7 @@ public class ScoreManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI levelText;
+    public PlayerAttack playerAttack; // Referencia al script PlayerAttack
 
     private void Awake()
     {
@@ -37,10 +40,14 @@ public class ScoreManager : MonoBehaviour
         // Calculamos el nuevo nivel basado en los puntos alcanzados
         level = (score / pointsPerLevel) + 1;
 
-        // Si el nivel ha cambiado, mostramos el mensaje
+        // Si el nivel ha cambiado, aplicamos cambios al ataque
         if (level > previousLevel)
         {
             Debug.Log("¡Subiste de nivel! Nuevo nivel: " + level);
+            if (playerAttack != null)
+            {
+                playerAttack.LevelUp(level);
+            }
         }
     }
 
