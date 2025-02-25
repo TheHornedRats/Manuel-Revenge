@@ -1,23 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemyHealth : MonoBehaviour
 {
     public int health = 100;
-    public int damage;
-    public int puntuacion;
+    private List<StatusEffect> activeEffects = new List<StatusEffect>();
 
-    void Start()
-    {
-
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Atack")
-        {
-            TakeDamage(damage);
-        }
-    }
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -29,10 +17,21 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    public void ApplyEffect(StatusEffect effect)
+    {
+        StatusEffect newEffect = gameObject.AddComponent(effect.GetType()) as StatusEffect;
+        if (newEffect != null)
+        {
+            newEffect.duration = effect.duration;
+            newEffect.ApplyEffect(this);
+            activeEffects.Add(newEffect);
+            Debug.Log(name + " recibió efecto de " + effect.GetType().Name);
+        }
+    }
+
     private void Die()
     {
         Debug.Log(name + " ha muerto.");
         Destroy(gameObject);
-        ScoreManager.instance.AddScore(5);
     }
 }
