@@ -7,17 +7,14 @@ public class Espadon : Weapon
     private Collider2D hitbox;
     public float attackDuration = 0.3f;
     public GameObject bleedEffectPrefab; // Prefab del efecto de sangrado
-    public float bleedDuration = 3f;
-    public float bleedDamagePerSecond = 5f;
-    public int bleedTicks = 3;
 
     private void Start()
     {
-        weaponName = "Espadón";
-        damage = 50f;
-        cooldown = 1.5f;
-        effect = "Sangrado";
-
+        if (weaponData == null)
+        {
+            Debug.LogError("WeaponData no asignado en " + gameObject.name);
+            return;
+        }
         hitbox = GetComponent<Collider2D>();
         if (hitbox != null)
         {
@@ -27,7 +24,7 @@ public class Espadon : Weapon
 
     protected override void PerformAttack()
     {
-        Debug.Log(weaponName + " ha atacado automáticamente.");
+        Debug.Log(weaponData.weaponName + " ha atacado automáticamente.");
         StartCoroutine(ActivateHitbox());
     }
 
@@ -48,17 +45,17 @@ public class Espadon : Weapon
             EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage((int)damage);
-                Debug.Log("Espadón golpeó a " + collision.name);
+                enemyHealth.TakeDamage((int)weaponData.baseDamage);
+                Debug.Log(weaponData.weaponName + " golpeó a " + collision.name);
 
-                // Aplicar efecto de sangrado
-                if (bleedEffectPrefab != null)
+                // Aplicar efecto de sangrado si está habilitado en WeaponData
+                if (weaponData.appliesStatusEffect && weaponData.statusEffect == "Sangrado")
                 {
                     Debug.Log("Aplicando sangrado a " + collision.name);
                     BleedEffect bleedEffect = collision.gameObject.AddComponent<BleedEffect>();
-                    bleedEffect.duration = bleedDuration;
-                    bleedEffect.damagePerSecond = bleedDamagePerSecond;
-                    bleedEffect.tickCount = bleedTicks;
+                    bleedEffect.duration = 3f;
+                    bleedEffect.damagePerSecond = weaponData.baseDamage * 0.2f;
+                    bleedEffect.tickCount = 3;
                     bleedEffect.ApplyEffect(enemyHealth);
                 }
             }

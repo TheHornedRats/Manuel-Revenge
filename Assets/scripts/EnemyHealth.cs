@@ -32,6 +32,7 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log(name + " ha muerto.");
+        ScoreManager.Instance.AddScore(10); // Aumentar puntuación al morir
         Destroy(gameObject);
     }
 }

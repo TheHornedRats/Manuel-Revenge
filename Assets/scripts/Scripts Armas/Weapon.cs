@@ -1,34 +1,73 @@
-using UnityEngine;
 
 namespace Weapons
 {
+    using UnityEngine;
+
     public abstract class Weapon : MonoBehaviour
     {
-        [Header("Weapon Stats")]
+        public WeaponData weaponData;
         public string weaponName;
-        public int level = 1;
-        public float damage;
-        public float cooldown;
-        public string effect; // Puede ser "Sangrado", "Fuego", "Veneno", etc.
-
+        private float damage;
+        private float cooldown;
+        private int level = 1;
         private float lastAttackTime;
+
+        private void Start()
+        {
+            if (weaponData != null)
+            {
+                weaponName = weaponData.weaponName;
+                damage = weaponData.baseDamage;
+                cooldown = weaponData.baseCooldown;
+
+                Debug.Log($"WeaponData asignado: {weaponData.weaponName}, Cooldown: {weaponData.baseCooldown}");
+
+                // Si el cooldown es 0, forzar un valor correcto
+                if (cooldown <= 0)
+                {
+                    Debug.LogWarning($"El cooldown del arma {weaponName} estaba en {cooldown}. Se fuerza a 1.5");
+                    cooldown = 1.5f;
+                }
+            }
+            else
+            {
+                Debug.LogError("WeaponData NO asignado en " + gameObject.name);
+            }
+        }
+
+
 
         public void TryAttack()
         {
-            if (Time.time >= lastAttackTime + cooldown)
+            float tiempoActual = Time.time;
+            float tiempoSiguienteAtaque = lastAttackTime + cooldown;
+
+            Debug.Log($"Intentando atacar... Tiempo actual: {tiempoActual}, Último ataque: {lastAttackTime}, Cooldown: {cooldown}, Siguiente ataque permitido: {tiempoSiguienteAtaque}");
+
+            if (tiempoActual >= tiempoSiguienteAtaque)
             {
                 PerformAttack();
-                lastAttackTime = Time.time;
+                lastAttackTime = tiempoActual; // Se actualiza el tiempo del último ataque
+                Debug.Log("Ataque realizado. Nuevo tiempo de ataque registrado: " + lastAttackTime);
+            }
+            else
+            {
+                Debug.Log("Ataque bloqueado por cooldown.");
             }
         }
+
 
         protected abstract void PerformAttack();
 
         public void UpgradeWeapon()
         {
-            level++;
-            damage *= 1.2f; // Aumenta el daño un 20%
-            cooldown *= 0.9f; // Reduce el cooldown un 10%
+            if (level < weaponData.maxLevel)
+            {
+                level++;
+                damage *= weaponData.damageIncreasePerLevel;
+                cooldown *= weaponData.cooldownReductionPerLevel;
+                Debug.Log(weaponData.weaponName + " mejorado al nivel " + level);
+            }
         }
     }
 }

@@ -15956,12 +15956,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 3672655057767452113}
     m_Modifications:
     - target: {fileID: 3085456118332618080, guid: 2152d579cefb23842aa69920456d177a, type: 3}
+      propertyPath: damage
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085456118332618080, guid: 2152d579cefb23842aa69920456d177a, type: 3}
+      propertyPath: cooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085456118332618080, guid: 2152d579cefb23842aa69920456d177a, type: 3}
+      propertyPath: weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 34e7a7508b5484e40ab8f5faaa35ff31, type: 2}
+    - target: {fileID: 3085456118332618080, guid: 2152d579cefb23842aa69920456d177a, type: 3}
+      propertyPath: weaponName
+      value: Espadon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085456118332618080, guid: 2152d579cefb23842aa69920456d177a, type: 3}
       propertyPath: bleedEffectPrefab
       value: 
       objectReference: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
     - target: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
       propertyPath: m_Name
       value: EspadonWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
+      propertyPath: m_TagString
+      value: Atack
       objectReference: {fileID: 0}
     - target: {fileID: 3474147015255282891, guid: 2152d579cefb23842aa69920456d177a, type: 3}
       propertyPath: m_RootOrder
@@ -15977,7 +15997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3474147015255282891, guid: 2152d579cefb23842aa69920456d177a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.164829
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3474147015255282891, guid: 2152d579cefb23842aa69920456d177a, type: 3}
       propertyPath: m_LocalRotation.w
