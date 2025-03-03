@@ -7,7 +7,7 @@ public class SurvivedTime : MonoBehaviour
 
     void Update()
     {
-        float tiempoJugado = Time.time;
+        float tiempoJugado = Time.timeSinceLevelLoad;
         int minutos = Mathf.FloorToInt(tiempoJugado / 60);
         int segundos = Mathf.FloorToInt(tiempoJugado % 60);
         tiempoText.text = $"Tiempo Jugado: {minutos:D2}:{segundos:D2}";

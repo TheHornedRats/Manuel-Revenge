@@ -1,29 +1,36 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Necesario para cargar escenas
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeathScreenController : MonoBehaviour
 {
-    public void Resume()
+    public GameObject deathScreen;
+    public Button restartButton;
+    public Button menuButton;
+
+    void Start()
     {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
+        deathScreen.SetActive(false);
+
+        restartButton.onClick.AddListener(RestartGame);
+        menuButton.onClick.AddListener(GoToMenu);
     }
 
-    void Pause()
+    public void ShowDeathScreen()
     {
-        pauseMenuUI.SetActive(true);
+        deathScreen.SetActive(true);
         Time.timeScale = 0f;
-        isPaused = true;
     }
 
-    public void QuitGame()
+    public void RestartGame()
     {
         Time.timeScale = 1f;
-
-#if UNITY_EDITOR //Esto para el juego en Unity
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit(); //Y esto para el juego en builds
-#endif
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void GoToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single); //Cargar la escena del menu y cerrar la otra
+    }
+}
