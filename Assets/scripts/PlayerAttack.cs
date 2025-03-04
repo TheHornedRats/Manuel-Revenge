@@ -1,38 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Weapons; // Importamos el namespace donde están las armas
+using System.Collections.Generic;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [Header("Lista de Armas")]
-
-    [Header("Ajustes de Ataque a Distancia")]
-    public GameObject fireballPrefab;
-    public Transform firePoint;
-    public float baseFireballSpeed = 5f;
-    public int baseFireballDamage = 10;
-    public float baseFireballExplosionRadius = 2f;
-    public LayerMask enemyLayer;
-    public GameObject explosionEffect;
-
-    [Header("Cooldown del Ataque")]
-    WeaponHandler weaponHandler;
-    public int playerLevel = 1;
-
-    private void Start()
-    {
-        weaponHandler = GetComponent<WeaponHandler>();
-    }
+    public List<Weapon> weapons = new List<Weapon>();
 
     void Update()
     {
-       
+        Vector3 playerPosition = transform.position;
+        foreach (Weapon weapon in weapons)
+        {
+            if (weapon.weaponData != null)
+            {
+                weapon.TryAttack(playerPosition); // Ahora cada arma maneja su propio cooldown
+            }
+        }
     }
 
     public void LevelUp(int newLevel)
     {
-        playerLevel = newLevel;
-        Debug.Log("Nuevo nivel alcanzado: " + playerLevel);
+        foreach (Weapon weapon in weapons)
+        {
+            weapon.UpgradeWeapon(); // Mejora todas las armas cuando el jugador sube de nivel
+        }
     }
 }

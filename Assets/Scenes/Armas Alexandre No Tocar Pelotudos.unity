@@ -15483,14 +15483,6 @@ MonoBehaviour:
   weapons:
   - {fileID: 11400000, guid: 34e7a7508b5484e40ab8f5faaa35ff31, type: 2}
   - {fileID: 11400000, guid: e3d810f688847234980ca491d514f43d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   currentWeapon: {fileID: 0}
   weaponName: 
 --- !u!1 &1686880838
@@ -15527,7 +15519,7 @@ MonoBehaviour:
   pointsPerLevel: 300
   scoreText: {fileID: 439723843}
   levelText: {fileID: 1631031734}
-  playerAttack: {fileID: 3672655057767452114}
+  playerAttack: {fileID: 0}
 --- !u!4 &1686880840
 Transform:
   m_ObjectHideFlags: 0
@@ -16181,17 +16173,21 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7563235014418319839, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 619418245}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 295698327950257503, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3672655057767452120}
   m_SourcePrefab: {fileID: 100100000, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
 --- !u!4 &3672655057767452113 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7563235014418319839, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
   m_PrefabInstance: {fileID: 3672655057767452112}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3672655057767452114 stripped
+--- !u!114 &3672655057767452120
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
-  m_PrefabInstance: {fileID: 3672655057767452112}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244667593}
   m_Enabled: 1
@@ -16199,3 +16195,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb445eec5af87e14292ed9824ffcee9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapons: []

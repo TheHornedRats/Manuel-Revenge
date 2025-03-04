@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3474147015255282891}
   - component: {fileID: 6482669315410278886}
   m_Layer: 3
-  m_Name: EspadonWeapon
+  m_Name: WeaponHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -22,24 +22,42 @@ public class WeaponData : ScriptableObject
 
     public void InitWeapon(int weaponLevel)
     {
-        weaponCooldown = weaponLevel * cooldownReductionPerLevel * baseCooldown;
+        weaponCooldown = baseCooldown * Mathf.Pow(cooldownReductionPerLevel, weaponLevel - 1);
+        Debug.Log($"{weaponName} inicializado con cooldown: {weaponCooldown}");
     }
 
-    public void UpdateWeapon(Vector3 playerPosition){
-        currentCooldown += Time.deltaTime;
-        if(currentCooldown >= weaponCooldown)
+    public void UpdateWeapon(Vector3 playerPosition)
+    {
+        playerPos = playerPosition;
+        if (currentCooldown > 0)
         {
-            currentCooldown = 0;
+            currentCooldown -= Time.deltaTime;
+        }
+
+        if (currentCooldown <= 0)
+        {
             PerformAttack();
+            currentCooldown = weaponCooldown; // Reiniciar cooldown tras el ataque
         }
     }
 
     void PerformAttack()
     {
         Debug.Log("ATACA " + weaponName);
-        if(attackPrefab != null)
+
+        if (attackPrefab != null)
         {
-            Instantiate(attackPrefab, playerPos, Quaternion.identity);
+            GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.identity);
+            EspadonAttack attackAttributes = attack.GetComponent<EspadonAttack>();
+            if (attackAttributes != null)
+            {
+                attackAttributes.damage = baseDamage;
+
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No hay prefab asignado para " + weaponName);
         }
     }
 }

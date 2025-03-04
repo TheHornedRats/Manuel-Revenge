@@ -14,29 +14,8 @@ public class WeaponHandler : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Hola");
-
-        if (currentWeapon != null)
-        {
-            weaponName = currentWeapon.weaponName;
-            damage = currentWeapon.baseDamage;
-            cooldown = currentWeapon.baseCooldown;
-
-            Debug.Log($"WeaponData asignado: {currentWeapon.weaponName}, Cooldown: {currentWeapon.baseCooldown}");
-
-            // Si el cooldown es 0, forzar un valor correcto
-            if (cooldown <= 0)
-            {
-                Debug.LogWarning($"El cooldown del arma {weaponName} estaba en {cooldown}. Se fuerza a 1.5");
-                cooldown = 1.5f;
-            }
-
-            currentWeapon.InitWeapon(1);
-        }
-        else
-        {
-            Debug.LogError("WeaponData NO asignado en " + gameObject.name);
-        }
+       
+      
 
         foreach (WeaponData weaponData in weapons)
         {

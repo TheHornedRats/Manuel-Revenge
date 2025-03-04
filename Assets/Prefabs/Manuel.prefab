@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6479020462234755427}
   - component: {fileID: 7966989569596547175}
   - component: {fileID: -5654087302299029089}
-  - component: {fileID: -2284471849904843932}
   m_Layer: 7
   m_Name: Manuel
   m_TagString: Player
@@ -190,29 +189,6 @@ MonoBehaviour:
   damage: 0
   healthSlider: {fileID: 0}
   maxHealth: 100
---- !u!114 &-2284471849904843932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295698327950257503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb445eec5af87e14292ed9824ffcee9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 111972236631396493, guid: c6622e269e6826442bcf9c2b21c00deb, type: 3}
-  firePoint: {fileID: 0}
-  baseFireballSpeed: 5
-  baseFireballDamage: 10
-  baseFireballExplosionRadius: 2
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  explosionEffect: {fileID: 2277020464440144577, guid: 7fb45351c6a17bc4eab8fdd8342e059e, type: 3}
-  attackInterval: 2
-  playerLevel: 1
 --- !u!1 &1954576043372935537
 GameObject:
   m_ObjectHideFlags: 0

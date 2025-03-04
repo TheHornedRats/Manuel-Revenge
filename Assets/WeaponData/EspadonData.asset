@@ -18,6 +18,6 @@ MonoBehaviour:
   appliesStatusEffect: 1
   statusEffect: Sangrado
   maxLevel: 5
-  attackPrefab: {fileID: 0}
+  attackPrefab: {fileID: 3370492357764059366, guid: 2d2d51dff485d3e48b27f6f1a23b6465, type: 3}
   damageIncreasePerLevel: 1.2
   cooldownReductionPerLevel: 0.9
