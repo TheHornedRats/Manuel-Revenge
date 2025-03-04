@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class XPBarProgress : MonoBehaviour
 {
     public Slider slider;
-    public int maxExp = 300; // Valor máximo de experiencia por nivel
+    public int maxExp = 1000; // Valor máximo de experiencia por nivel
 
     private void Start()
     {

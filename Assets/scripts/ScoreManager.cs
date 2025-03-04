@@ -5,21 +5,31 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager instance;
+    public static ScoreManager instance { get; private set; }
+
     public int score = 0;
     public int level = 1;
-    public int pointsPerLevel = 300;
+    public int pointsPerLevel = 1000;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI levelText;
-    public PlayerAttack playerAttack; // Referencia al script PlayerAttack
+    public PlayerAttack playerAttack;
+
+    // Evento para notificar cambios en el score
+    public delegate void ScoreChanged(int newScore);
+    public event ScoreChanged OnScoreChanged;
 
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+            return;
+        }
     }
 
     private void Start()
@@ -29,18 +39,19 @@ public class ScoreManager : MonoBehaviour
 
     public void AddScore(int amount)
     {
-        int previousLevel = level; // Guardamos el nivel antes de sumar la puntuación
+        int previousLevel = level;
         score += amount;
         CheckLevelUp(previousLevel);
         UpdateUI();
+
+        // Disparar evento si hay suscriptores
+        OnScoreChanged?.Invoke(score);
     }
 
     private void CheckLevelUp(int previousLevel)
     {
-        // Calculamos el nuevo nivel basado en los puntos alcanzados
         level = (score / pointsPerLevel) + 1;
 
-        // Si el nivel ha cambiado, aplicamos cambios al ataque
         if (level > previousLevel)
         {
             Debug.Log("¡Subiste de nivel! Nuevo nivel: " + level);
