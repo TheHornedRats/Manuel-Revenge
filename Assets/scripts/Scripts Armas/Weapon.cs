@@ -3,7 +3,7 @@ namespace Weapons
 {
     using UnityEngine;
 
-    public abstract class Weapon : MonoBehaviour
+    public class Weapon : MonoBehaviour
     {
         public WeaponData weaponData;
         public string weaponName;
@@ -14,6 +14,8 @@ namespace Weapons
 
         private void Start()
         {
+            Debug.Log("Hola");
+
             if (weaponData != null)
             {
                 weaponName = weaponData.weaponName;
@@ -57,7 +59,7 @@ namespace Weapons
         }
 
 
-        protected abstract void PerformAttack();
+        protected void PerformAttack(){}
 
         public void UpgradeWeapon()
         {

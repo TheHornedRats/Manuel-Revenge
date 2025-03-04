@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10b8ce6228505bd42a3c5a8f1dc0e04a, type: 3}
-  m_Name: EspadonData
+  m_Name: Latigo
   m_EditorClassIdentifier: 
-  weaponName: Espadon
-  baseDamage: 50
-  baseCooldown: 2
-  appliesStatusEffect: 1
-  statusEffect: Sangrado
+  weaponName: Latigo
+  baseDamage: 100
+  baseCooldown: 5
+  appliesStatusEffect: 0
+  statusEffect: 
   maxLevel: 5
   attackPrefab: {fileID: 0}
   damageIncreasePerLevel: 1.2

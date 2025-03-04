@@ -22,12 +22,7 @@ public class Espadon : Weapon
         }
     }
 
-    protected override void PerformAttack()
-    {
-        Debug.Log(weaponData.weaponName + " ha atacado automáticamente.");
-        StartCoroutine(ActivateHitbox());
-    }
-
+  
     private IEnumerator ActivateHitbox()
     {
         if (hitbox != null)

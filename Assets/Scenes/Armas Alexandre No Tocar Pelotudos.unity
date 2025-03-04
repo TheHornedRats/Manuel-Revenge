@@ -715,17 +715,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3474147015255282891, guid: 2152d579cefb23842aa69920456d177a, type: 3}
   m_PrefabInstance: {fileID: 2309308782198302996}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &619418246 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3085456118332618080, guid: 2152d579cefb23842aa69920456d177a, type: 3}
-  m_PrefabInstance: {fileID: 2309308782198302996}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804bdeab4f9974a41b1190cc7f8833e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1023550376
 GameObject:
   m_ObjectHideFlags: 0
@@ -15474,6 +15463,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631031731}
   m_CullTransparentMesh: 1
+--- !u!1 &1666573007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
+  m_PrefabInstance: {fileID: 2309308782198302996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1666573009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666573007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce827af24bb4de747bb9af7c453e1a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 11400000, guid: 34e7a7508b5484e40ab8f5faaa35ff31, type: 2}
+  - {fileID: 11400000, guid: e3d810f688847234980ca491d514f43d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentWeapon: {fileID: 0}
+  weaponName: 
 --- !u!1 &1686880838
 GameObject:
   m_ObjectHideFlags: 0
@@ -15977,7 +15996,7 @@ PrefabInstance:
       objectReference: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
     - target: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
       propertyPath: m_Name
-      value: EspadonWeapon
+      value: WeaponHandler
       objectReference: {fileID: 0}
     - target: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
       propertyPath: m_TagString
@@ -16030,7 +16049,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3370492357764059366, guid: 2152d579cefb23842aa69920456d177a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666573009}
   m_SourcePrefab: {fileID: 100100000, guid: 2152d579cefb23842aa69920456d177a, type: 3}
 --- !u!1001 &3672655057767452112
 PrefabInstance:
@@ -16079,7 +16101,7 @@ PrefabInstance:
     - target: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
       propertyPath: weapons.Array.data[0]
       value: 
-      objectReference: {fileID: 619418246}
+      objectReference: {fileID: 0}
     - target: {fileID: -2284471849904843932, guid: acf5755ca0f9189429cf7bdcf0b29c54, type: 3}
       propertyPath: baseFireballExplosionRadius
       value: 3

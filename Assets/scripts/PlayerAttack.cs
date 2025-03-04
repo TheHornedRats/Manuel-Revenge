@@ -6,7 +6,6 @@ using Weapons; // Importamos el namespace donde están las armas
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Lista de Armas")]
-    public List<Weapon> weapons = new List<Weapon>(); // Lista de todas las armas equipadas
 
     [Header("Ajustes de Ataque a Distancia")]
     public GameObject fireballPrefab;
@@ -18,20 +17,17 @@ public class PlayerAttack : MonoBehaviour
     public GameObject explosionEffect;
 
     [Header("Cooldown del Ataque")]
+    WeaponHandler weaponHandler;
     public int playerLevel = 1;
+
+    private void Start()
+    {
+        weaponHandler = GetComponent<WeaponHandler>();
+    }
 
     void Update()
     {
-        foreach (Weapon weapon in weapons)
-        {
-            weapon.TryAttack();
-        }
-    }
-
-    public void AddWeapon(Weapon newWeapon)
-    {
-        weapons.Add(newWeapon);
-        Debug.Log("Nueva arma añadida: " + newWeapon.weaponName);
+       
     }
 
     public void LevelUp(int newLevel)

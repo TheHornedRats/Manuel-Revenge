@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3474147015255282891}
   - component: {fileID: 6482669315410278886}
-  - component: {fileID: 3085456118332618080}
   m_Layer: 3
   m_Name: EspadonWeapon
   m_TagString: Untagged
@@ -31,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6482669315410278886
 BoxCollider2D:
@@ -78,21 +77,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3085456118332618080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3370492357764059366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804bdeab4f9974a41b1190cc7f8833e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponName: 
-  level: 1
-  damage: 0
-  cooldown: 0
-  effect: 
-  attackDuration: 0.3
