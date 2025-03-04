@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     public int score = 0;
     public int level = 1;
-    public int pointsPerLevel = 1000;
+    public int pointsPerLevel = 300;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI levelText;
@@ -48,6 +48,8 @@ public class ScoreManager : MonoBehaviour
         OnScoreChanged?.Invoke(score);
     }
 
+    public LevelUpPanel levelUpPanel;
+
     private void CheckLevelUp(int previousLevel)
     {
         level = (score / pointsPerLevel) + 1;
@@ -58,6 +60,11 @@ public class ScoreManager : MonoBehaviour
             if (playerAttack != null)
             {
                 playerAttack.LevelUp(level);
+            }
+
+            if (levelUpPanel != null)
+            {
+                levelUpPanel.ShowPanel();
             }
         }
     }
