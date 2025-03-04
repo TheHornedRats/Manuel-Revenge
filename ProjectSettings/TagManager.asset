@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Atack
   - Enemy
+  - Teletransportable
   layers:
   - Default
   - TransparentFX
