@@ -8,7 +8,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager instance;
     public int score = 0;
     public int level = 1;
-    public int pointsPerLevel = 1000;
+    public int pointsPerLevel = 300;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI levelText;
