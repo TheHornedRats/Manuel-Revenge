@@ -46,11 +46,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void DropXPItems()
     {
-        Vector3 dropPosition = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
+        Vector3 dropPosition1 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
+        Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
+        Vector3 dropPosition3 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.2f);
 
         // Instanciar los objetos de XP en posiciones aleatorias
-        Instantiate(xp5Prefab, dropPosition, Quaternion.identity);
-        Instantiate(xp10Prefab, dropPosition, Quaternion.identity);
-        Instantiate(xp20Prefab, dropPosition, Quaternion.identity);
+        Instantiate(xp5Prefab, dropPosition1 , Quaternion.identity);
+        Instantiate(xp10Prefab, dropPosition2, Quaternion.identity);
+        Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
     }
 }
