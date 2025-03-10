@@ -24,17 +24,27 @@ public class PlayerHealth : MonoBehaviour
             TakeDamagePlayer(damage);
         }
     }
+
     public void TakeDamagePlayer(int damage)
     {
-        maxHealth -= damage;
+        currentHealth -= damage; // Reducimos `currentHealth` en lugar de `maxHealth`
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Asegura que la vida no sea menor a 0
         healthSlider.value = currentHealth;  // Actualiza la barra de vida
-        Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + maxHealth);
+        Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + currentHealth);
 
-        if (maxHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
+    }
+
+    public void Heal(int amount)
+    {
+        int previousHealth = currentHealth; // Guardamos la vida antes de curar
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        healthSlider.value = currentHealth; // Asegura que la UI de la barra de vida refleje el cambio
+
+        Debug.Log($" El jugador ha sido curado por {amount} puntos de vida. Vida antes: {previousHealth}, Vida actual: {currentHealth}");
     }
 
     private void Die()

@@ -1,63 +1,52 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager Instance;
+    public int currentXP = 0;
+    public int xpToLevelUp = 100;
+    public int playerLevel = 1;
+    public TextMeshProUGUI xpText;
 
-    private int score = 0;
-    private int level = 1;
-    private int scoreToLevelUp = 100;
-    public WeaponHandler weaponHandler;
-    public TextMeshProUGUI experienceText;
 
-    private void Awake()
+    private void Start()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        UpdateXPText();
     }
 
-    public void AddScore(int points)
+    public void AddXP(int amount)
     {
-        score += points;
-        UpdateExperienceText();
-        Debug.Log("Puntos: " + score + " / " + scoreToLevelUp);
+        currentXP += amount;
+        Debug.Log("XP obtenida: " + amount + ". XP total: " + currentXP + "/" + xpToLevelUp);
 
-        if (score >= scoreToLevelUp)
+        UpdateXPText();
+
+        if (currentXP >= xpToLevelUp)
         {
             LevelUp();
         }
     }
 
-    private void LevelUp()
+    private void UpdateXPText()
     {
-        level++;
-        score = 0;
-        scoreToLevelUp += 50;
-        UpdateExperienceText();
-
-        Debug.Log("¡Subiste al nivel " + level + "!");
-
-        if (weaponHandler != null && weaponHandler.weapons.Count > 0)
+        if (xpText != null)
         {
-            int weaponIndex = Random.Range(0, weaponHandler.weapons.Count);
-            weaponHandler.weapons[weaponIndex].InitWeapon(level);
-            Debug.Log("Se mejoró el arma: " + weaponHandler.weapons[weaponIndex].weaponName);
+            xpText.text = "XP: " + currentXP + "/" + xpToLevelUp;
+        }
+        else
+        {
+            Debug.LogError("xpText no asignado en ScoreManager.");
         }
     }
 
-    private void UpdateExperienceText()
+    private void LevelUp()
     {
-        if (experienceText != null)
-        {
-            experienceText.text = "EXP: " + score + " / " + scoreToLevelUp;
-        }
+        playerLevel++;
+        currentXP -= xpToLevelUp;
+        xpToLevelUp = Mathf.RoundToInt(xpToLevelUp * 1.2f);
+
+        Debug.Log("Subiste al nivel " + playerLevel);
+        UpdateXPText();
     }
 }
