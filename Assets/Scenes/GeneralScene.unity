@@ -15111,6 +15111,10 @@ MonoBehaviour:
   spawnInterval: 10
   minDistance: 30
   maxDistance: 30
+  buffsManager: {fileID: 1912086089}
+  pauseMenuUI: {fileID: 0}
+  optionButtons: []
+  optionTexts: []
 --- !u!4 &1272236530
 Transform:
   m_ObjectHideFlags: 0
