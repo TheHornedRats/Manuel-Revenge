@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI levelText;
     public PlayerAttack playerAttack;
+
+    public Button UpgradeButton1;
+    public Button UpgradeButton2;
+    public Button UpgradeButton3;
 
     // Evento para notificar cambios en el score
     public delegate void ScoreChanged(int newScore);
@@ -35,6 +40,7 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         UpdateUI();
+        levelUpPanel.ClosePanel();
     }
 
     public void AddScore(int amount)
@@ -48,7 +54,7 @@ public class ScoreManager : MonoBehaviour
         OnScoreChanged?.Invoke(score);
     }
 
-    public LevelUpPanel levelUpPanel;
+    public LevelUpChoose levelUpPanel;
 
     private void CheckLevelUp(int previousLevel)
     {
@@ -65,6 +71,9 @@ public class ScoreManager : MonoBehaviour
             if (levelUpPanel != null)
             {
                 levelUpPanel.ShowPanel();
+                Time.timeScale = 0;
+                UpgradeButton1.onClick.AddListener(levelUpPanel.ClosePanel);
+
             }
         }
     }

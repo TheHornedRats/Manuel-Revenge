@@ -1,31 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class LevelUpPanel : MonoBehaviour
+public class LevelUpChoose : MonoBehaviour
 {
     public GameObject panel;
-    public Button closeButton;
-
-    private void Start()
-    {
-        panel.SetActive(false); // Asegura que inicia desactivado
-    }
-
-    private void Update()
-    {
-        if (panel.activeSelf && Input.GetKeyDown(KeyCode.X))
-        {
-            HidePanel();
-        }
-    }
 
     public void ShowPanel()
     {
         panel.SetActive(true);
     }
 
-    public void HidePanel()
+    public void ClosePanel()
     {
         panel.SetActive(false);
+        Time.timeScale = 1; // Reanuda el juego
     }
 }
