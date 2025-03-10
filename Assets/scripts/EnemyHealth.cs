@@ -1,38 +1,34 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int health = 100;
-    private List<StatusEffect> activeEffects = new List<StatusEffect>();
+    public int maxHealth = 100;
+    private int currentHealth;
+    public float damageMultiplier = 2f; 
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + health);
+        int finalDamage = Mathf.RoundToInt(damage * damageMultiplier);
+        Debug.Log($"[DAÑO] {name} recibió {finalDamage} de daño. (Base: {damage}, Multiplicador: {damageMultiplier}). Vida restante: {currentHealth - finalDamage}");
 
-        if (health <= 0)
+        currentHealth -= finalDamage;
+
+        if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    public void ApplyEffect(StatusEffect effect)
-    {
-        StatusEffect newEffect = gameObject.AddComponent(effect.GetType()) as StatusEffect;
-        if (newEffect != null)
+    private void Die()
         {
-            newEffect.duration = effect.duration;
-            newEffect.ApplyEffect(this);
-            activeEffects.Add(newEffect);
-            Debug.Log(name + " recibió efecto de " + effect.GetType().Name);
+            ScoreManager.Instance.AddScore(10);
+            Destroy(gameObject);
         }
+
     }
 
-    private void Die()
-    {
-        Debug.Log(name + " ha muerto.");
-        ScoreManager.Instance.AddScore(10); // Aumentar puntuación al morir
-        Destroy(gameObject);
-    }
-}

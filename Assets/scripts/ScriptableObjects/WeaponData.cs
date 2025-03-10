@@ -1,63 +1,88 @@
 using UnityEngine;
 
+public enum WeaponType
+{
+    Melee,
+    Projectile
+}
+
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Weapons/Weapon Data")]
 public class WeaponData : ScriptableObject
 {
+    [Header("Información del Arma")]
     public string weaponName;
+    public WeaponType weaponType;
     public float baseDamage;
     public float baseCooldown;
-    public bool appliesStatusEffect;
-    public string statusEffect;
-    public int maxLevel = 5;
     public GameObject attackPrefab;
 
-    [Header("Level Up Modifiers")]
+    [Header("Evolución del Arma")]
+    public int maxLevel = 5;
     public float damageIncreasePerLevel = 1.2f;
     public float cooldownReductionPerLevel = 0.9f;
 
-    private float weaponCooldown = 0;
-    private float currentCooldown = 0;
+    [Header("Efectos de Estado")]
+    public bool appliesStatusEffect;
+    public string statusEffect;
+    public float statusEffectDuration;
+    public float statusEffectDamage;
+    public int statusEffectTicks;
 
-    private Vector3 playerPos;
+    private float weaponCooldown;
+    private float currentCooldown;
 
     public void InitWeapon(int weaponLevel)
     {
-        weaponCooldown = baseCooldown * Mathf.Pow(cooldownReductionPerLevel, weaponLevel - 1);
-        Debug.Log($"{weaponName} inicializado con cooldown: {weaponCooldown}");
+        baseDamage *= Mathf.Pow(damageIncreasePerLevel, weaponLevel - 1);
+        baseCooldown *= Mathf.Pow(cooldownReductionPerLevel, weaponLevel - 1);
+        weaponCooldown = baseCooldown;
+        currentCooldown = 0;
     }
 
     public void UpdateWeapon(Vector3 playerPosition)
     {
-        playerPos = playerPosition;
         if (currentCooldown > 0)
         {
             currentCooldown -= Time.deltaTime;
+            return;
         }
 
-        if (currentCooldown <= 0)
-        {
-            PerformAttack();
-            currentCooldown = weaponCooldown; // Reiniciar cooldown tras el ataque
-        }
+        PerformAttack(playerPosition);
+        currentCooldown = weaponCooldown;
     }
 
-    void PerformAttack()
+    void PerformAttack(Vector3 playerPos)
     {
-        Debug.Log("ATACA " + weaponName);
-
-        if (attackPrefab != null)
+        if (attackPrefab == null)
         {
-            GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.identity);
-            EspadonAttack attackAttributes = attack.GetComponent<EspadonAttack>();
-            if (attackAttributes != null)
-            {
-                attackAttributes.damage = baseDamage;
+            Debug.LogWarning("No hay prefab asignado para " + weaponName);
+            return;
+        }
 
-            }
+        GameObject attack = Instantiate(attackPrefab, playerPos + Vector3.right, Quaternion.identity);
+        WeaponHitbox hitbox = attack.GetComponent<WeaponHitbox>();
+
+        if (hitbox != null)
+        {
+            hitbox.Setup(this);
         }
         else
         {
-            Debug.LogWarning("No hay prefab asignado para " + weaponName);
+            Debug.LogError("WeaponHitbox no encontrado en el prefab de " + weaponName);
+        }
+
+        Debug.Log(weaponName + " atacó.");
+
+        switch (weaponType)
+        {
+            case WeaponType.Melee:
+                Destroy(attack, 0.3f);
+                break;
+            case WeaponType.Projectile:
+                Rigidbody2D rb = attack.GetComponent<Rigidbody2D>();
+                if (rb != null) rb.velocity = Vector2.right * 5f;
+                Destroy(attack, 3f);
+                break;
         }
     }
 }

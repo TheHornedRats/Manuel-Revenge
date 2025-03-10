@@ -1,30 +1,26 @@
 using UnityEngine;
-using System.Collections;
 
 public class BleedEffect : StatusEffect
 {
-    public float damagePerSecond; // Daño aplicado por segundo
-    public int tickCount; // Número de veces que se aplicará el daño
-    private float tickInterval; // Intervalo entre cada aplicación de daño
+    public float damagePerSecond;
+    public int tickCount;
+    private float tickInterval;
+    private int ticksApplied = 0;
 
-    private void Start()
+    protected override void OnEffectStart()
     {
         tickInterval = duration / tickCount;
     }
 
-    protected override IEnumerator EffectCoroutine()
+    protected override void OnEffectUpdate()
     {
-        Debug.Log("Efecto de Sangrado aplicado a " + enemyHealth.name);
-        for (int i = 0; i < tickCount; i++)
+        if (enemyHealth == null) return;
+
+        if (elapsedTime >= tickInterval * (ticksApplied + 1) && ticksApplied < tickCount)
         {
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage((int)damagePerSecond);
-                Debug.Log("Sangrado: " + damagePerSecond + " de daño aplicado a " + enemyHealth.name);
-            }
-            yield return new WaitForSeconds(tickInterval);
+            enemyHealth.TakeDamage((int)damagePerSecond);
+            ticksApplied++;
+            Debug.Log(" Sangrado: " + damagePerSecond + " de daño aplicado a " + enemyHealth.name);
         }
-        Debug.Log("Efecto de Sangrado finalizado en " + enemyHealth.name);
-        Destroy(this); // Elimina el efecto después de completar los ticks
     }
 }

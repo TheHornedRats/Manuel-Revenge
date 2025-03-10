@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10b8ce6228505bd42a3c5a8f1dc0e04a, type: 3}
-  m_Name: Latigo
+  m_Name: FireballData
   m_EditorClassIdentifier: 
-  weaponName: Latigo
-  baseDamage: 100
-  baseCooldown: 5
-  appliesStatusEffect: 0
-  statusEffect: 
+  weaponName: Fireball
+  weaponType: 1
+  baseDamage: Infinity
+  baseCooldown: 6.1244763e-24
+  attackPrefab: {fileID: 2809130547693281285, guid: 2f5860f5b87981548a5991b714a86908, type: 3}
   maxLevel: 5
-  attackPrefab: {fileID: 0}
   damageIncreasePerLevel: 1.2
   cooldownReductionPerLevel: 0.9
+  appliesStatusEffect: 1
+  statusEffect: Fuego
+  statusEffectDuration: 5
+  statusEffectDamage: 0
+  statusEffectTicks: 0

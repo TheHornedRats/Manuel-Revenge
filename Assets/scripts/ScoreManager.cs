@@ -1,66 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
-    public int score = 0;
-    public int level = 1;
-    public int pointsPerLevel = 1000;
 
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI levelText;
-    public PlayerAttack playerAttack; // Referencia al script PlayerAttack
+    private int score = 0;
+    private int level = 1;
+    private int scoreToLevelUp = 100;
+    public WeaponHandler weaponHandler;
+    public TextMeshProUGUI experienceText;
 
     private void Awake()
     {
         if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        UpdateUI();
-    }
-
-    public void AddScore(int amount)
-    {
-        int previousLevel = level; // Guardamos el nivel antes de sumar la puntuación
-        score += amount;
-        CheckLevelUp(previousLevel);
-        UpdateUI();
-    }
-
-    private void CheckLevelUp(int previousLevel)
-    {
-        // Calculamos el nuevo nivel basado en los puntos alcanzados
-        level = (score / pointsPerLevel) + 1;
-
-        // Si el nivel ha cambiado, aplicamos cambios al ataque
-        if (level > previousLevel)
         {
-            Debug.Log("¡Subiste de nivel! Nuevo nivel: " + level);
-            if (playerAttack != null)
-            {
-                playerAttack.LevelUp(level);
-            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    private void UpdateUI()
+    public void AddScore(int points)
     {
-        if (scoreText != null)
-            scoreText.text = "Puntuación: " + score;
-        else
-            Debug.LogWarning("ScoreText no asignado en el Inspector.");
+        score += points;
+        UpdateExperienceText();
+        Debug.Log("Puntos: " + score + " / " + scoreToLevelUp);
 
-        if (levelText != null)
-            levelText.text = "Nivel: " + level;
-        else
-            Debug.LogWarning("LevelText no asignado en el Inspector.");
+        if (score >= scoreToLevelUp)
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        level++;
+        score = 0;
+        scoreToLevelUp += 50;
+        UpdateExperienceText();
+
+        Debug.Log("¡Subiste al nivel " + level + "!");
+
+        if (weaponHandler != null && weaponHandler.weapons.Count > 0)
+        {
+            int weaponIndex = Random.Range(0, weaponHandler.weapons.Count);
+            weaponHandler.weapons[weaponIndex].InitWeapon(level);
+            Debug.Log("Se mejoró el arma: " + weaponHandler.weapons[weaponIndex].weaponName);
+        }
+    }
+
+    private void UpdateExperienceText()
+    {
+        if (experienceText != null)
+        {
+            experienceText.text = "EXP: " + score + " / " + scoreToLevelUp;
+        }
     }
 }

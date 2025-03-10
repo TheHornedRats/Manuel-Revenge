@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: EspadonData
   m_EditorClassIdentifier: 
   weaponName: Espadon
-  baseDamage: 50
-  baseCooldown: 2
-  appliesStatusEffect: 1
-  statusEffect: Sangrado
-  maxLevel: 5
+  weaponType: 0
+  baseDamage: 2.6801214e+35
+  baseCooldown: 3.797926e-20
   attackPrefab: {fileID: 3370492357764059366, guid: 2d2d51dff485d3e48b27f6f1a23b6465, type: 3}
+  maxLevel: 5
   damageIncreasePerLevel: 1.2
   cooldownReductionPerLevel: 0.9
+  appliesStatusEffect: 1
+  statusEffect: Sangrado
+  statusEffectDuration: 5
+  statusEffectDamage: 5
+  statusEffectTicks: 5
