@@ -2,37 +2,33 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int health = 100;
-    public int damage;
-    public int puntuacion;
+    public int maxHealth = 100;
+    private int currentHealth;
+    public float damageMultiplier = 2f; 
 
-    void Start()
+    private void Start()
     {
-
+        currentHealth = maxHealth;
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Atack")
-        {
-            TakeDamage(damage);
-        }
-    }
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + health);
+        int finalDamage = Mathf.RoundToInt(damage * damageMultiplier);
+        Debug.Log($"[DAÑO] {name} recibió {finalDamage} de daño. (Base: {damage}, Multiplicador: {damageMultiplier}). Vida restante: {currentHealth - finalDamage}");
 
-        if (health <= 0)
+        currentHealth -= finalDamage;
+
+        if (currentHealth <= 0)
         {
             Die();
         }
     }
 
     private void Die()
-    {
-        Debug.Log(name + " ha muerto.");
-        Destroy(gameObject);
-        ScoreManager.instance.AddScore(5);
+        {
+            ScoreManager.Instance.AddScore(10);
+            Destroy(gameObject);
+        }
+
     }
-}
+

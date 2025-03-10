@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b8ce6228505bd42a3c5a8f1dc0e04a, type: 3}
+  m_Name: EspadonData
+  m_EditorClassIdentifier: 
+  weaponName: Espadon
+  weaponType: 0
+  baseDamage: 2.6801214e+35
+  baseCooldown: 3.797926e-20
+  attackPrefab: {fileID: 3370492357764059366, guid: 2d2d51dff485d3e48b27f6f1a23b6465, type: 3}
+  maxLevel: 5
+  damageIncreasePerLevel: 1.2
+  cooldownReductionPerLevel: 0.9
+  appliesStatusEffect: 1
+  statusEffect: Sangrado
+  statusEffectDuration: 5
+  statusEffectDamage: 5
+  statusEffectTicks: 5
