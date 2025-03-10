@@ -10,7 +10,8 @@ public class ScoreManager : MonoBehaviour
 
     public int score = 0;
     public int level = 1;
-    public int pointsPerLevel = 300;
+    public int pointsPerLevel = 100;
+    public float levelMultiplier = 1.2f;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI levelText;
@@ -71,8 +72,11 @@ public class ScoreManager : MonoBehaviour
             if (levelUpPanel != null)
             {
                 levelUpPanel.ShowPanel();
+                //pointsPerLevel = pointsPerLevel * levelMultiplier;
                 Time.timeScale = 0;
                 UpgradeButton1.onClick.AddListener(levelUpPanel.ClosePanel);
+                UpgradeButton2.onClick.AddListener(levelUpPanel.ClosePanel);
+                UpgradeButton3.onClick.AddListener(levelUpPanel.ClosePanel);
 
             }
         }

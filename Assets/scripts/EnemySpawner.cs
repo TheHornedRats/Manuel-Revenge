@@ -5,6 +5,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("Spawner Settings")]
     public GameObject enemyPrefab1; // Prefab del enemigo común (90%)
     public GameObject enemyPrefab2; // Prefab del enemigo raro (10%)
+    public GameObject enemyPrefab3; // Prefab del enemigo raro (10%)
+
     public Transform player; // Referencia al jugador
     public float spawnRadius = 20f; // Radio en el que aparecerán los enemigos fuera del mapa
     public float initialSpawnInterval = 5f; // Intervalo inicial entre apariciones (en segundos)
@@ -46,7 +48,10 @@ public class EnemySpawner : MonoBehaviour
             Vector3 spawnOffset = new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
             Vector3 spawnPosition = baseSpawnPosition + spawnOffset;
 
-            GameObject enemyPrefab = Random.value < 0.9f ? enemyPrefab1 : enemyPrefab2; // 80% para enemigo 1, 20% para enemigo 2
+            float rand = Random.value;
+
+            GameObject enemyPrefab = rand < 0.8f ? enemyPrefab1 : 
+                                     rand < 0.95f ? enemyPrefab2 : enemyPrefab3; // 70% para enemigo 1, 20% para enemigo 2, 10% para enemigo 3
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
 
             EnemyFollow enemyScript = enemy.GetComponent<EnemyFollow>();
