@@ -6,12 +6,11 @@ TagManager:
   tags:
   - Atack
   - Enemy
-  - Teletransportable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Weapon
+  - UI2
   - Water
   - UI
   - Enemy

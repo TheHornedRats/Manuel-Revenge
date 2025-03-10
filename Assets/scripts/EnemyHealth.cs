@@ -2,33 +2,57 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
-    private int currentHealth;
-    public float damageMultiplier = 2f; 
+    public int health = 100;
+    public int damage;
+    public int puntuacion;
 
-    private void Start()
+    public GameObject xp5Prefab;
+    public GameObject xp10Prefab;
+    public GameObject xp20Prefab;
+    public float dropRange = 1.0f;
+
+    void Start()
     {
-        currentHealth = maxHealth;
+
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Atack")
+        {
+            TakeDamage(damage);
+        }
+    }
     public void TakeDamage(int damage)
     {
-        int finalDamage = Mathf.RoundToInt(damage * damageMultiplier);
-        Debug.Log($"[DAÑO] {name} recibió {finalDamage} de daño. (Base: {damage}, Multiplicador: {damageMultiplier}). Vida restante: {currentHealth - finalDamage}");
+        health -= damage;
+        Debug.Log(name + " sufrió " + damage + " de daño. Salud restante: " + health);
 
-        currentHealth -= finalDamage;
-
-        if (currentHealth <= 0)
+        if (health <= 0)
         {
             Die();
         }
     }
 
     private void Die()
-        {
-            ScoreManager.Instance.AddScore(10);
-            Destroy(gameObject);
-        }
+    {
+        Debug.Log(name + " ha muerto.");
 
+        DropXPItems();
+
+        Destroy(gameObject);
+        ScoreManager.instance.AddScore(5);
     }
 
+    private void DropXPItems()
+    {
+        Vector3 dropPosition1 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
+        Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
+        Vector3 dropPosition3 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.2f);
+
+        // Instanciar los objetos de XP en posiciones aleatorias
+        Instantiate(xp5Prefab, dropPosition1 , Quaternion.identity);
+        Instantiate(xp10Prefab, dropPosition2, Quaternion.identity);
+        Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
+    }
+}
