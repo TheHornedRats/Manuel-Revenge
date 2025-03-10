@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Fireball
   weaponType: 1
-  baseDamage: Infinity
-  baseCooldown: 6.1244763e-24
+  baseDamage: 5
+  baseCooldown: 0.4
   attackPrefab: {fileID: 2809130547693281285, guid: 2f5860f5b87981548a5991b714a86908, type: 3}
   maxLevel: 5
   damageIncreasePerLevel: 1.2

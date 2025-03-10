@@ -6,10 +6,11 @@ public class EnemyHealth : MonoBehaviour
     public int damage;
     public int puntuacion;
 
-    public GameObject xp5Prefab;
-    public GameObject xp10Prefab;
-    public GameObject xp20Prefab;
+    public GameObject xpPrefab;
+    //public GameObject xp10Prefab;
+    //public GameObject xp20Prefab;
     public float dropRange = 1.0f;
+    bool isDead = false;
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class EnemyHealth : MonoBehaviour
         health -= damage;
         Debug.Log(name + " sufrió " + damage + " de daño. Salud restante: " + health);
 
-        if (health <= 0)
+        if (health <= 0 && !isDead)
         {
             Die();
         }
@@ -37,6 +38,8 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log(name + " ha muerto.");
+        isDead = true;
+
 
         DropXPItems();
 
@@ -47,12 +50,12 @@ public class EnemyHealth : MonoBehaviour
     private void DropXPItems()
     {
         Vector3 dropPosition1 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
-        Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
-        Vector3 dropPosition3 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.2f);
+       // Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
+       // Vector3 dropPosition3 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.2f);
 
         // Instanciar los objetos de XP en posiciones aleatorias
-        Instantiate(xp5Prefab, dropPosition1 , Quaternion.identity);
-        Instantiate(xp10Prefab, dropPosition2, Quaternion.identity);
-        Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
+        Instantiate(xpPrefab, dropPosition1 , Quaternion.identity);
+        //Instantiate(xp10Prefab, dropPosition2, Quaternion.identity);
+        //Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
     }
 }

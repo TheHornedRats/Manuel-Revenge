@@ -33,7 +33,7 @@ public class WeaponHandler : MonoBehaviour
         {
             if (weapon != null)
             {
-                weapon.UpdateWeapon(transform.position + Vector3.right);
+                weapon.UpdateWeapon(transform.position);
             }
         }
     }

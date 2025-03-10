@@ -31,6 +31,8 @@ public class WeaponData : ScriptableObject
     private float weaponCooldown;
     private float currentCooldown;
 
+    Vector3 lastMovementInput;
+
     public void InitWeapon(int weaponLevel)
     {
         baseDamage *= Mathf.Pow(damageIncreasePerLevel, weaponLevel - 1);
@@ -59,7 +61,14 @@ public class WeaponData : ScriptableObject
             return;
         }
 
-        GameObject attack = Instantiate(attackPrefab, playerPos + Vector3.right, Quaternion.identity);
+        // Obtener la dirección en la que se mueve el jugador
+        Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (movementInput != Vector3.zero)
+        {
+            lastMovementInput = movementInput;
+        }
+
+        GameObject attack = Instantiate(attackPrefab, playerPos + lastMovementInput.normalized, Quaternion.identity);
         WeaponHitbox hitbox = attack.GetComponent<WeaponHitbox>();
 
         if (hitbox != null)
@@ -80,7 +89,7 @@ public class WeaponData : ScriptableObject
                 break;
             case WeaponType.Projectile:
                 Rigidbody2D rb = attack.GetComponent<Rigidbody2D>();
-                if (rb != null) rb.velocity = Vector2.right * 5f;
+                if (rb != null) rb.velocity = (Vector2)lastMovementInput.normalized * 5f;
                 Destroy(attack, 3f);
                 break;
         }
