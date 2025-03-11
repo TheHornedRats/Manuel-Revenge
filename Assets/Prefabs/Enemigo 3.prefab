@@ -189,7 +189,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   puntuacion: 0
-  xpPrefab: {fileID: 1785084165971269622, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
+  xp5Prefab: {fileID: 1785084165971269622, guid: 41ec522568104394597ec504faa84723, type: 3}
+  xp10Prefab: {fileID: 1785084165971269622, guid: aa1f316760e09434cb2b2919c06e4ec4, type: 3}
+  xp20Prefab: {fileID: 1785084165971269622, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
   dropRange: 1
 --- !u!114 &-3819563168698776304
 MonoBehaviour:

@@ -1,10 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
 
     private bool isPaused = false;
+
+    void Start()
+    {
+        pauseMenuUI.SetActive(false); // Asegurar que el menú de pausa esté oculto al inicio
+        isPaused = false;
+        Time.timeScale = 1f; // Asegurar que el juego comienza en tiempo normal
+    }
 
     void Update()
     {
@@ -34,11 +43,6 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1f;
-
-    #if UNITY_EDITOR //Esto para el juego en Unity
-        UnityEditor.EditorApplication.isPlaying = false;
-    #else
-        Application.Quit(); //Y esto para el juego en builds
-#endif
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single); //Cargar la escena del menu y cerrar la otra
     }
 }

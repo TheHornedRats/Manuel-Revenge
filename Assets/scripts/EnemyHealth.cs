@@ -5,7 +5,9 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
     public int puntuacion;
-    public GameObject xpPrefab;
+    public GameObject xp5Prefab;
+    public GameObject xp10Prefab;
+    public GameObject xp20Prefab;
     public float dropRange = 1.0f;
     private bool isDead = false;
 
@@ -49,8 +51,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void DropXPItems()
     {
-        Vector3 dropPosition = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
-        Instantiate(xpPrefab, dropPosition, Quaternion.identity);
+        Vector3 dropPosition1 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
+        Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
+        Vector3 dropPosition3 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), -0.1f);
+
+        Instantiate(xp5Prefab, dropPosition1, Quaternion.identity);
+        Instantiate(xp10Prefab, dropPosition2, Quaternion.identity);
+        Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
     }
 
     private void HealPlayer(int damageDealt)
