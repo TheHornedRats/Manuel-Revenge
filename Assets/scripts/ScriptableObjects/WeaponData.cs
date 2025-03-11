@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum WeaponType { Melee, Projectile, ExpandingWave }
+public enum WeaponType { Melee, Projectile, ExpandingWave, Javelin }
 
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/WeaponData")]
 public class WeaponData : ScriptableObject
@@ -13,6 +13,7 @@ public class WeaponData : ScriptableObject
     [Header("Estadísticas del Arma")]
     public float baseDamage = 10f;
     public float baseCooldown = 1f;
+    public float projectileSpeed = 8f;
 
     [Header("Evolución del Arma")]
     public int maxLevel = 5;
@@ -25,6 +26,7 @@ public class WeaponData : ScriptableObject
     public float statusEffectDuration;
     public float statusEffectDamage;
     public int statusEffectTicks;
+    public float knockbackForce = 5f; // Fuerza de retroceso para la jabalina
 
     private float weaponCooldown;
     private float currentCooldown;
@@ -44,12 +46,22 @@ public class WeaponData : ScriptableObject
 
     public void UpdateWeapon(Vector3 playerPosition)
     {
-        if (currentCooldown > 0)
+        if (weaponType == WeaponType.Javelin)
         {
-            currentCooldown -= Time.deltaTime;
-            return;
+            if (Input.GetMouseButtonDown(0) && CanAttack()) // Disparar con click izquierdo
+            {
+                PerformAttack(playerPosition);
+            }
         }
-        PerformAttack(playerPosition);
+        else
+        {
+            if (currentCooldown > 0)
+            {
+                currentCooldown -= Time.deltaTime;
+                return;
+            }
+            PerformAttack(playerPosition);
+        }
     }
 
     public bool CanAttack()
@@ -61,15 +73,22 @@ public class WeaponData : ScriptableObject
     {
         if (currentCooldown > 0) return;
 
-        // Obtener la dirección en la que se mueve el jugador
-        Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (movementInput != Vector3.zero)
+        Vector3 attackDirection = lastMovementInput.normalized; // Dirección predeterminada (última dirección del jugador)
+
+        // Obtener la dirección hacia el mouse si es un proyectil o jabalina
+        if (weaponType == WeaponType.Projectile || weaponType == WeaponType.Javelin)
         {
-            lastMovementInput = movementInput;
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            attackDirection = (mousePosition - playerPos).normalized;
+            attackDirection.z = 0;
         }
 
-        GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.identity);
-        Debug.Log(weaponName + " atacó.");
+        // Calcular la rotación para que apunte en la dirección correcta
+        float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+
+        // Instanciar el ataque con la rotación correcta
+        GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.Euler(0, 0, angle));
+        Debug.Log(weaponName + " atacó en dirección " + attackDirection);
 
         switch (weaponType)
         {
@@ -79,22 +98,30 @@ public class WeaponData : ScriptableObject
 
             case WeaponType.Projectile:
                 Rigidbody2D rb = attack.GetComponent<Rigidbody2D>();
-                if (rb != null) rb.velocity = (Vector2)lastMovementInput.normalized * 5f;
+                if (rb != null) rb.velocity = attackDirection * projectileSpeed;
                 Destroy(attack, 3f);
                 break;
 
-            case WeaponType.ExpandingWave: // Crucifijo (Onda expansiva)
+            case WeaponType.ExpandingWave:
                 ExpandingWave expandingWave = attack.GetComponent<ExpandingWave>();
                 if (expandingWave != null)
                 {
-                    Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - playerPos).normalized;
-                    direction.z = 0;
-                    expandingWave.Initialize(direction);
+                    expandingWave.Initialize(attackDirection);
                 }
                 else
                 {
                     Debug.LogError("ExpandingWave no encontrado en el Crucifijo.");
                 }
+                break;
+
+            case WeaponType.Javelin: // Lanza Relámpago
+                Rigidbody2D javelinRb = attack.GetComponent<Rigidbody2D>();
+                if (javelinRb != null)
+                {
+                    javelinRb.velocity = attackDirection * projectileSpeed;
+                }
+                attack.transform.right = attackDirection; // Apunta correctamente
+                Destroy(attack, 4f);
                 break;
         }
 

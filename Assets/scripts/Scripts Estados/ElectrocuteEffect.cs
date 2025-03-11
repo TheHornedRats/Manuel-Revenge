@@ -8,16 +8,28 @@ public class ElectrocuteEffect : StatusEffect
 
     protected override void OnEffectStart()
     {
+        // Detectar enemigos en el radio de propagación
         Collider2D[] enemies = Physics2D.OverlapCircleAll(enemyHealth.transform.position, chainRadius, enemyLayer);
+
         foreach (Collider2D enemy in enemies)
         {
-            if (enemy != enemyHealth.gameObject) // No dañar al enemigo original
+            if (enemy.gameObject != enemyHealth.gameObject) // Evitar auto-daño
             {
                 EnemyHealth targetHealth = enemy.GetComponent<EnemyHealth>();
                 if (targetHealth != null)
                 {
-                    targetHealth.TakeDamage((int)chainDamage);
-                    Debug.Log(enemy.name + " recibió daño por electrocución!");
+                    targetHealth.TakeDamage(Mathf.RoundToInt(chainDamage));
+                    Debug.Log($"{enemy.name} recibió daño por electrocución!");
+
+                    // Propagar efecto de electrocución a otros enemigos
+                    if (enemy.GetComponent<ElectrocuteEffect>() == null)
+                    {
+                        ElectrocuteEffect newElectrocute = enemy.gameObject.AddComponent<ElectrocuteEffect>();
+                        newElectrocute.duration = duration;
+                        newElectrocute.chainDamage = chainDamage * 0.7f; // El daño se reduce en cada propagación
+                        newElectrocute.chainRadius = chainRadius;
+                        newElectrocute.enemyLayer = enemyLayer;
+                    }
                 }
             }
         }

@@ -5,8 +5,23 @@ public class SanctifyEffect : StatusEffect
     private float reductionMultiplier = 0.7f; // Reduce el daño del enemigo
     private float healPercentage = 0.1f; // Cura el 10% del daño infligido
 
+    protected override void Update() // Se añade override correctamente si StatusEffect tiene un Update
+    {
+        if (enemyHealth == null)
+        {
+            Debug.Log("[Santificación] El enemigo ha muerto, eliminando efecto.");
+            Destroy(this);
+        }
+    }
+
     protected override void OnEffectStart()
     {
+        if (enemyHealth == null)
+        {
+            Debug.LogWarning("[Santificación] enemyHealth es NULL al iniciar el efecto.");
+            return;
+        }
+
         Debug.Log($"[Santificación] Aplicando efecto en {enemyHealth.name}");
 
         EnemyAttack enemyAttack = enemyHealth.GetComponent<EnemyAttack>();
@@ -37,6 +52,12 @@ public class SanctifyEffect : StatusEffect
 
     protected override void OnEffectEnd()
     {
+        if (enemyHealth == null)
+        {
+            Debug.LogWarning("[Santificación] enemyHealth es NULL al finalizar el efecto.");
+            return;
+        }
+
         Debug.Log($"[Santificación] Finalizando efecto en {enemyHealth.name}");
 
         EnemyAttack enemyAttack = enemyHealth.GetComponent<EnemyAttack>();
