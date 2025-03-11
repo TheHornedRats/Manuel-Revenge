@@ -28,8 +28,7 @@ public class WeaponData : ScriptableObject
 
     private float weaponCooldown;
     private float currentCooldown;
-
-    Vector3 lastMovementInput;
+    private Vector3 lastMovementInput = Vector3.right;
 
     public void InitWeapon(int weaponLevel)
     {
@@ -40,52 +39,34 @@ public class WeaponData : ScriptableObject
         baseCooldown *= cooldownFactor;
 
         weaponCooldown = baseCooldown;
-        currentCooldown = 0; //  Se asegura que el cooldown comienza en 0 al nivel inicial
+        currentCooldown = 0; // Se asegura que el cooldown comienza en 0 al nivel inicial
     }
 
-
-   public void UpdateWeapon(Vector3 playerPosition)
+    public void UpdateWeapon(Vector3 playerPosition)
     {
         if (currentCooldown > 0)
         {
             currentCooldown -= Time.deltaTime;
- 
             return;
         }
-
         PerformAttack(playerPosition);
     }
-
 
     public bool CanAttack()
     {
         return currentCooldown <= 0;
     }
 
-<<<<<<< HEAD
+    public void PerformAttack(Vector3 playerPos)
+    {
+        if (currentCooldown > 0) return;
+
         // Obtener la dirección en la que se mueve el jugador
         Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movementInput != Vector3.zero)
         {
             lastMovementInput = movementInput;
         }
-
-        GameObject attack = Instantiate(attackPrefab, playerPos + lastMovementInput.normalized, Quaternion.identity);
-        WeaponHitbox hitbox = attack.GetComponent<WeaponHitbox>();
-
-        if (hitbox != null)
-        {
-            hitbox.Setup(this);
-        }
-        else
-        {
-            Debug.LogError("WeaponHitbox no encontrado en el prefab de " + weaponName);
-        }
-=======
-    public void PerformAttack(Vector3 playerPos)
-    {
-        if (currentCooldown > 0) return; // Evita ataques múltiples sin cooldown
->>>>>>> origin/Armas
 
         GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.identity);
         Debug.Log(weaponName + " atacó.");
@@ -107,6 +88,7 @@ public class WeaponData : ScriptableObject
                 if (expandingWave != null)
                 {
                     Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - playerPos).normalized;
+                    direction.z = 0;
                     expandingWave.Initialize(direction);
                 }
                 else

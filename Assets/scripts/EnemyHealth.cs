@@ -2,37 +2,39 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int health = 100;
-    public int damage;
+    public int maxHealth = 100;
+    private int currentHealth;
     public int puntuacion;
-
     public GameObject xpPrefab;
-    //public GameObject xp10Prefab;
-    //public GameObject xp20Prefab;
     public float dropRange = 1.0f;
-    bool isDead = false;
+    private bool isDead = false;
 
-    void Start()
+    private void Start()
     {
-
+        currentHealth = maxHealth;
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Atack")
-        {
-            TakeDamage(damage);
-        }
-    }
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        Debug.Log(name + " sufrió " + damage + " de daño. Salud restante: " + health);
+        currentHealth -= damage;
+        Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
 
-        if (health <= 0 && !isDead)
+        // Si el enemigo tiene Santificación, curar al jugador
+        SanctifyEffect sanctifyEffect = GetComponent<SanctifyEffect>();
+        if (sanctifyEffect != null)
+        {
+            HealPlayer(damage);
+        }
+
+        if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
+    }
+
+    public int GetHealth() // Método público para acceder a la salud actual
+    {
+        return currentHealth;
     }
 
     private void Die()
@@ -40,22 +42,30 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log(name + " ha muerto.");
         isDead = true;
 
-
         DropXPItems();
-
         Destroy(gameObject);
         ScoreManager.instance.AddScore(5);
     }
 
     private void DropXPItems()
     {
-        Vector3 dropPosition1 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
-       // Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
-       // Vector3 dropPosition3 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.2f);
+        Vector3 dropPosition = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
+        Instantiate(xpPrefab, dropPosition, Quaternion.identity);
+    }
 
-        // Instanciar los objetos de XP en posiciones aleatorias
-        Instantiate(xpPrefab, dropPosition1 , Quaternion.identity);
-        //Instantiate(xp10Prefab, dropPosition2, Quaternion.identity);
-        //Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
+    private void HealPlayer(int damageDealt)
+    {
+        float healPercentage = 0.1f;
+        int healAmount = Mathf.RoundToInt(damageDealt * healPercentage);
+
+        if (healAmount > 0)
+        {
+            PlayerHealth player = FindObjectOfType<PlayerHealth>();
+            if (player != null)
+            {
+                player.Heal(healAmount);
+                Debug.Log($"El jugador se cura {healAmount} de vida gracias a la Santificación.");
+            }
+        }
     }
 }

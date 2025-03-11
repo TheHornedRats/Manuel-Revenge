@@ -12,7 +12,7 @@ public class BurnEffect : StatusEffect
 
     private int ticksApplied = 0;
     private float tickInterval;
-    private float burnElapsedTime = 0f; // Renombrado para evitar conflictos con StatusEffect
+    private float burnElapsedTime = 0f;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class BurnEffect : StatusEffect
         tickInterval = duration / tickCount;
     }
 
-    protected override void Update() // Se añade override correctamente
+    protected override void Update()
     {
         if (enemyHealth == null)
         {
@@ -38,10 +38,10 @@ public class BurnEffect : StatusEffect
         {
             enemyHealth.TakeDamage(Mathf.RoundToInt(damagePerSecond));
             ticksApplied++;
-            Debug.Log($"{enemyHealth.name} recibe daño de fuego. Vida restante: {enemyHealth.GetCurrentHealth()}");
+            Debug.Log($"{enemyHealth.name} recibe daño de fuego. Vida restante: {enemyHealth.GetHealth()}");
 
             SpreadFire();
-            burnElapsedTime = 0f; // Reiniciar el temporizador
+            burnElapsedTime = 0f;
         }
 
         if (ticksApplied >= tickCount)
