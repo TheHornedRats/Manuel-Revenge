@@ -187,8 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78857a5f2308fc44988c7516f484fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
+  maxHealth: 100
   puntuacion: 0
   xp5Prefab: {fileID: 1785084165971269622, guid: 41ec522568104394597ec504faa84723, type: 3}
   xp10Prefab: {fileID: 1785084165971269622, guid: aa1f316760e09434cb2b2919c06e4ec4, type: 3}

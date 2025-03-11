@@ -14,7 +14,11 @@ public class ScoreManager : MonoBehaviour
     public float levelMultiplier = 1.2f;
 
     public TextMeshProUGUI scoreText;
+<<<<<<< Updated upstream
     public TextMeshProUGUI scoreTextFinal;
+=======
+    public TextMeshProUGUI finalScoreText;
+>>>>>>> Stashed changes
     public TextMeshProUGUI levelText;
     public PlayerAttack playerAttack;
 
@@ -95,10 +99,15 @@ public class ScoreManager : MonoBehaviour
         else
             Debug.LogWarning("LevelText no asignado en el Inspector.");
 
+<<<<<<< Updated upstream
         //puntuacion final
 
         if (scoreTextFinal != null)
             scoreTextFinal.text = "PUNTUACIÓN FINAL: " + score;
+=======
+        if (finalScoreText != null)
+            finalScoreText.text = "Puntuación: " + score;
+>>>>>>> Stashed changes
         else
             Debug.LogWarning("ScoreText no asignado en el Inspector.");
     }
