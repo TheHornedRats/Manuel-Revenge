@@ -29,12 +29,15 @@ public class WeaponHandler : MonoBehaviour
 
     private void Update()
     {
-        foreach (WeaponData weapon in weapons)
+        foreach (WeaponData weaponData in weapons)
         {
-            if (weapon != null)
+            if (weaponData != null)
             {
-                weapon.UpdateWeapon(transform.position);
+                weaponData.UpdateWeapon(transform.position);
             }
         }
     }
+
+
+
 }

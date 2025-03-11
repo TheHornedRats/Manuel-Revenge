@@ -1,20 +1,18 @@
 using UnityEngine;
 
-public enum WeaponType
-{
-    Melee,
-    Projectile
-}
+public enum WeaponType { Melee, Projectile, ExpandingWave }
 
-[CreateAssetMenu(fileName = "NewWeapon", menuName = "Weapons/Weapon Data")]
+[CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/WeaponData")]
 public class WeaponData : ScriptableObject
 {
     [Header("Información del Arma")]
     public string weaponName;
     public WeaponType weaponType;
-    public float baseDamage;
-    public float baseCooldown;
     public GameObject attackPrefab;
+
+    [Header("Estadísticas del Arma")]
+    public float baseDamage = 10f;
+    public float baseCooldown = 1f;
 
     [Header("Evolución del Arma")]
     public int maxLevel = 5;
@@ -35,32 +33,36 @@ public class WeaponData : ScriptableObject
 
     public void InitWeapon(int weaponLevel)
     {
-        baseDamage *= Mathf.Pow(damageIncreasePerLevel, weaponLevel - 1);
-        baseCooldown *= Mathf.Pow(cooldownReductionPerLevel, weaponLevel - 1);
+        float damageFactor = Mathf.Pow(damageIncreasePerLevel, weaponLevel - 1);
+        float cooldownFactor = Mathf.Pow(cooldownReductionPerLevel, weaponLevel - 1);
+
+        baseDamage *= damageFactor;
+        baseCooldown *= cooldownFactor;
+
         weaponCooldown = baseCooldown;
-        currentCooldown = 0;
+        currentCooldown = 0; //  Se asegura que el cooldown comienza en 0 al nivel inicial
     }
 
-    public void UpdateWeapon(Vector3 playerPosition)
+
+   public void UpdateWeapon(Vector3 playerPosition)
     {
         if (currentCooldown > 0)
         {
             currentCooldown -= Time.deltaTime;
+ 
             return;
         }
 
         PerformAttack(playerPosition);
-        currentCooldown = weaponCooldown;
     }
 
-    void PerformAttack(Vector3 playerPos)
-    {
-        if (attackPrefab == null)
-        {
-            Debug.LogWarning("No hay prefab asignado para " + weaponName);
-            return;
-        }
 
+    public bool CanAttack()
+    {
+        return currentCooldown <= 0;
+    }
+
+<<<<<<< HEAD
         // Obtener la dirección en la que se mueve el jugador
         Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movementInput != Vector3.zero)
@@ -79,7 +81,13 @@ public class WeaponData : ScriptableObject
         {
             Debug.LogError("WeaponHitbox no encontrado en el prefab de " + weaponName);
         }
+=======
+    public void PerformAttack(Vector3 playerPos)
+    {
+        if (currentCooldown > 0) return; // Evita ataques múltiples sin cooldown
+>>>>>>> origin/Armas
 
+        GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.identity);
         Debug.Log(weaponName + " atacó.");
 
         switch (weaponType)
@@ -87,11 +95,27 @@ public class WeaponData : ScriptableObject
             case WeaponType.Melee:
                 Destroy(attack, 0.3f);
                 break;
+
             case WeaponType.Projectile:
                 Rigidbody2D rb = attack.GetComponent<Rigidbody2D>();
                 if (rb != null) rb.velocity = (Vector2)lastMovementInput.normalized * 5f;
                 Destroy(attack, 3f);
                 break;
+
+            case WeaponType.ExpandingWave: // Crucifijo (Onda expansiva)
+                ExpandingWave expandingWave = attack.GetComponent<ExpandingWave>();
+                if (expandingWave != null)
+                {
+                    Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - playerPos).normalized;
+                    expandingWave.Initialize(direction);
+                }
+                else
+                {
+                    Debug.LogError("ExpandingWave no encontrado en el Crucifijo.");
+                }
+                break;
         }
+
+        currentCooldown = baseCooldown; // Reiniciar cooldown
     }
 }
