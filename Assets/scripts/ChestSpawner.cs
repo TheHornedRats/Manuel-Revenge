@@ -6,17 +6,17 @@ using TMPro;
 
 public class ChestSpawner : MonoBehaviour
 {
-    public GameObject chestPrefab;              // Prefab del cofre
-    public Transform player;                   // Referencia al transform del jugador
-    public float spawnInterval = 10f;          // Intervalo de aparición en segundos
-    public float minDistance = 30f;            // Distancia mínima para spawnear el cofre
-    public float maxDistance = 60f;            // Distancia máxima para spawnear el cofre
+    public GameObject chestPrefab;
+    public Transform player;
+    public float spawnInterval = 10f;
+    public float minDistance = 30f;
+    public float maxDistance = 60f;
 
-    public Buffs buffsManager;                 // Referencia directa al script Buffs
+    public Buffs buffsManager;
 
-    public GameObject pauseMenuUI;             // Panel para mostrar los botones
-    public Button[] optionButtons;             // Botones para seleccionar buffs
-    public TextMeshProUGUI[] optionTexts;      // Textos para los botones de buffs
+    public GameObject pauseMenuUI;
+    public Button[] optionButtons;
+    public TextMeshProUGUI[] optionTexts;
 
     private bool isPaused = false;
     private Collider2D currentChest;
@@ -28,13 +28,10 @@ public class ChestSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && currentChest != null)
         {
-            if (currentChest != null)
-            {
-                Debug.Log("Has abierto el cofre");
-                PauseGameWithOptions();
-            }
+            Debug.Log("Has abierto el cofre");
+            OpenChest();
         }
     }
 
@@ -69,7 +66,7 @@ public class ChestSpawner : MonoBehaviour
         Instantiate(chestPrefab, spawnPosition, Quaternion.identity);
     }
 
-    void PauseGameWithOptions()
+    void OpenChest()
     {
         if (buffsManager == null)
         {
@@ -80,7 +77,6 @@ public class ChestSpawner : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         pauseMenuUI.SetActive(true);
-
         buffsManager.ShowBuffOptions();
     }
 
@@ -91,5 +87,3 @@ public class ChestSpawner : MonoBehaviour
         pauseMenuUI.SetActive(false);
     }
 }
-
-
