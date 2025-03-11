@@ -2904,7 +2904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab1: {fileID: 6552913883591398799, guid: 85569bc9cf071f24d9b1d23f7046df78, type: 3}
   enemyPrefab2: {fileID: 6552913883591398799, guid: a931dbc30e49d1e4b9438193ce223285, type: 3}
-  enemyPrefab3: {fileID: 6552913883591398799, guid: 2b0b7bffdd1a39447a084a8f193ae90d, type: 3}
+  enemyPrefab3: {fileID: 6552913883591398799, guid: 0d64c51af7da8a24f92d84d494c2a1e5, type: 3}
   player: {fileID: 3672655057767452113}
   spawnRadius: 20
   initialSpawnInterval: 5
@@ -3299,7 +3299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.052469466, y: 0.08386916}
   m_AnchorMax: {x: 0.29500002, y: 0.91973835}
-  m_AnchoredPosition: {x: 1, y: -1}
+  m_AnchoredPosition: {x: 1, y: -0.99998474}
   m_SizeDelta: {x: 2.0662842, y: -0.88020325}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1214184532
