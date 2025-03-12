@@ -45,6 +45,8 @@ public class EnemyHealth : MonoBehaviour
         isDead = true;
 
         DropXPItems();
+        Debug.Log("Intentando destruir " + name);
+
         Destroy(gameObject);
         ScoreManager.instance.AddScore(5);
     }

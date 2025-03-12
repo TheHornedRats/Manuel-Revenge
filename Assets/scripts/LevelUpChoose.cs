@@ -22,6 +22,8 @@ public class LevelUpChoose : MonoBehaviour
     public Image img2;
     public Image img3;
 
+    public List<Sprite> weaponImages; // Asignar en el Inspector
+
     private List<string> weapons = new List<string> { "Arma 1", "Arma 2", "Arma 3", "Arma 4", "Arma 5" };
     private List<string> descriptions = new List<string>
     {
@@ -32,7 +34,7 @@ public class LevelUpChoose : MonoBehaviour
         "Descripción de Arma 5"
     };
 
-    public List<Sprite> weaponImages; // Asignar en el Inspector
+    public AudioSource audioSource; // Referencia al AudioSource
 
     void Start()
     {
@@ -44,6 +46,11 @@ public class LevelUpChoose : MonoBehaviour
         AssignRandomWeapons(); // Asigna los textos e imágenes antes de mostrar el panel
         panel.SetActive(true);
         Time.timeScale = 0; // Pausa el juego si es necesario
+
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Reproduce el sonido
+        }
     }
 
     public void ClosePanel()
