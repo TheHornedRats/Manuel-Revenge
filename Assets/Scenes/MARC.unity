@@ -3114,6 +3114,7 @@ MonoBehaviour:
   enemyPrefab1: {fileID: 6552913883591398799, guid: 85569bc9cf071f24d9b1d23f7046df78, type: 3}
   enemyPrefab2: {fileID: 6552913883591398799, guid: a931dbc30e49d1e4b9438193ce223285, type: 3}
   enemyPrefab3: {fileID: 6552913883591398799, guid: 0d64c51af7da8a24f92d84d494c2a1e5, type: 3}
+  enemyPrefab4: {fileID: 6552913883591398799, guid: 4620e40f6e4eb87479d471592ed56421, type: 3}
   player: {fileID: 3672655057767452113}
   spawnRadius: 20
   initialSpawnInterval: 5
@@ -5433,7 +5434,7 @@ MonoBehaviour:
   score: 0
   level: 1
   pointsPerLevel: 300
-  levelMultiplier: 1.2
+  levelMultiplier: 4
   scoreText: {fileID: 439723843}
   levelText: {fileID: 1631031734}
   playerAttack: {fileID: 0}
@@ -5763,7 +5764,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1747017032}
-  maxExp: 300
 --- !u!1 &1752456073
 GameObject:
   m_ObjectHideFlags: 0
