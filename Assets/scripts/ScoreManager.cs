@@ -11,9 +11,10 @@ public class ScoreManager : MonoBehaviour
     public int score = 0;
     public int level = 1;
     public int pointsPerLevel = 100;
-    public float levelMultiplier = 2f;
+    public float levelMultiplier = 1.4f;
 
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI levelText;
     public PlayerAttack playerAttack;
 
@@ -92,5 +93,10 @@ public class ScoreManager : MonoBehaviour
             levelText.text = "Nivel: " + level;
         else
             Debug.LogWarning("LevelText no asignado en el Inspector.");
+
+        if (finalScoreText != null)
+            finalScoreText.text = "Puntuación: " + score;
+        else
+            Debug.LogWarning("ScoreText no asignado en el Inspector.");
     }
 }

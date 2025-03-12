@@ -71,6 +71,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         Time.timeScale = 0f; // Detiene el tiempo
+        Camera.main.transform.SetParent(null);
         gameObject.SetActive(false); // Desactiva al jugador (puedes modificar esto si prefieres destruirlo)
     }
 }

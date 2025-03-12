@@ -1,9 +1,10 @@
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI; // Necesario para usar UI
 
 public class SurvivalTimer : MonoBehaviour
 {
-    public Text timerText; // Referencia al texto UI
+    public TextMeshProUGUI timerText; // Referencia al texto UI
     public GameObject player; // Referencia al jugador
     private float survivalTime = 0f;
     private bool isRunning = true;
