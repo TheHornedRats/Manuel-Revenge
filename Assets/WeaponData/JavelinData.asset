@@ -15,9 +15,11 @@ MonoBehaviour:
   weaponName: Javelin
   weaponType: 3
   attackPrefab: {fileID: 7755434435846515150, guid: dc1b73674b3005a42a4e9702a40d0a17, type: 3}
+  explosionEffectPrefab: {fileID: 0}
   baseDamage: 50
   baseCooldown: 5
-  projectileSpeed: 200
+  projectileSpeed: 15
+  explosionRadius: 2
   maxLevel: 5
   damageIncreasePerLevel: 1.2
   cooldownReductionPerLevel: 0.9
@@ -26,4 +28,4 @@ MonoBehaviour:
   statusEffectDuration: 5
   statusEffectDamage: 1
   statusEffectTicks: 2
-  knockbackForce: 200
+  knockbackForce: 5
