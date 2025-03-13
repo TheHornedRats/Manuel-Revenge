@@ -22,6 +22,11 @@ public class LevelUpChoose : MonoBehaviour
     public Image img2;
     public Image img3;
 
+    // Referencias a los botones dentro del panel
+    public Button button1;
+    public Button button2;
+    public Button button3;
+
     public List<Sprite> weaponImages; // Asignar en el Inspector
 
     private List<string> weapons = new List<string> { "Arma 1", "Arma 2", "Arma 3", "Arma 4", "Arma 5" };
@@ -34,7 +39,11 @@ public class LevelUpChoose : MonoBehaviour
         "Descripción de Arma 5"
     };
 
+    private List<int> selectedWeaponIndexes = new List<int>(); // Almacena los índices de las armas seleccionadas
+
     public AudioSource audioSource; // Referencia al AudioSource
+
+    public WeaponActivator weaponActivator; // Referencia al script WeaponActivator
 
     void Start()
     {
@@ -51,6 +60,9 @@ public class LevelUpChoose : MonoBehaviour
         {
             audioSource.Play(); // Reproduce el sonido
         }
+
+        // Asigna las funcionalidades a los botones
+        AssignFunctionsToButtons();
     }
 
     public void ClosePanel()
@@ -59,29 +71,52 @@ public class LevelUpChoose : MonoBehaviour
         Time.timeScale = 1; // Reanuda el juego
     }
 
+    // Asigna armas aleatorias a los botones
     void AssignRandomWeapons()
     {
         List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4 };
-        List<int> selectedIndexes = new List<int>();
+        selectedWeaponIndexes.Clear(); // Limpiar la lista de índices seleccionados
 
         for (int i = 0; i < 3; i++)
         {
             int randomIndex = Random.Range(0, availableIndexes.Count);
-            selectedIndexes.Add(availableIndexes[randomIndex]);
+            selectedWeaponIndexes.Add(availableIndexes[randomIndex]);
             availableIndexes.RemoveAt(randomIndex);
         }
 
         // Asigna los valores aleatorios a los textos, descripciones e imágenes
-        text1.text = weapons[selectedIndexes[0]];
-        text2.text = weapons[selectedIndexes[1]];
-        text3.text = weapons[selectedIndexes[2]];
+        text1.text = weapons[selectedWeaponIndexes[0]];
+        text2.text = weapons[selectedWeaponIndexes[1]];
+        text3.text = weapons[selectedWeaponIndexes[2]];
 
-        desc1.text = descriptions[selectedIndexes[0]];
-        desc2.text = descriptions[selectedIndexes[1]];
-        desc3.text = descriptions[selectedIndexes[2]];
+        desc1.text = descriptions[selectedWeaponIndexes[0]];
+        desc2.text = descriptions[selectedWeaponIndexes[1]];
+        desc3.text = descriptions[selectedWeaponIndexes[2]];
 
-        img1.sprite = weaponImages[selectedIndexes[0]];
-        img2.sprite = weaponImages[selectedIndexes[1]];
-        img3.sprite = weaponImages[selectedIndexes[2]];
+        img1.sprite = weaponImages[selectedWeaponIndexes[0]];
+        img2.sprite = weaponImages[selectedWeaponIndexes[1]];
+        img3.sprite = weaponImages[selectedWeaponIndexes[2]];
+    }
+
+    // Asigna las funciones correspondientes a los botones
+    void AssignFunctionsToButtons()
+    {
+        // Asigna a cada botón la función correspondiente a su índice
+        button1.onClick.RemoveAllListeners();
+        button2.onClick.RemoveAllListeners();
+        button3.onClick.RemoveAllListeners();
+
+        button1.onClick.AddListener(() => HandleButtonFunction(0)); // Asocia el índice 0 al primer botón
+        button2.onClick.AddListener(() => HandleButtonFunction(1)); // Asocia el índice 1 al segundo botón
+        button3.onClick.AddListener(() => HandleButtonFunction(2)); // Asocia el índice 2 al tercer botón
+    }
+
+    // Función que se llama cuando un botón es presionado
+    void HandleButtonFunction(int index)
+    {
+        if (index < 0 || index >= selectedWeaponIndexes.Count) return;
+
+        // Llama al método de WeaponActivator para activar el prefab correspondiente
+        weaponActivator.ActivateWeapon(selectedWeaponIndexes[index]);
     }
 }
