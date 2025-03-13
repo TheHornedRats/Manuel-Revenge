@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class BurnEffect : StatusEffect
 {
-    public GameObject fireEffectPrefab;
+    public GameObject fireEffectPrefab; // Prefab visual del fuego
     private GameObject fireEffectInstance;
 
     public float damagePerSecond = 3f;
     public int tickCount = 5;
     public float spreadRadius = 1.5f;
-    public float spreadChance = 1f;
+    public float spreadChance = 0.3f;
 
     private int ticksApplied = 0;
     private float tickInterval;
@@ -28,7 +28,7 @@ public class BurnEffect : StatusEffect
     {
         if (enemyHealth == null)
         {
-            Destroy(this);
+            DestroyEffect();
             return;
         }
 
@@ -38,7 +38,7 @@ public class BurnEffect : StatusEffect
         {
             enemyHealth.TakeDamage(Mathf.RoundToInt(damagePerSecond));
             ticksApplied++;
-            Debug.Log($"{enemyHealth.name} recibe daño de fuego. Vida restante: {enemyHealth.GetHealth()}");
+            Debug.Log($"{enemyHealth.name} recibe daño de fuego. Vida restante: {enemyHealth.GetCurrentHealth()}");
 
             SpreadFire();
             burnElapsedTime = 0f;
@@ -46,8 +46,7 @@ public class BurnEffect : StatusEffect
 
         if (ticksApplied >= tickCount)
         {
-            Destroy(fireEffectInstance);
-            Destroy(this);
+            DestroyEffect();
         }
     }
 
@@ -72,5 +71,14 @@ public class BurnEffect : StatusEffect
                 }
             }
         }
+    }
+
+    private void DestroyEffect()
+    {
+        if (fireEffectInstance != null)
+        {
+            Destroy(fireEffectInstance);
+        }
+        Destroy(this);
     }
 }

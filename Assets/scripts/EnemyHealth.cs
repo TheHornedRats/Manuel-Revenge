@@ -34,7 +34,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public int GetHealth() // Método público para acceder a la salud actual
+    public int GetCurrentHealth() // Se renombra para que coincida con el llamado en BurnEffect.cs
     {
         return currentHealth;
     }

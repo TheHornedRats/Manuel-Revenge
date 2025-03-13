@@ -41,11 +41,36 @@ public class WeaponHitbox : MonoBehaviour
                 }
             }
 
-            if (weaponData.weaponType == WeaponType.Javelin)
+            if (weaponData.weaponType == WeaponType.Javelin || weaponData.weaponType == WeaponType.Projectile)
             {
-                Destroy(gameObject); // La jabalina desaparece tras impactar
+                Explode();
             }
         }
+    }
+
+    private void Explode()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, weaponData.explosionRadius);
+
+        foreach (Collider2D enemy in enemies)
+        {
+            if (enemy.CompareTag("Enemy"))
+            {
+                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(Mathf.RoundToInt(weaponData.baseDamage));
+                    ApplyStatusEffect(enemyHealth);
+                }
+            }
+        }
+
+        if (weaponData.explosionEffectPrefab != null)
+        {
+            Instantiate(weaponData.explosionEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+        Destroy(gameObject);
     }
 
     private void ApplyStatusEffect(EnemyHealth enemy)
@@ -94,13 +119,12 @@ public class WeaponHitbox : MonoBehaviour
                 {
                     ElectrocuteEffect electrocute = enemy.gameObject.AddComponent<ElectrocuteEffect>();
                     electrocute.duration = weaponData.statusEffectDuration;
-                    electrocute.chainDamage = weaponData.statusEffectDamage; // Se usa chainDamage en lugar de damagePerSecond
+                    electrocute.chainDamage = weaponData.statusEffectDamage;
                     electrocute.chainRadius = 3f;
-                    electrocute.enemyLayer = LayerMask.GetMask("Enemy"); // Asegurar que afecta solo a enemigos
+                    electrocute.enemyLayer = LayerMask.GetMask("Enemy");
                     Debug.Log($"{enemy.name} ha sido electrocutado y puede propagar el daño!");
                 }
                 break;
-
         }
     }
 }
