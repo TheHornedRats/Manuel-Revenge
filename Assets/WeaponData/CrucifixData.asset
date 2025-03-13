@@ -15,8 +15,11 @@ MonoBehaviour:
   weaponName: Crucifijo
   weaponType: 2
   attackPrefab: {fileID: 7755434435846515150, guid: 640738e2788d40f41a3485fef96cd1b8, type: 3}
+  explosionEffectPrefab: {fileID: 0}
   baseDamage: 15
   baseCooldown: 1.5
+  projectileSpeed: 8
+  explosionRadius: 2
   maxLevel: 5
   damageIncreasePerLevel: 1.2
   cooldownReductionPerLevel: 0.9
@@ -24,4 +27,5 @@ MonoBehaviour:
   statusEffect: "Santificaci\xF3n"
   statusEffectDuration: 5
   statusEffectDamage: 0
-  statusEffectTicks: 0
+  statusEffectTicks: 5
+  knockbackForce: 0

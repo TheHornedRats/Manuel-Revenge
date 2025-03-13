@@ -4,9 +4,9 @@ public abstract class StatusEffect : MonoBehaviour
 {
     public float duration;            // Duración total del efecto
     protected EnemyHealth enemyHealth;
-    protected float elapsedTime = 0f; // Tiempo transcurrido desde que el estado se aplicó
+    protected float elapsedTime = 0f; // Tiempo transcurrido desde que se aplicó el efecto
 
-    // Referencia al sistema de partículas creado dinámicamente
+    // Variable para almacenar el ParticleSystem creado por código
     protected ParticleSystem effectParticles;
 
     public void ApplyEffect(EnemyHealth target)
@@ -14,16 +14,41 @@ public abstract class StatusEffect : MonoBehaviour
         enemyHealth = target;
         OnEffectStart();       // Lógica inicial del efecto
 
-        // Crear el sistema de partículas por defecto
+        // Crear el sistema de partículas de forma dinámica
         CreateParticleSystem();
+    }
+
+    protected virtual void CreateParticleSystem()
+    {
+        // Creamos un GameObject para las partículas y lo hacemos hijo del enemigo
+        GameObject psObject = new GameObject($"{this.GetType().Name}_Particles");
+        psObject.transform.SetParent(enemyHealth.transform, false);
+
+        // Agregamos un ParticleSystem
+        effectParticles = psObject.AddComponent<ParticleSystem>();
+
+        // Configuramos el módulo Main del ParticleSystem
+        var mainModule = effectParticles.main;
+        mainModule.duration = duration;
+        mainModule.loop = false;             // No se repite indefinidamente
+        mainModule.playOnAwake = false;      // No comienza automáticamente
+        mainModule.startColor = Color.white; // Color base (puedes cambiarlo o sobrescribirlo en cada efecto)
+        mainModule.startSize = 0.5f;         // Tamaño de las partículas
+
+        // Opcional: configura la emisión
+        var emissionModule = effectParticles.emission;
+        emissionModule.rateOverTime = 10f;
+
+        // Inicia la emisión
+        effectParticles.Play();
     }
 
     protected virtual void Update()
     {
         elapsedTime += Time.deltaTime;
-        OnEffectUpdate(); // Lógica que corre cada frame
+        OnEffectUpdate();
 
-        // Si el efecto finaliza, destruimos el sistema de partículas y este componente
+        // Si el efecto ha durado lo suficiente, finaliza y destruye el ParticleSystem
         if (elapsedTime >= duration)
         {
             OnEffectEnd();
@@ -35,32 +60,7 @@ public abstract class StatusEffect : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Crea y configura un sistema de partículas genérico.
-    /// Se puede sobrescribir en cada efecto para personalizarlo.
-    /// </summary>
-    protected virtual void CreateParticleSystem()
-    {
-        // Creamos un GameObject para las partículas y lo hacemos hijo del enemigo
-        GameObject psObject = new GameObject($"{this.GetType().Name}_Particles");
-        psObject.transform.SetParent(enemyHealth.transform, false);
-
-        // Agregamos el componente ParticleSystem
-        effectParticles = psObject.AddComponent<ParticleSystem>();
-
-        // Configuración básica del módulo "Main"
-        var mainModule = effectParticles.main;
-        mainModule.duration = duration;       // Dura lo mismo que el efecto
-        mainModule.loop = false;             // No se repite indefinidamente
-        mainModule.playOnAwake = false;      // No empieza hasta que llamemos a Play()
-        mainModule.startColor = Color.red; // Color base (puedes ajustarlo)
-        mainModule.startSize = 1f;         // Tamaño inicial de las partículas
-
-        // Llamamos a Play() para que empiece a emitir
-        effectParticles.Play();
-    }
-
-    // Métodos virtuales que los efectos específicos pueden sobrescribir
+    // Métodos virtuales para que cada efecto pueda sobrescribir su comportamiento
     protected virtual void OnEffectStart() { }
     protected virtual void OnEffectUpdate() { }
     protected virtual void OnEffectEnd() { }

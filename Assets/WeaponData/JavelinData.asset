@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponType: 3
   attackPrefab: {fileID: 7755434435846515150, guid: dc1b73674b3005a42a4e9702a40d0a17, type: 3}
   explosionEffectPrefab: {fileID: 0}
-  baseDamage: 50
+  baseDamage: 12
   baseCooldown: 5
   projectileSpeed: 30
   explosionRadius: 2
@@ -24,7 +24,7 @@ MonoBehaviour:
   damageIncreasePerLevel: 1.2
   cooldownReductionPerLevel: 0.9
   appliesStatusEffect: 1
-  statusEffect: "Electrificaci\xF3n"
+  statusEffect: "Electrocuci\xF3n"
   statusEffectDuration: 5
   statusEffectDamage: 1
   statusEffectTicks: 2

@@ -2,6 +2,17 @@ using UnityEngine;
 
 public class BleedEffect : StatusEffect
 {
+   
+        protected override void CreateParticleSystem()
+        {
+            // Llama al método base para crear el sistema
+            base.CreateParticleSystem();
+            // Cambia el color a rojo
+            var main = effectParticles.main;
+            main.startColor = Color.magenta;
+        }
+  
+
     public float damagePerSecond;
     public int tickCount;
     private float tickInterval;

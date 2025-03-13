@@ -90,31 +90,30 @@ public class WeaponHitbox : MonoBehaviour
                 break;
 
             case "Electrocución":
+                if (enemy.GetComponent<ElectrocuteEffect>() == null)
                 {
-                    ElectrocuteEffect electrocute = enemy.GetComponent<ElectrocuteEffect>();
-                    if (electrocute == null)
-                    {
-                        electrocute = enemy.gameObject.AddComponent<ElectrocuteEffect>();
-                    }
+                    ElectrocuteEffect electrocute = enemy.gameObject.AddComponent<ElectrocuteEffect>();
                     electrocute.duration = weaponData.statusEffectDuration;
                     electrocute.chainDamage = weaponData.statusEffectDamage;
                     electrocute.chainRadius = 3f;
                     electrocute.enemyLayer = LayerMask.GetMask("Enemy");
+                    electrocute.ApplyEffect(enemy); // ¡Importante para crear el ParticleSystem!
                 }
                 break;
 
+
             case "Santificación":
                 {
-                    SanctifyEffect sanctifyEffect = enemy.GetComponent<SanctifyEffect>();
-                    if (sanctifyEffect == null)
+                    SanctifyEffect existingEffect = enemy.GetComponent<SanctifyEffect>();
+                    if (existingEffect == null)
                     {
-                        sanctifyEffect = enemy.gameObject.AddComponent<SanctifyEffect>();
+                        existingEffect = enemy.gameObject.AddComponent<SanctifyEffect>();
+                        existingEffect.duration = weaponData.statusEffectDuration;
+                        existingEffect.ApplyEffect(enemy);
                     }
-                    sanctifyEffect.duration = weaponData.statusEffectDuration;
-                    // Llamamos a ApplyEffect para asegurarnos de que se inicialice correctamente (por ejemplo, para crear partículas)
-                    sanctifyEffect.ApplyEffect(enemy);
                 }
                 break;
+
         }
     }
 

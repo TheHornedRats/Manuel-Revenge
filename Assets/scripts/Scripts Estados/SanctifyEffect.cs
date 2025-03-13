@@ -2,32 +2,50 @@ using UnityEngine;
 
 public class SanctifyEffect : StatusEffect
 {
-    // Multiplicador para reducir el daño del enemigo (70% del original)
+    // Multiplicador para reducir el daño del enemigo
     private float reductionMultiplier = 0.7f;
-    // Porcentaje de curación para el jugador (10% del daño recibido)
+    // Porcentaje de curación para el jugador
     private float healPercentage = 0.1f;
     // Almacenamos el daño original para restaurarlo al finalizar el efecto
     private int originalDamage = -1;
 
-    protected override void OnEffectStart()
+    /// <summary>
+    /// Sobrescribimos CreateParticleSystem para asignar un color y material específico.
+    /// </summary>
+    protected override void CreateParticleSystem()
     {
-        if (enemyHealth == null)
+        // Llama al método base que crea el GameObject y el ParticleSystem
+        base.CreateParticleSystem();
+
+        // Cambia el color de inicio a algo distintivo, por ejemplo, amarillo
+        var main = effectParticles.main;
+        main.startColor = Color.yellow;
+
+        // Asegúrate de asignar un material válido para partículas
+        ParticleSystemRenderer psRenderer = effectParticles.GetComponent<ParticleSystemRenderer>();
+        if (psRenderer != null)
         {
-            Debug.LogError("[Santificación] enemyHealth es NULL al iniciar el efecto.");
-            Destroy(this);
-            return;
+            // Creamos un material en runtime con un shader de partículas
+            Material runtimeMat = new Material(Shader.Find("Particles/Standard Unlit"));
+            psRenderer.material = runtimeMat;
+
+            // Opcional: Ajustar la capa de sorting si estás en 2D
+            psRenderer.sortingLayerName = "Default";
+            psRenderer.sortingOrder = 20;
         }
 
-        Debug.Log($"[Santificación] Aplicando efecto en {enemyHealth.name}");
+        Debug.Log("[Santificación] Particle System creado y configurado.");
+    }
 
+    protected override void OnEffectStart()
+    {
+        // Lógica de reducción de daño del enemigo
         EnemyAttack enemyAttack = enemyHealth.GetComponent<EnemyAttack>();
         if (enemyAttack != null)
         {
-            // Almacenamos el daño original solo la primera vez
             if (originalDamage < 0)
-            {
                 originalDamage = enemyAttack.damage;
-            }
+
             enemyAttack.damage = Mathf.RoundToInt(originalDamage * reductionMultiplier);
             Debug.Log($"{enemyHealth.name} ha sido santificado. Daño reducido a {enemyAttack.damage}");
         }
@@ -37,7 +55,9 @@ public class SanctifyEffect : StatusEffect
         }
     }
 
-    // Se invoca desde EnemyHealth cada vez que el enemigo recibe daño
+    /// <summary>
+    /// Se llama desde EnemyHealth cuando el enemigo recibe daño.
+    /// </summary>
     public void HealPlayer(int damageDealt)
     {
         if (damageDealt <= 0) return;
@@ -60,19 +80,12 @@ public class SanctifyEffect : StatusEffect
 
     protected override void OnEffectEnd()
     {
-        if (enemyHealth == null)
-        {
-            Debug.LogError("[Santificación] enemyHealth es NULL al finalizar el efecto.");
-            return;
-        }
-
-        Debug.Log($"[Santificación] Finalizando efecto en {enemyHealth.name}");
-
+        // Restaurar el daño original
         EnemyAttack enemyAttack = enemyHealth.GetComponent<EnemyAttack>();
         if (enemyAttack != null && originalDamage > 0)
         {
             enemyAttack.damage = originalDamage;
-            Debug.Log($"{enemyHealth.name} ha recuperado su fuerza a {originalDamage} de daño.");
+            Debug.Log($"{enemyHealth.name} ha recuperado su daño original: {originalDamage}");
         }
     }
 }
