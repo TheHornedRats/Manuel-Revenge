@@ -8,7 +8,7 @@ public class WeaponHitbox : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.LogError($"WeaponData es NULL en {gameObject.name}. Asegúrate de asignarlo en el prefab.");
+            Debug.LogError($"WeaponData es NULL en {gameObject.name}.");
             return;
         }
         weaponData = data;
@@ -24,6 +24,9 @@ public class WeaponHitbox : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
+            // Destruir el proyectil inmediatamente al colisionar
+            Destroy(gameObject);
+
             EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
             Rigidbody2D enemyRb = collision.GetComponent<Rigidbody2D>();
 
@@ -31,53 +34,29 @@ public class WeaponHitbox : MonoBehaviour
             {
                 enemyHealth.TakeDamage(Mathf.RoundToInt(weaponData.baseDamage));
                 ApplyStatusEffect(enemyHealth);
-
-                // Si es una jabalina, empuja al enemigo hacia atrás
-                if (weaponData.weaponType == WeaponType.Javelin && enemyRb != null)
-                {
-                    Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
-                    enemyRb.AddForce(knockbackDirection * weaponData.knockbackForce, ForceMode2D.Impulse);
-                    Debug.Log($"{collision.name} fue empalado y empujado!");
-                }
             }
 
-            if (weaponData.weaponType == WeaponType.Javelin || weaponData.weaponType == WeaponType.Projectile)
+            // Para la jabalina, aplicar un empuje mayor
+            if (weaponData.weaponType == WeaponType.Javelin && enemyRb != null)
             {
-                Explode();
+                Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
+                enemyRb.AddForce(knockbackDirection * weaponData.knockbackForce * 5f, ForceMode2D.Impulse);
+                Debug.Log($"{collision.name} fue empalado y fuertemente empujado! Fuerza aplicada: {weaponData.knockbackForce * 5f}");
             }
-        }
-    }
 
-    private void Explode()
-    {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, weaponData.explosionRadius);
-
-        foreach (Collider2D enemy in enemies)
-        {
-            if (enemy.CompareTag("Enemy"))
+            // Para proyectiles con efecto de explosión, instanciar la explosión
+            if (weaponData.weaponType == WeaponType.Projectile && weaponData.explosionEffectPrefab != null)
             {
-                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                if (enemyHealth != null)
-                {
-                    enemyHealth.TakeDamage(Mathf.RoundToInt(weaponData.baseDamage));
-                    ApplyStatusEffect(enemyHealth);
-                }
+                Instantiate(weaponData.explosionEffectPrefab, transform.position, Quaternion.identity);
             }
         }
-
-        if (weaponData.explosionEffectPrefab != null)
-        {
-            Instantiate(weaponData.explosionEffectPrefab, transform.position, Quaternion.identity);
-        }
-
-        Destroy(gameObject);
     }
 
     private void ApplyStatusEffect(EnemyHealth enemy)
     {
         if (!weaponData.appliesStatusEffect) return;
 
-        Debug.Log($"Intentando aplicar efecto {weaponData.statusEffect} a {enemy.name}");
+        Debug.Log($"Aplicando efecto {weaponData.statusEffect} a {enemy.name}");
 
         switch (weaponData.statusEffect)
         {
@@ -88,7 +67,6 @@ public class WeaponHitbox : MonoBehaviour
                     bleedEffect.duration = weaponData.statusEffectDuration;
                     bleedEffect.damagePerSecond = weaponData.statusEffectDamage;
                     bleedEffect.tickCount = weaponData.statusEffectTicks;
-                    Debug.Log($"{enemy.name} ha sido afectado por Sangrado.");
                 }
                 break;
 
@@ -101,16 +79,6 @@ public class WeaponHitbox : MonoBehaviour
                     burnEffect.duration = weaponData.statusEffectDuration;
                     burnEffect.spreadChance = 0.3f;
                     burnEffect.spreadRadius = 1.5f;
-                    Debug.Log($"{enemy.name} ahora está en llamas!");
-                }
-                break;
-
-            case "Santificación":
-                if (enemy.GetComponent<SanctifyEffect>() == null)
-                {
-                    SanctifyEffect sanctifyEffect = enemy.gameObject.AddComponent<SanctifyEffect>();
-                    sanctifyEffect.duration = weaponData.statusEffectDuration;
-                    Debug.Log($"{enemy.name} ha sido afectado por Santificación.");
                 }
                 break;
 
@@ -122,7 +90,15 @@ public class WeaponHitbox : MonoBehaviour
                     electrocute.chainDamage = weaponData.statusEffectDamage;
                     electrocute.chainRadius = 3f;
                     electrocute.enemyLayer = LayerMask.GetMask("Enemy");
-                    Debug.Log($"{enemy.name} ha sido electrocutado y puede propagar el daño!");
+                }
+                break;
+
+            case "Santificación":
+                if (enemy.GetComponent<SanctifyEffect>() == null)
+                {
+                    SanctifyEffect sanctifyEffect = enemy.gameObject.AddComponent<SanctifyEffect>();
+                    sanctifyEffect.duration = weaponData.statusEffectDuration;
+                    sanctifyEffect.ApplyEffect(enemy);
                 }
                 break;
         }

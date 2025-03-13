@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class BurnEffect : StatusEffect
 {
-    public GameObject fireEffectPrefab; // Prefab visual del fuego
+    public GameObject fireEffectPrefab;
     private GameObject fireEffectInstance;
 
     public float damagePerSecond = 3f;
     public int tickCount = 5;
     public float spreadRadius = 1.5f;
-    public float spreadChance = 0.3f;
+    public float spreadChance = 1f;
 
     private int ticksApplied = 0;
     private float tickInterval;
@@ -28,7 +28,7 @@ public class BurnEffect : StatusEffect
     {
         if (enemyHealth == null)
         {
-            DestroyEffect();
+            Destroy(this);
             return;
         }
 
@@ -38,47 +38,14 @@ public class BurnEffect : StatusEffect
         {
             enemyHealth.TakeDamage(Mathf.RoundToInt(damagePerSecond));
             ticksApplied++;
-            Debug.Log($"{enemyHealth.name} recibe daño de fuego. Vida restante: {enemyHealth.GetCurrentHealth()}");
-
-            SpreadFire();
+            Debug.Log($"{enemyHealth.name} recibe daño de fuego. Vida restante: {enemyHealth.GetHealth()}");
             burnElapsedTime = 0f;
         }
 
         if (ticksApplied >= tickCount)
         {
-            DestroyEffect();
-        }
-    }
-
-    private void SpreadFire()
-    {
-        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, spreadRadius);
-
-        foreach (Collider2D col in nearbyEnemies)
-        {
-            if (col.CompareTag("Enemy") && col.gameObject != gameObject)
-            {
-                if (Random.value < spreadChance)
-                {
-                    if (col.GetComponent<BurnEffect>() == null)
-                    {
-                        BurnEffect newBurn = col.gameObject.AddComponent<BurnEffect>();
-                        newBurn.damagePerSecond = damagePerSecond;
-                        newBurn.tickCount = tickCount;
-                        newBurn.duration = duration;
-                        Debug.Log($"{enemyHealth.name} ha propagado el fuego a {col.name}!");
-                    }
-                }
-            }
-        }
-    }
-
-    private void DestroyEffect()
-    {
-        if (fireEffectInstance != null)
-        {
             Destroy(fireEffectInstance);
+            Destroy(this);
         }
-        Destroy(this);
     }
 }
