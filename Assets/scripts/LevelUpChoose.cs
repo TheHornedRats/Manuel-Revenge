@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class LevelUpChoose : MonoBehaviour
 {
     public GameObject panel;
+    public WeaponUnlock weaponUnlock;
 
     // Referencias a los textos dentro del panel
     public TextMeshProUGUI text1;
@@ -29,7 +30,7 @@ public class LevelUpChoose : MonoBehaviour
 
     public List<Sprite> weaponImages; // Asignar en el Inspector
 
-    private List<string> weapons = new List<string> { "Arma 1", "Arma 2", "Arma 3", "Arma 4", "Arma 5" };
+    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5" };
     private List<string> descriptions = new List<string>
     {
         "Descripción de Arma 1",
@@ -39,15 +40,36 @@ public class LevelUpChoose : MonoBehaviour
         "Descripción de Arma 5"
     };
 
-    private List<int> selectedWeaponIndexes = new List<int>(); // Almacena los índices de las armas seleccionadas
+    private List<System.Action> buttonFunctions = new List<System.Action>();
+    private List<int> selectedWeaponIndexes = new List<int>();
 
     public AudioSource audioSource; // Referencia al AudioSource
-
-    public WeaponActivator weaponActivator; // Referencia al script WeaponActivator
 
     void Start()
     {
         panel.SetActive(false); // Asegura que el panel esté oculto al iniciar
+        buttonFunctions.Add(() => HandleButtonFunction(0));
+        buttonFunctions.Add(() => HandleButtonFunction(1));
+        buttonFunctions.Add(() => HandleButtonFunction(2));
+        buttonFunctions.Add(() => HandleButtonFunction(3));
+        buttonFunctions.Add(() => HandleButtonFunction(4));
+    }
+
+    void Update()
+    {
+        // Detecta las teclas numéricas 1, 2, 3
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            HandleButtonFunction(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            HandleButtonFunction(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            HandleButtonFunction(2);
+        }
     }
 
     public void ShowPanel()
@@ -61,8 +83,8 @@ public class LevelUpChoose : MonoBehaviour
             audioSource.Play(); // Reproduce el sonido
         }
 
-        // Asigna las funcionalidades a los botones
-        AssignFunctionsToButtons();
+        // Asigna una función aleatoria a cada botón
+        AssignRandomFunctionsToButtons();
     }
 
     public void ClosePanel()
@@ -71,7 +93,6 @@ public class LevelUpChoose : MonoBehaviour
         Time.timeScale = 1; // Reanuda el juego
     }
 
-    // Asigna armas aleatorias a los botones
     void AssignRandomWeapons()
     {
         List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4 };
@@ -98,25 +119,70 @@ public class LevelUpChoose : MonoBehaviour
         img3.sprite = weaponImages[selectedWeaponIndexes[2]];
     }
 
-    // Asigna las funciones correspondientes a los botones
-    void AssignFunctionsToButtons()
+    void AssignRandomFunctionsToButtons()
     {
-        // Asigna a cada botón la función correspondiente a su índice
+        List<int> availableFunctions = new List<int> { 0, 1, 2, 3, 4 }; // 5 posibles funcionalidades
+
+        // Baraja las funciones para que sean aleatorias
+        availableFunctions.Shuffle();
+
+        // Asigna las funcionalidades aleatorias a los botones
         button1.onClick.RemoveAllListeners();
         button2.onClick.RemoveAllListeners();
         button3.onClick.RemoveAllListeners();
 
-        button1.onClick.AddListener(() => HandleButtonFunction(0)); // Asocia el índice 0 al primer botón
-        button2.onClick.AddListener(() => HandleButtonFunction(1)); // Asocia el índice 1 al segundo botón
-        button3.onClick.AddListener(() => HandleButtonFunction(2)); // Asocia el índice 2 al tercer botón
+        button1.onClick.AddListener(() => buttonFunctions[availableFunctions[0]]());
+        button2.onClick.AddListener(() => buttonFunctions[availableFunctions[1]]());
+        button3.onClick.AddListener(() => buttonFunctions[availableFunctions[2]]());
     }
 
-    // Función que se llama cuando un botón es presionado
-    void HandleButtonFunction(int index)
+    // Funcionalidades para los botones
+    public void HandleButtonFunction(int index)
     {
-        if (index < 0 || index >= selectedWeaponIndexes.Count) return;
+        GameObject weaponToActivate = null;
 
-        // Llama al método de WeaponActivator para activar el prefab correspondiente
-        weaponActivator.ActivateWeapon(selectedWeaponIndexes[index]);
+        if (index == 0) // Si es el primer botón
+        {
+            weaponToActivate = weaponUnlock.fireballPrefab;
+        }
+        else if (index == 1) // Segundo botón
+        {
+            weaponToActivate = weaponUnlock.javelinPrefab;
+        }
+        else if (index == 2) // Tercer botón
+        {
+            weaponToActivate = weaponUnlock.crucifixPrefab;
+        }
+
+        // Verifica que la referencia no sea nula antes de llamar al método
+        if (weaponToActivate != null)
+        {
+            Debug.Log("Activando arma: " + weaponToActivate.name);  // Para verificar en la consola
+            weaponUnlock.ActivateWeapon(weaponToActivate);
+        }
+        else
+        {
+            Debug.LogError("La referencia del arma es nula.");
+        }
+    }
+
+}
+
+// Extensión para barajar la lista
+public static class ListExtensions
+{
+    private static System.Random rng = new System.Random();
+
+    public static void Shuffle<T>(this IList<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
     }
 }

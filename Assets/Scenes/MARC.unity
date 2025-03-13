@@ -1612,7 +1612,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: M
+  m_text: I
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3638,6 +3638,8 @@ MonoBehaviour:
   weapons:
   - {fileID: 11400000, guid: 34e7a7508b5484e40ab8f5faaa35ff31, type: 2}
   - {fileID: 11400000, guid: fd2627684d6c3b449965626044e8dd15, type: 2}
+  - {fileID: 11400000, guid: 8b5b1fbe12c7a96438672de9edf1987a, type: 2}
+  - {fileID: 11400000, guid: f0cca703ae1cf784082405f6fefd6015, type: 2}
 --- !u!1 &874103745
 GameObject:
   m_ObjectHideFlags: 0
@@ -4330,6 +4332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1033919588}
+  weaponUnlock: {fileID: 1838126978}
   text1: {fileID: 835181733}
   text2: {fileID: 971558624}
   text3: {fileID: 1068883313}
@@ -4349,7 +4352,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3fa63dd01c85d2347a178bafa37c4b52, type: 3}
   - {fileID: 21300000, guid: 630b68366261635489924854da30a1b1, type: 3}
   audioSource: {fileID: 1033919594}
-  weaponActivator: {fileID: 1838126978}
 --- !u!82 &1033919594
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4774,7 +4776,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: X
+  m_text: U
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5244,7 +5246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: V
+  m_text: O
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5934,7 +5936,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: I
+  m_text: Y
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7570,8 +7572,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   level: 1
-  pointsPerLevel: 300
-  levelMultiplier: 4
+  pointsPerLevel: 200
+  levelMultiplier: 2
   scoreText: {fileID: 439723843}
   finalScoreText: {fileID: 874103747}
   levelText: {fileID: 1631031734}

@@ -27,6 +27,27 @@ public class Trucos : MonoBehaviour
         scoreManager = ScoreManager.instance;
     }
 
+    void Update()
+    {
+        // Detectar teclas I, X, M, V
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            TogglePlayerCollider();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            OnAddScoreButtonClick();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnSpawnEnemyButtonClick();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SlowDownTime();
+        }
+    }
+
     void TogglePlayerCollider()
     {
         BoxCollider2D boxCollider = playerTransform.GetComponent<BoxCollider2D>();
@@ -61,7 +82,7 @@ public class Trucos : MonoBehaviour
         {
             Vector2 spawnPosition = GetSpawnPosition();
             Instantiate(enemigoPrefab, spawnPosition, Quaternion.identity);
-            Debug.Log("¡Enemigo 4 spawneado lejos del jugador!");
+            Debug.Log("¡Enemigo spawneado lejos del jugador!");
         }
         else
         {
