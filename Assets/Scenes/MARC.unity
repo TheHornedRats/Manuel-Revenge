@@ -879,7 +879,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Vida Infinita
+  m_text: Inmortal
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2457,7 +2457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.816187, y: 0}
   m_AnchorMax: {x: 1, y: 0.08234448}
-  m_AnchoredPosition: {x: -0.6723938, y: -0.14538574}
+  m_AnchoredPosition: {x: -0.6724243, y: -0.14538574}
   m_SizeDelta: {x: 1.3446007, y: -0.2908001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &495466413
@@ -3906,7 +3906,7 @@ GameObject:
   - component: {fileID: 941554784}
   - component: {fileID: 941554783}
   m_Layer: 5
-  m_Name: ButtonTruco (1)
+  m_Name: 1000xp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4994,7 +4994,7 @@ GameObject:
   - component: {fileID: 1185213359}
   - component: {fileID: 1185213358}
   m_Layer: 5
-  m_Name: ButtonTruco
+  m_Name: Immortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6370,6 +6370,7 @@ GameObject:
   - component: {fileID: 1429732576}
   - component: {fileID: 1429732575}
   - component: {fileID: 1429732579}
+  - component: {fileID: 1429732580}
   m_Layer: 5
   m_Name: CheatMenu
   m_TagString: Untagged
@@ -6475,6 +6476,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trucosMenuUI: {fileID: 724599430}
+--- !u!114 &1429732580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429732574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ae385e6c51b3341b98be2bf90ee235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeHealthButton: {fileID: 1185213358}
+  addScoreButton: {fileID: 941554783}
+  spawnEnemyButton: {fileID: 1930836722}
+  slowTimeButton: {fileID: 1578742722}
+  enemigoPrefab: {fileID: 6552913883591398799, guid: 4620e40f6e4eb87479d471592ed56421, type: 3}
+  playerTransform: {fileID: 3672655057767452113}
+  minSpawnDistance: 3
+  maxSpawnDistance: 6
 --- !u!1 &1462301523
 GameObject:
   m_ObjectHideFlags: 0
@@ -6997,7 +7018,7 @@ GameObject:
   - component: {fileID: 1578742723}
   - component: {fileID: 1578742722}
   m_Layer: 5
-  m_Name: ButtonTruco (3)
+  m_Name: VelocidadDeJuego
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7166,7 +7187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Da\xF1o maximo"
+  m_text: Spawnear enemigo fuerte (dummy)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7229,7 +7250,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -94.57422, y: 0, z: -98.35718, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8983,7 +9004,7 @@ GameObject:
   - component: {fileID: 1930836723}
   - component: {fileID: 1930836722}
   m_Layer: 5
-  m_Name: ButtonTruco (2)
+  m_Name: SpawnearEnemigo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9907,7 +9928,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: + velocidad
+  m_text: Reducir velocidad de juego
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9970,7 +9991,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -48.298492, y: 0, z: -50.59845, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
