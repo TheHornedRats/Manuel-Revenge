@@ -61,9 +61,13 @@ public class WeaponHitbox : MonoBehaviour
         switch (weaponData.statusEffect)
         {
             case "Sangrado":
-                if (enemy.GetComponent<BleedEffect>() == null)
                 {
-                    BleedEffect bleedEffect = enemy.gameObject.AddComponent<BleedEffect>();
+                    BleedEffect bleedEffect = enemy.GetComponent<BleedEffect>();
+                    if (bleedEffect == null)
+                    {
+                        bleedEffect = enemy.gameObject.AddComponent<BleedEffect>();
+                    }
+                    // Actualizamos (o asignamos) las propiedades del efecto
                     bleedEffect.duration = weaponData.statusEffectDuration;
                     bleedEffect.damagePerSecond = weaponData.statusEffectDamage;
                     bleedEffect.tickCount = weaponData.statusEffectTicks;
@@ -71,21 +75,27 @@ public class WeaponHitbox : MonoBehaviour
                 break;
 
             case "Fuego":
-                if (enemy.GetComponent<BurnEffect>() == null)
                 {
-                    BurnEffect burnEffect = enemy.gameObject.AddComponent<BurnEffect>();
+                    BurnEffect burnEffect = enemy.GetComponent<BurnEffect>();
+                    if (burnEffect == null)
+                    {
+                        burnEffect = enemy.gameObject.AddComponent<BurnEffect>();
+                    }
+                    burnEffect.duration = weaponData.statusEffectDuration;
                     burnEffect.damagePerSecond = weaponData.statusEffectDamage;
                     burnEffect.tickCount = weaponData.statusEffectTicks;
-                    burnEffect.duration = weaponData.statusEffectDuration;
                     burnEffect.spreadChance = 0.3f;
                     burnEffect.spreadRadius = 1.5f;
                 }
                 break;
 
             case "Electrocución":
-                if (enemy.GetComponent<ElectrocuteEffect>() == null)
                 {
-                    ElectrocuteEffect electrocute = enemy.gameObject.AddComponent<ElectrocuteEffect>();
+                    ElectrocuteEffect electrocute = enemy.GetComponent<ElectrocuteEffect>();
+                    if (electrocute == null)
+                    {
+                        electrocute = enemy.gameObject.AddComponent<ElectrocuteEffect>();
+                    }
                     electrocute.duration = weaponData.statusEffectDuration;
                     electrocute.chainDamage = weaponData.statusEffectDamage;
                     electrocute.chainRadius = 3f;
@@ -94,13 +104,18 @@ public class WeaponHitbox : MonoBehaviour
                 break;
 
             case "Santificación":
-                if (enemy.GetComponent<SanctifyEffect>() == null)
                 {
-                    SanctifyEffect sanctifyEffect = enemy.gameObject.AddComponent<SanctifyEffect>();
+                    SanctifyEffect sanctifyEffect = enemy.GetComponent<SanctifyEffect>();
+                    if (sanctifyEffect == null)
+                    {
+                        sanctifyEffect = enemy.gameObject.AddComponent<SanctifyEffect>();
+                    }
                     sanctifyEffect.duration = weaponData.statusEffectDuration;
+                    // Llamamos a ApplyEffect para asegurarnos de que se inicialice correctamente (por ejemplo, para crear partículas)
                     sanctifyEffect.ApplyEffect(enemy);
                 }
                 break;
         }
     }
+
 }

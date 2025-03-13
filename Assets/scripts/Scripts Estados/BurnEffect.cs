@@ -2,6 +2,18 @@ using UnityEngine;
 
 public class BurnEffect : StatusEffect
 {
+    protected override void CreateParticleSystem()
+    {
+        // Llamamos primero al método base para crear el sistema de partículas
+        base.CreateParticleSystem();
+
+        // Cambiamos el color a rojo
+        if (effectParticles != null)
+        {
+            var main = effectParticles.main;
+            main.startColor = Color.red;
+        }
+    }
     public GameObject fireEffectPrefab;
     private GameObject fireEffectInstance;
 

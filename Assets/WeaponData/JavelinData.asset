@@ -18,7 +18,7 @@ MonoBehaviour:
   explosionEffectPrefab: {fileID: 0}
   baseDamage: 50
   baseCooldown: 5
-  projectileSpeed: 15
+  projectileSpeed: 30
   explosionRadius: 2
   maxLevel: 5
   damageIncreasePerLevel: 1.2
