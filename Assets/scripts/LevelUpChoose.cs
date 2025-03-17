@@ -121,43 +121,33 @@ public class LevelUpChoose : MonoBehaviour
 
     void AssignRandomFunctionsToButtons()
     {
-        List<int> availableFunctions = new List<int> { 0, 1, 2, 3, 4 }; // 5 posibles funcionalidades
-
-        // Baraja las funciones para que sean aleatorias
-        availableFunctions.Shuffle();
-
-        // Asigna las funcionalidades aleatorias a los botones
         button1.onClick.RemoveAllListeners();
         button2.onClick.RemoveAllListeners();
         button3.onClick.RemoveAllListeners();
 
-        button1.onClick.AddListener(() => buttonFunctions[availableFunctions[0]]());
-        button2.onClick.AddListener(() => buttonFunctions[availableFunctions[1]]());
-        button3.onClick.AddListener(() => buttonFunctions[availableFunctions[2]]());
+        button1.onClick.AddListener(() => HandleButtonFunction(selectedWeaponIndexes[0]));
+        button2.onClick.AddListener(() => HandleButtonFunction(selectedWeaponIndexes[1]));
+        button3.onClick.AddListener(() => HandleButtonFunction(selectedWeaponIndexes[2]));
     }
+
 
     // Funcionalidades para los botones
     public void HandleButtonFunction(int index)
     {
         GameObject weaponToActivate = null;
 
-        if (index == 0) // Si es el primer botón
+        switch (index)
         {
-            weaponToActivate = weaponUnlock.fireballPrefab;
-        }
-        else if (index == 1) // Segundo botón
-        {
-            weaponToActivate = weaponUnlock.javelinPrefab;
-        }
-        else if (index == 2) // Tercer botón
-        {
-            weaponToActivate = weaponUnlock.crucifixPrefab;
+            case 0: weaponToActivate = weaponUnlock.swordPrefab; break; // Espada
+            case 1: weaponToActivate = weaponUnlock.fireballPrefab; break; // Fireball
+            case 2: weaponToActivate = weaponUnlock.crucifixPrefab; break; // Crucifijo
+            case 3: weaponToActivate = weaponUnlock.javelinPrefab; break; // Javalina
+            case 4: weaponToActivate = weaponUnlock.weapon5Prefab; break; // Arma 5
         }
 
-        // Verifica que la referencia no sea nula antes de llamar al método
         if (weaponToActivate != null)
         {
-            Debug.Log("Activando arma: " + weaponToActivate.name);  // Para verificar en la consola
+            Debug.Log("Activando arma: " + weaponToActivate.name);
             weaponUnlock.ActivateWeapon(weaponToActivate);
         }
         else
@@ -165,6 +155,7 @@ public class LevelUpChoose : MonoBehaviour
             Debug.LogError("La referencia del arma es nula.");
         }
     }
+
 
 }
 
