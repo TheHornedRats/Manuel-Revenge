@@ -33,10 +33,10 @@ public class LevelUpChoose : MonoBehaviour
     private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5" };
     private List<string> descriptions = new List<string>
     {
-        "Descripción de Arma 1",
-        "Descripción de Arma 2",
-        "Descripción de Arma 3",
-        "Descripción de Arma 4",
+        "El espadon",
+        "Dispara en función a donde apuntes con el ratón",
+        "Dispara en posiciones aleatorias",
+        "Disapara al hacer click",
         "Descripción de Arma 5"
     };
 

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class EnemyHealth : MonoBehaviour
     public GameObject xp20Prefab;
     public float dropRange = 1.0f;
     private bool isDead = false;
+
+    public TextMeshPro comboTextPrefab;  // Para TextMeshPro en la UI
+    private static int comboCount = 0;
+    private static float lastKillTime;
+    private static float comboResetTime = 3.0f;
 
     private void Start()
     {
@@ -43,8 +50,8 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log(name + " ha muerto.");
         isDead = true;
 
+        UpdateCombo();
         DropXPItems();
-        Debug.Log("Intentando destruir " + name);
 
         Destroy(gameObject);
         ScoreManager.instance.AddScore(5);
@@ -59,5 +66,33 @@ public class EnemyHealth : MonoBehaviour
         Instantiate(xp5Prefab, dropPosition1, Quaternion.identity);
         Instantiate(xp10Prefab, dropPosition2, Quaternion.identity);
         Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
+    }
+
+    private void UpdateCombo()
+    {
+        if (Time.time - lastKillTime > comboResetTime)
+        {
+            comboCount = 1;
+        }
+        else
+        {
+            comboCount++;
+        }
+
+        lastKillTime = Time.time;
+        ShowComboText();
+    }
+
+    private void ShowComboText()
+    {
+        if (comboTextPrefab == null) return;
+
+        TextMeshPro comboTextInstance = Instantiate(comboTextPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+        comboTextInstance.text = $"Combo x{comboCount}";
+
+        comboTextInstance.fontSize = Mathf.Clamp(3 + (comboCount * 0.5f), 3, 7);
+        comboTextInstance.color = Color.Lerp(Color.white, Color.red, comboCount / 10f);
+
+        Destroy(comboTextInstance.gameObject, 1.5f);
     }
 }

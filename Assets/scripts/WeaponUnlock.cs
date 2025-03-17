@@ -3,11 +3,11 @@
 public class WeaponUnlock : MonoBehaviour
 {
     // Referencias a los prefabs de las armas
-    public GameObject swordPrefab;    // 🗡 Espada
-    public GameObject fireballPrefab; // 🔥 Fireball
-    public GameObject crucifixPrefab; // ✝️ Crucifijo
-    public GameObject javelinPrefab;  // 🏹 Javalina
-    public GameObject weapon5Prefab;  // ❓ Arma 5 (puedes cambiar el nombre)
+    public GameObject swordPrefab;    // Espada
+    public GameObject fireballPrefab; // Fireball
+    public GameObject crucifixPrefab; // Crucifijo
+    public GameObject javelinPrefab;  // Javalina
+    public GameObject weapon5Prefab;  // Test
 
     private GameObject currentWeapon;
 
