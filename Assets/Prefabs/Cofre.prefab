@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1374516037929871422}
   - component: {fileID: 2249206565153328083}
   - component: {fileID: 4269275490312018602}
+  - component: {fileID: 3237887579170102690}
   m_Layer: 0
   m_Name: Cofre
   m_TagString: Untagged
@@ -130,3 +131,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3125, y: 1.125}
   m_EdgeRadius: 0
+--- !u!114 &3237887579170102690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989224513304549000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b0513bd61d194e4e98d8bbe197820ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelUI: {fileID: 0}
+  chest: {fileID: 0}
