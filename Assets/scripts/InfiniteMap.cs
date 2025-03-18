@@ -15,11 +15,12 @@ public class InfiniteMap : MonoBehaviour
 
     void Start()
     {
+        if (mainCamera == null) mainCamera = Camera.main;
         lastChunkPosition = GetChunkPosition(mainCamera.transform.position);
         GenerateChunksAroundCamera();
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         Vector2Int currentChunk = GetChunkPosition(mainCamera.transform.position);
 
@@ -33,7 +34,6 @@ public class InfiniteMap : MonoBehaviour
         ProcessChunkRemoval();
     }
 
-    // Convierte la posición de la cámara en coordenadas de Chunk
     Vector2Int GetChunkPosition(Vector3 position)
     {
         return new Vector2Int(
@@ -42,29 +42,27 @@ public class InfiniteMap : MonoBehaviour
         );
     }
 
-    // Genera los chunks en TODAS direcciones alrededor de la cámara
     void GenerateChunksAroundCamera()
     {
-        float camHeight = 10f * mainCamera.orthographicSize;
+        float camHeight = 2f * mainCamera.orthographicSize;
         float camWidth = camHeight * mainCamera.aspect;
 
-        int chunksX = Mathf.CeilToInt(camWidth / chunkSize) + 10;
-        int chunksY = Mathf.CeilToInt(camHeight / chunkSize) + 10;
+        int chunksX = Mathf.CeilToInt(camWidth / chunkSize) + 3;
+        int chunksY = Mathf.CeilToInt(camHeight / chunkSize) + 3;
 
         Vector2Int centerChunk = GetChunkPosition(mainCamera.transform.position);
 
-        for (int x = -chunksX / 2; x <= chunksX / 2; x++)
+        for (int x = -chunksX / 2 - 1; x <= chunksX / 2 + 1; x++)
         {
-            for (int y = -chunksY / 2; y <= chunksY / 2; y++)
+            for (int y = -chunksY / 2 - 1; y <= chunksY / 2 + 1; y++)
             {
                 Vector2Int newChunkPos = new Vector2Int(centerChunk.x + x, centerChunk.y + y);
 
-                if (!spawnedChunks.ContainsKey(newChunkPos)) // Solo generar si no existe
+                if (!spawnedChunks.ContainsKey(newChunkPos))
                 {
                     SpawnChunk(newChunkPos);
                 }
 
-                // Si un chunk estaba marcado para eliminar pero sigue visible, lo quitamos de la lista de eliminación
                 if (chunksToDelete.ContainsKey(newChunkPos))
                 {
                     chunksToDelete.Remove(newChunkPos);
@@ -73,7 +71,6 @@ public class InfiniteMap : MonoBehaviour
         }
     }
 
-    // Instancia un nuevo Chunk en la posición indicada
     void SpawnChunk(Vector2Int position)
     {
         Vector3 worldPosition = new Vector3(position.x * chunkSize, position.y * chunkSize, 0);
@@ -81,14 +78,13 @@ public class InfiniteMap : MonoBehaviour
         spawnedChunks.Add(position, newChunk);
     }
 
-    // Programa la eliminación de chunks que ya no están en la vista de la cámara
     void ScheduleChunkRemoval()
     {
         float camHeight = 2f * mainCamera.orthographicSize;
         float camWidth = camHeight * mainCamera.aspect;
 
-        int chunksX = Mathf.CeilToInt(camWidth / chunkSize) + 2;
-        int chunksY = Mathf.CeilToInt(camHeight / chunkSize) + 2;
+        int chunksX = Mathf.CeilToInt(camWidth / chunkSize) + 5;
+        int chunksY = Mathf.CeilToInt(camHeight / chunkSize) + 5;
 
         Vector2Int centerChunk = GetChunkPosition(mainCamera.transform.position);
 
@@ -98,7 +94,6 @@ public class InfiniteMap : MonoBehaviour
         {
             Vector2Int chunkPos = chunk.Key;
 
-            // Si el chunk está fuera del área visible extendida, programamos su eliminación
             if (chunkPos.x < centerChunk.x - chunksX / 2 || chunkPos.x > centerChunk.x + chunksX / 2 ||
                 chunkPos.y < centerChunk.y - chunksY / 2 || chunkPos.y > centerChunk.y + chunksY / 2)
             {
@@ -106,24 +101,22 @@ public class InfiniteMap : MonoBehaviour
             }
         }
 
-        // Añadir chunks a la lista de eliminación con un temporizador
         foreach (Vector2Int chunkPos in toRemove)
         {
-            if (!chunksToDelete.ContainsKey(chunkPos)) // Evita marcar un chunk varias veces
+            if (!chunksToDelete.ContainsKey(chunkPos))
             {
-                chunksToDelete.Add(chunkPos, Time.time + despawnDelay); // Guardamos el tiempo de eliminación
+                chunksToDelete.Add(chunkPos, Time.time + despawnDelay);
             }
         }
     }
 
-    // Procesa la eliminación de chunks que ya pasaron el tiempo de espera
     void ProcessChunkRemoval()
     {
         List<Vector2Int> toDelete = new List<Vector2Int>();
 
         foreach (var chunk in chunksToDelete)
         {
-            if (Time.time >= chunk.Value) // Si ya pasó el tiempo de despawn
+            if (Time.time >= chunk.Value)
             {
                 toDelete.Add(chunk.Key);
             }
@@ -133,7 +126,7 @@ public class InfiniteMap : MonoBehaviour
         {
             if (spawnedChunks.ContainsKey(chunkPos))
             {
-                Destroy(spawnedChunks[chunkPos]);
+                spawnedChunks[chunkPos].SetActive(false); // Desactiva en lugar de destruir
                 spawnedChunks.Remove(chunkPos);
             }
             chunksToDelete.Remove(chunkPos);
