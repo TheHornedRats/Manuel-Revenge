@@ -11,9 +11,10 @@ public class ScoreManager : MonoBehaviour
     public int score = 0;
     public int level = 1;
     public int pointsPerLevel = 100;
-    public float levelMultiplier = 1.2f;
+    public float levelMultiplier = 1.4f;
 
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI levelText;
     public PlayerAttack playerAttack;
 
@@ -46,9 +47,8 @@ public class ScoreManager : MonoBehaviour
 
     public void AddScore(int amount)
     {
-        int previousLevel = level;
         score += amount;
-        CheckLevelUp(previousLevel);
+        CheckLevelUp();
         UpdateUI();
 
         // Disparar evento si hay suscriptores
@@ -57,13 +57,15 @@ public class ScoreManager : MonoBehaviour
 
     public LevelUpChoose levelUpPanel;
 
-    private void CheckLevelUp(int previousLevel)
+    private void CheckLevelUp()
     {
-        level = (score / pointsPerLevel) + 1;
-
-        if (level > previousLevel)
+        while (score >= pointsPerLevel)
         {
+            level++;
+            score -= pointsPerLevel; // Restar el exceso para permitir subir múltiples niveles si se gana mucho puntaje de golpe
+            pointsPerLevel = Mathf.CeilToInt(pointsPerLevel * levelMultiplier); // Aumenta el umbral
             Debug.Log("¡Subiste de nivel! Nuevo nivel: " + level);
+
             if (playerAttack != null)
             {
                 playerAttack.LevelUp(level);
@@ -72,12 +74,10 @@ public class ScoreManager : MonoBehaviour
             if (levelUpPanel != null)
             {
                 levelUpPanel.ShowPanel();
-                //pointsPerLevel = pointsPerLevel * levelMultiplier;
                 Time.timeScale = 0;
                 UpgradeButton1.onClick.AddListener(levelUpPanel.ClosePanel);
                 UpgradeButton2.onClick.AddListener(levelUpPanel.ClosePanel);
                 UpgradeButton3.onClick.AddListener(levelUpPanel.ClosePanel);
-
             }
         }
     }
@@ -93,5 +93,10 @@ public class ScoreManager : MonoBehaviour
             levelText.text = "Nivel: " + level;
         else
             Debug.LogWarning("LevelText no asignado en el Inspector.");
+
+        if (finalScoreText != null)
+            finalScoreText.text = "Puntuación: " + score;
+        else
+            Debug.LogWarning("ScoreText no asignado en el Inspector.");
     }
 }
