@@ -11,12 +11,19 @@ public abstract class StatusEffect : MonoBehaviour
 
     public void ApplyEffect(EnemyHealth target)
     {
-        enemyHealth = target;
-        OnEffectStart();       // Lógica inicial del efecto
+        if (target == null)
+        {
+            Debug.LogError(" ERROR: Intento de aplicar efecto a un EnemyHealth NULL.");
+            return;
+        }
 
-        // Crear el sistema de partículas de forma dinámica
+        enemyHealth = target;
+        Debug.Log($" {this.GetType().Name} aplicado correctamente a {enemyHealth.name}");
+
+        OnEffectStart();
         CreateParticleSystem();
     }
+
 
     protected virtual void CreateParticleSystem()
     {
@@ -46,7 +53,15 @@ public abstract class StatusEffect : MonoBehaviour
     protected virtual void Update()
     {
         elapsedTime += Time.deltaTime;
+
+
         OnEffectUpdate();
+
+        // Si el efecto tiene ticks de daño, aplica en intervalos
+        if (this is DamageOverTimeEffect dotEffect)
+        {
+            dotEffect.ApplyDamageTick();
+        }
 
         // Si el efecto ha durado lo suficiente, finaliza y destruye el ParticleSystem
         if (elapsedTime >= duration)
@@ -59,6 +74,7 @@ public abstract class StatusEffect : MonoBehaviour
             Destroy(this);
         }
     }
+
 
     // Métodos virtuales para que cada efecto pueda sobrescribir su comportamiento
     protected virtual void OnEffectStart() { }

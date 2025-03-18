@@ -4,16 +4,21 @@ public class BurnEffect : StatusEffect
 {
     protected override void CreateParticleSystem()
     {
-        // Llamamos primero al método base para crear el sistema de partículas
         base.CreateParticleSystem();
-
-        // Cambiamos el color a rojo
         if (effectParticles != null)
         {
             var main = effectParticles.main;
             main.startColor = Color.red;
+
+            // Eliminar cualquier intento de modificar duration
+            if (!effectParticles.isStopped)
+            {
+                Debug.LogWarning(" El sistema de partículas ya está reproduciéndose. No se puede modificar duration.");
+                return;
+            }
         }
     }
+
     public GameObject fireEffectPrefab;
     private GameObject fireEffectInstance;
 
@@ -24,40 +29,82 @@ public class BurnEffect : StatusEffect
 
     private int ticksApplied = 0;
     private float tickInterval;
-    private float burnElapsedTime = 0f;
 
-    private void Start()
+    protected override void OnEffectStart()
     {
         if (fireEffectPrefab != null)
         {
-            fireEffectInstance = Instantiate(fireEffectPrefab, transform.position, Quaternion.identity, transform);
+            fireEffectInstance = Instantiate(fireEffectPrefab, enemyHealth.transform.position, Quaternion.identity, enemyHealth.transform);
+        }
+
+        // Validar `duration` para evitar que sea 0 o negativo
+        if (duration <= 0)
+        {
+            Debug.LogWarning($"WARNING: `duration` es {duration}. Se establecerá a 2s por defecto.");
+            duration = 2f;
+        }
+
+        // Validar `tickCount` para evitar divisiones por cero
+        if (tickCount <= 0)
+        {
+            Debug.LogWarning($"WARNING: `tickCount` es {tickCount}. Se establecerá a 1 por defecto.");
+            tickCount = 1;
         }
 
         tickInterval = duration / tickCount;
+
+        Debug.Log($"{enemyHealth.name} está en llamas por {duration} segundos. Tick cada {tickInterval}s.");
     }
 
-    protected override void Update()
+
+    protected override void OnEffectUpdate()
     {
-        if (enemyHealth == null)
-        {
-            Destroy(this);
-            return;
-        }
+        if (enemyHealth == null) return;
 
-        burnElapsedTime += Time.deltaTime;
-
-        if (burnElapsedTime >= tickInterval && ticksApplied < tickCount)
+        if (elapsedTime >= tickInterval * (ticksApplied + 1) && ticksApplied < tickCount)
         {
-            enemyHealth.TakeDamage(Mathf.RoundToInt(damagePerSecond));
+            int damageAmount = Mathf.RoundToInt(damagePerSecond);
+            enemyHealth.TakeDamage(damageAmount);
             ticksApplied++;
-            Debug.Log($"{enemyHealth.name} recibe daño de fuego. Vida restante: {enemyHealth.GetHealth()}");
-            burnElapsedTime = 0f;
-        }
 
-        if (ticksApplied >= tickCount)
+            Debug.Log($" [FUEGO] {enemyHealth.name} recibe {damageAmount} de daño. Vida restante: {enemyHealth.GetHealth()}");
+
+            // Instanciar un nuevo sistema de partículas en cada tick
+            if (fireEffectPrefab != null)
+            {
+                GameObject fireInstance = Instantiate(fireEffectPrefab, enemyHealth.transform.position, Quaternion.identity, enemyHealth.transform);
+
+                // Asegurar que el sistema de partículas se detiene y se destruye después de su duración
+                ParticleSystem ps = fireInstance.GetComponent<ParticleSystem>();
+                if (ps != null)
+                {
+                    var main = ps.main;
+                    main.loop = false; // Asegurar que no se repita
+                    ps.Play();
+                    Destroy(fireInstance, main.duration);
+
+                }
+                else
+                {
+                    Debug.LogWarning(" El prefab de fuego no tiene un ParticleSystem.");
+                }
+            }
+
+            if (ticksApplied >= tickCount)
+            {
+                Debug.Log($" {enemyHealth.name} ya no está en llamas.");
+                Destroy(this);
+            }
+        }
+    }
+
+
+    protected override void OnEffectEnd()
+    {
+        if (fireEffectInstance != null)
         {
             Destroy(fireEffectInstance);
-            Destroy(this);
         }
+        Debug.Log($" {enemyHealth.name} ya no está en llamas.");
     }
 }

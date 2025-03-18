@@ -81,6 +81,8 @@ public class WeaponHitbox : MonoBehaviour
                     {
                         burnEffect = enemy.gameObject.AddComponent<BurnEffect>();
                     }
+                    burnEffect.ApplyEffect(enemy); // IMPORTANTE: Ahora el efecto sabe a qué enemigo aplicarse.
+
                     burnEffect.duration = weaponData.statusEffectDuration;
                     burnEffect.damagePerSecond = weaponData.statusEffectDamage;
                     burnEffect.tickCount = weaponData.statusEffectTicks;

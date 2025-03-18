@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponType: 1
   attackPrefab: {fileID: 2809130547693281285, guid: 2f5860f5b87981548a5991b714a86908, type: 3}
   explosionEffectPrefab: {fileID: 231367704926956747, guid: c92537715c82ed04f96f24b21aa4d93a, type: 3}
-  baseDamage: 30
+  baseDamage: 25
   baseCooldown: 1
   projectileSpeed: 8
   explosionRadius: 2
@@ -25,7 +25,7 @@ MonoBehaviour:
   cooldownReductionPerLevel: 0.9
   appliesStatusEffect: 1
   statusEffect: Fuego
-  statusEffectDuration: 5
-  statusEffectDamage: 1
-  statusEffectTicks: 2
+  statusEffectDuration: 20
+  statusEffectDamage: 2
+  statusEffectTicks: 20
   knockbackForce: 5

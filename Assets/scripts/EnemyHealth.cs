@@ -25,6 +25,8 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log($"[DEBUG] {name} recibiendo {damage} de daño de {this.GetType().Name}"); // Mensaje de depuración
+
         currentHealth -= damage;
         Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
 
@@ -39,6 +41,7 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
     }
+
 
     public int GetHealth()
     {
@@ -95,4 +98,5 @@ public class EnemyHealth : MonoBehaviour
 
         Destroy(comboTextInstance.gameObject, 1.5f);
     }
+  
 }
