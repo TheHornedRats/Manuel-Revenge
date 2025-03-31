@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -13,12 +13,12 @@ public class LevelUpChoose : MonoBehaviour
     public TextMeshProUGUI text2;
     public TextMeshProUGUI text3;
 
-    // Referencias a los textos adicionales (descripciÛn)
+    // Referencias a los textos adicionales (descripci√≥n)
     public TextMeshProUGUI desc1;
     public TextMeshProUGUI desc2;
     public TextMeshProUGUI desc3;
 
-    // Referencias a las im·genes dentro del panel
+    // Referencias a las im√°genes dentro del panel
     public Image img1;
     public Image img2;
     public Image img3;
@@ -34,10 +34,10 @@ public class LevelUpChoose : MonoBehaviour
     private List<string> descriptions = new List<string>
     {
         "El espadon",
-        "Dispara en funciÛn a donde apuntes con el ratÛn",
+        "Dispara en funci√≥n a donde apuntes con el rat√≥n",
         "Dispara en posiciones aleatorias",
         "Disapara al hacer click",
-        "DescripciÛn de Arma 5"
+        "Descripci√≥n de Arma 5"
     };
 
     private List<System.Action> buttonFunctions = new List<System.Action>();
@@ -47,7 +47,7 @@ public class LevelUpChoose : MonoBehaviour
 
     void Start()
     {
-        panel.SetActive(false); // Asegura que el panel estÈ oculto al iniciar
+        panel.SetActive(false); // Asegura que el panel est√© oculto al iniciar
         buttonFunctions.Add(() => HandleButtonFunction(0));
         buttonFunctions.Add(() => HandleButtonFunction(1));
         buttonFunctions.Add(() => HandleButtonFunction(2));
@@ -57,7 +57,7 @@ public class LevelUpChoose : MonoBehaviour
 
     void Update()
     {
-        // Detecta las teclas numÈricas 1, 2, 3
+        // Detecta las teclas num√©ricas 1, 2, 3
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             HandleButtonFunction(0);
@@ -74,18 +74,21 @@ public class LevelUpChoose : MonoBehaviour
 
     public void ShowPanel()
     {
-        AssignRandomWeapons(); // Asigna los textos e im·genes antes de mostrar el panel
+        AssignRandomWeapons(); // Asigna los textos e im√°genes antes de mostrar el panel
         panel.SetActive(true);
-        Time.timeScale = 0; // Pausa el juego si es necesario
+
+        // Eliminar esta l√≠nea si no quieres pausar el juego
+        // Time.timeScale = 0; 
 
         if (audioSource != null)
         {
             audioSource.Play(); // Reproduce el sonido
         }
 
-        // Asigna una funciÛn aleatoria a cada botÛn
+        // Asigna una funci√≥n aleatoria a cada bot√≥n
         AssignRandomFunctionsToButtons();
     }
+
 
     public void ClosePanel()
     {
@@ -96,7 +99,7 @@ public class LevelUpChoose : MonoBehaviour
     void AssignRandomWeapons()
     {
         List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4 };
-        selectedWeaponIndexes.Clear(); // Limpiar la lista de Ìndices seleccionados
+        selectedWeaponIndexes.Clear(); // Limpiar la lista de √≠ndices seleccionados
 
         for (int i = 0; i < 3; i++)
         {
@@ -105,7 +108,7 @@ public class LevelUpChoose : MonoBehaviour
             availableIndexes.RemoveAt(randomIndex);
         }
 
-        // Asigna los valores aleatorios a los textos, descripciones e im·genes
+        // Asigna los valores aleatorios a los textos, descripciones e im√°genes
         text1.text = weapons[selectedWeaponIndexes[0]];
         text2.text = weapons[selectedWeaponIndexes[1]];
         text3.text = weapons[selectedWeaponIndexes[2]];
@@ -130,7 +133,6 @@ public class LevelUpChoose : MonoBehaviour
         button3.onClick.AddListener(() => HandleButtonFunction(selectedWeaponIndexes[2]));
     }
 
-
     // Funcionalidades para los botones
     public void HandleButtonFunction(int index)
     {
@@ -154,26 +156,11 @@ public class LevelUpChoose : MonoBehaviour
         {
             Debug.LogError("La referencia del arma es nula.");
         }
+
+        // Cerrar el panel despu√©s de seleccionar un arma
+        ClosePanel();
     }
 
 
-}
 
-// ExtensiÛn para barajar la lista
-public static class ListExtensions
-{
-    private static System.Random rng = new System.Random();
-
-    public static void Shuffle<T>(this IList<T> list)
-    {
-        int n = list.Count;
-        while (n > 1)
-        {
-            n--;
-            int k = rng.Next(n + 1);
-            T value = list[k];
-            list[k] = list[n];
-            list[n] = value;
-        }
-    }
 }
