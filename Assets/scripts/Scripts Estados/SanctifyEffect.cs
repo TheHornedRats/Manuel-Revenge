@@ -19,35 +19,9 @@ public class SanctifyEffect : StatusEffect
         {
             var main = effectParticles.main;
             main.startColor = new Color(1f, 0.95f, 0.7f); // Dorado suave
-            main.startSize = 0.15f;
-            main.startLifetime = 0.8f;
-            main.startSpeed = 0.1f;
-            // main.duration = ... -> NO tocar duration en tiempo de ejecución
-
-            var shape = effectParticles.shape;
-            shape.shapeType = ParticleSystemShapeType.Cone;
-            shape.angle = 15f;
-            shape.radius = 0.1f;
-
-            var emission = effectParticles.emission;
-            emission.rateOverTime = 10f;
-
-            var colorOverLifetime = effectParticles.colorOverLifetime;
-            colorOverLifetime.enabled = true;
-            Gradient grad = new Gradient();
-            grad.SetKeys(
-                new GradientColorKey[] {
-                new GradientColorKey(new Color(1f, 1f, 0.7f), 0.0f),
-                new GradientColorKey(Color.clear, 1.0f)
-                },
-                new GradientAlphaKey[] {
-                new GradientAlphaKey(1f, 0f),
-                new GradientAlphaKey(0f, 1f)
-                }
-            );
-            colorOverLifetime.color = grad;
         }
     }
+
 
 
     protected override void OnEffectStart()

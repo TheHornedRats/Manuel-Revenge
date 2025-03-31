@@ -2,48 +2,59 @@
 
 public class WeaponUnlock : MonoBehaviour
 {
-    // Referencias a los prefabs de las armas
-    public GameObject swordPrefab;    // Espada
-    public GameObject fireballPrefab; // Fireball
-    public GameObject crucifixPrefab; // Crucifijo
-    public GameObject javelinPrefab;  // Javalina
-    public GameObject weapon5Prefab;  // Test
+    public GameObject swordPrefab;
+    public GameObject fireballPrefab;
+    public GameObject crucifixPrefab;
+    public GameObject javelinPrefab;
+    public GameObject weapon5Prefab;
 
     private GameObject currentWeapon;
 
-    void Start()
-    {
-        // Asegura que todas las armas estén desactivadas al inicio
-        DeactivateAllWeapons();
-    }
-
-    void Update()
-    {
-        // Detecta las teclas numéricas 1 a 5 para activar las armas
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ActivateWeapon(swordPrefab);
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) ActivateWeapon(fireballPrefab);
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) ActivateWeapon(crucifixPrefab);
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) ActivateWeapon(javelinPrefab);
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) ActivateWeapon(weapon5Prefab);
-    }
-
     public void ActivateWeapon(GameObject weaponPrefab)
     {
-        if (weaponPrefab != null && !weaponPrefab.activeSelf)
+        if (weaponPrefab == null)
+        {
+            Debug.LogError("Intentaste activar un arma nula.");
+            return;
+        }
+
+        // Si el arma ya estaba activa, simplemente mejora su nivel
+        if (weaponPrefab.activeSelf)
+        {
+            Debug.Log("Mejorando arma: " + weaponPrefab.name);
+        }
+        else
         {
             weaponPrefab.SetActive(true);
-            Debug.Log("Arma activada: " + weaponPrefab.name);
+            Debug.Log("Activando nueva arma: " + weaponPrefab.name);
+        }
+
+        currentWeapon = weaponPrefab;
+
+        WeaponHandler handler = weaponPrefab.GetComponent<WeaponHandler>();
+        if (handler != null && handler.weaponData != null)
+        {
+            int nivel = ScoreManager.instance != null ? ScoreManager.instance.level : 1;
+            handler.weaponData.InitWeapon(nivel);
+        }
+        else
+        {
+            Debug.LogWarning("El arma no tiene WeaponHandler o WeaponData asignado.");
         }
     }
 
-
-    void DeactivateAllWeapons()
+    public void DeactivateAllWeapons()
     {
-        // Desactiva todas las armas al inicio
         if (swordPrefab != null) swordPrefab.SetActive(false);
         if (fireballPrefab != null) fireballPrefab.SetActive(false);
         if (crucifixPrefab != null) crucifixPrefab.SetActive(false);
         if (javelinPrefab != null) javelinPrefab.SetActive(false);
         if (weapon5Prefab != null) weapon5Prefab.SetActive(false);
+    }
+
+    void Start()
+    {
+        DeactivateAllWeapons();
+        ActivateWeapon(swordPrefab); // El personaje empieza siempre con la espada
     }
 }

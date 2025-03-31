@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1563573574130638327}
   - component: {fileID: 6341511930106459692}
   - component: {fileID: 6483158404386359988}
+  - component: {fileID: 6346651580473497101}
   m_Layer: 7
   m_Name: CrucifixPrefab
   m_TagString: Untagged
@@ -175,6 +176,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c1c380e79e4bfa4eb56c70087352e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 8b5b1fbe12c7a96438672de9edf1987a, type: 2}
+--- !u!114 &6346651580473497101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7755434435846515150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e3e78130833c64f92b314449ee62d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 8b5b1fbe12c7a96438672de9edf1987a, type: 2}

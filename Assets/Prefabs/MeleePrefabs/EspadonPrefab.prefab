@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6482669315410278886}
   - component: {fileID: 72008411632040977}
   - component: {fileID: 8516848921303716566}
+  - component: {fileID: 4843617629506564228}
   m_Layer: 3
   m_Name: EspadonPrefab
   m_TagString: Untagged
@@ -141,6 +142,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c1c380e79e4bfa4eb56c70087352e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 34e7a7508b5484e40ab8f5faaa35ff31, type: 2}
+--- !u!114 &4843617629506564228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3370492357764059366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e3e78130833c64f92b314449ee62d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 34e7a7508b5484e40ab8f5faaa35ff31, type: 2}

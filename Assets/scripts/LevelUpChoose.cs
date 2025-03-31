@@ -33,21 +33,21 @@ public class LevelUpChoose : MonoBehaviour
     private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5" };
     private List<string> descriptions = new List<string>
     {
-        "El espadon",
+        "El espadón",
         "Dispara en función a donde apuntes con el ratón",
         "Dispara en posiciones aleatorias",
-        "Disapara al hacer click",
+        "Dispara al hacer click",
         "Descripción de Arma 5"
     };
 
     private List<System.Action> buttonFunctions = new List<System.Action>();
     private List<int> selectedWeaponIndexes = new List<int>();
 
-    public AudioSource audioSource; // Referencia al AudioSource
+    public AudioSource audioSource;
 
     void Start()
     {
-        panel.SetActive(false); // Asegura que el panel esté oculto al iniciar
+        panel.SetActive(false);
         buttonFunctions.Add(() => HandleButtonFunction(0));
         buttonFunctions.Add(() => HandleButtonFunction(1));
         buttonFunctions.Add(() => HandleButtonFunction(2));
@@ -57,46 +57,35 @@ public class LevelUpChoose : MonoBehaviour
 
     void Update()
     {
-        // Detecta las teclas numéricas 1, 2, 3
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            HandleButtonFunction(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            HandleButtonFunction(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            HandleButtonFunction(2);
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) HandleButtonFunction(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) HandleButtonFunction(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) HandleButtonFunction(2);
     }
 
     public void ShowPanel()
     {
-        AssignRandomWeapons(); // Asigna los textos e imágenes antes de mostrar el panel
+        AssignRandomWeapons();
         panel.SetActive(true);
-        Time.timeScale = 0; // Pausa el juego si es necesario
+        Time.timeScale = 0;
 
         if (audioSource != null)
         {
-            audioSource.Play(); // Reproduce el sonido
+            audioSource.Play();
         }
 
-        // Asigna una función aleatoria a cada botón
         AssignRandomFunctionsToButtons();
     }
 
     public void ClosePanel()
     {
         panel.SetActive(false);
-        Time.timeScale = 1; // Reanuda el juego
+        Time.timeScale = 1;
     }
 
     void AssignRandomWeapons()
     {
         List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4 };
-        selectedWeaponIndexes.Clear(); // Limpiar la lista de índices seleccionados
+        selectedWeaponIndexes.Clear();
 
         for (int i = 0; i < 3; i++)
         {
@@ -105,7 +94,6 @@ public class LevelUpChoose : MonoBehaviour
             availableIndexes.RemoveAt(randomIndex);
         }
 
-        // Asigna los valores aleatorios a los textos, descripciones e imágenes
         text1.text = weapons[selectedWeaponIndexes[0]];
         text2.text = weapons[selectedWeaponIndexes[1]];
         text3.text = weapons[selectedWeaponIndexes[2]];
@@ -130,36 +118,34 @@ public class LevelUpChoose : MonoBehaviour
         button3.onClick.AddListener(() => HandleButtonFunction(selectedWeaponIndexes[2]));
     }
 
-
-    // Funcionalidades para los botones
     public void HandleButtonFunction(int index)
     {
         GameObject weaponToActivate = null;
 
         switch (index)
         {
-            case 0: weaponToActivate = weaponUnlock.swordPrefab; break; // Espada
-            case 1: weaponToActivate = weaponUnlock.fireballPrefab; break; // Fireball
-            case 2: weaponToActivate = weaponUnlock.crucifixPrefab; break; // Crucifijo
-            case 3: weaponToActivate = weaponUnlock.javelinPrefab; break; // Javalina
-            case 4: weaponToActivate = weaponUnlock.weapon5Prefab; break; // Arma 5
+            case 0: weaponToActivate = weaponUnlock.swordPrefab; break;
+            case 1: weaponToActivate = weaponUnlock.fireballPrefab; break;
+            case 2: weaponToActivate = weaponUnlock.crucifixPrefab; break;
+            case 3: weaponToActivate = weaponUnlock.javelinPrefab; break;
+            case 4: weaponToActivate = weaponUnlock.weapon5Prefab; break;
         }
 
         if (weaponToActivate != null)
         {
-            Debug.Log("Activando arma: " + weaponToActivate.name);
+            Debug.Log("Activando arma desde panel de subida de nivel: " + weaponToActivate.name);
             weaponUnlock.ActivateWeapon(weaponToActivate);
         }
         else
         {
             Debug.LogError("La referencia del arma es nula.");
         }
+
+        ClosePanel();
     }
-
-
 }
 
-// Extensión para barajar la lista
+// Extensión para barajar listas (por si deseas usarla después)
 public static class ListExtensions
 {
     private static System.Random rng = new System.Random();

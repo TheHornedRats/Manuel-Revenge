@@ -32,83 +32,65 @@ public class WeaponData : ScriptableObject
 
     private float currentCooldown = 0f;
 
+    // Valores originales para evitar acumulaciones incorrectas
+    [SerializeField] private float originalBaseDamage;
+    [SerializeField] private float originalBaseCooldown;
+
+    void OnEnable()
+    {
+        // Guardamos una vez los valores base al cargar el asset
+        originalBaseDamage = baseDamage;
+        originalBaseCooldown = baseCooldown;
+    }
+
     public void InitWeapon(int weaponLevel)
     {
         float damageFactor = Mathf.Pow(damageIncreasePerLevel, weaponLevel - 1);
         float cooldownFactor = Mathf.Pow(cooldownReductionPerLevel, weaponLevel - 1);
 
-        baseDamage *= damageFactor;
-        baseCooldown *= cooldownFactor;
-        currentCooldown = 0;
+        baseDamage = originalBaseDamage * damageFactor;
+        baseCooldown = originalBaseCooldown * cooldownFactor;
+        currentCooldown = 0f;
+    }
+
+    public bool CanAttack()
+    {
+        return currentCooldown <= 0f;
     }
 
     public void UpdateWeapon(Vector3 playerPosition)
     {
-        // Reducir el cooldown siempre, para que se pueda disparar de nuevo al alcanzar 0
         if (currentCooldown > 0)
         {
             currentCooldown -= Time.deltaTime;
         }
 
-        // Para la Jabalina: Dispara al hacer clic si el cooldown ha finalizado.
-        if (weaponType == WeaponType.Javelin)
-        {
-            if (Input.GetMouseButtonDown(0) && CanAttack())
-            {
-                PerformAttack(playerPosition);
-            }
-        }
-        // Para el Crucifijo: Se dispara automáticamente cuando el cooldown llega a 0.
-        else if (weaponName == "Crucifijo")
-        {
-            if (CanAttack())
-            {
-                PerformAttack(playerPosition);
-            }
-        }
-        // Para el resto de armas (Melee, Projectile, ExpandingWave)
-        else
-        {
-            if (currentCooldown <= 0)
-            {
-                PerformAttack(playerPosition);
-            }
-        }
-    }
+        if (!CanAttack()) return;
 
-    public bool CanAttack()
-    {
-        return currentCooldown <= 0;
+        PerformAttack(playerPosition);
     }
 
     public void PerformAttack(Vector3 playerPos)
     {
-        if (currentCooldown > 0) return;
-
         Vector3 attackDirection = Vector3.right;
 
-        // Si es Crucifijo, se asigna una dirección aleatoria
         if (weaponName == "Crucifijo")
         {
             attackDirection = Random.insideUnitCircle.normalized;
         }
         else
         {
-            // Para los demás, se apunta hacia el mouse
-            if (Input.mousePosition != null)
-            {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                attackDirection = (mousePos - playerPos).normalized;
-            }
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            attackDirection = (mousePos - playerPos).normalized;
         }
 
         GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.identity);
-        Debug.Log(weaponName + " atacó.");
+        Debug.Log($"{weaponName} atacó.");
 
         switch (weaponType)
         {
             case WeaponType.Melee:
-                Destroy(attack, 0.1f);
+                Destroy(attack, 0.3f);
                 break;
 
             case WeaponType.Projectile:
@@ -123,14 +105,10 @@ public class WeaponData : ScriptableObject
                 break;
 
             case WeaponType.ExpandingWave:
-                ExpandingWave expandingWave = attack.GetComponent<ExpandingWave>();
-                if (expandingWave != null)
+                ExpandingWave wave = attack.GetComponent<ExpandingWave>();
+                if (wave != null)
                 {
-                    expandingWave.Initialize(attackDirection);
-                }
-                else
-                {
-                    Debug.LogError("ExpandingWave no encontrado.");
+                    wave.Initialize(attackDirection);
                 }
                 break;
 
@@ -145,7 +123,6 @@ public class WeaponData : ScriptableObject
                 break;
         }
 
-        // Reinicia el cooldown para permitir nuevos disparos
         currentCooldown = baseCooldown;
     }
 }
