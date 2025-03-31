@@ -29,19 +29,13 @@ public class WeaponUnlock : MonoBehaviour
 
     public void ActivateWeapon(GameObject weaponPrefab)
     {
-        // Desactiva la arma actual si hay alguna activa
-        if (currentWeapon != null)
-        {
-            currentWeapon.SetActive(false);
-        }
-
-        // Activa la nueva arma si está disponible
         if (weaponPrefab != null && !weaponPrefab.activeSelf)
         {
             weaponPrefab.SetActive(true);
-            currentWeapon = weaponPrefab;
+            Debug.Log("Arma activada: " + weaponPrefab.name);
         }
     }
+
 
     void DeactivateAllWeapons()
     {
