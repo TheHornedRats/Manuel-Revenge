@@ -1760,7 +1760,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6158be9b0c29ce144875b0727a4ae293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 1845886509}
+  timerText: {fileID: 0}
+  finalTimerText: {fileID: 0}
   player: {fileID: 244667593}
 --- !u!4 &525583758
 Transform:
@@ -2905,6 +2906,7 @@ MonoBehaviour:
   enemyPrefab1: {fileID: 6552913883591398799, guid: 85569bc9cf071f24d9b1d23f7046df78, type: 3}
   enemyPrefab2: {fileID: 6552913883591398799, guid: a931dbc30e49d1e4b9438193ce223285, type: 3}
   enemyPrefab3: {fileID: 6552913883591398799, guid: 0d64c51af7da8a24f92d84d494c2a1e5, type: 3}
+  enemyPrefab4: {fileID: 0}
   player: {fileID: 3672655057767452113}
   spawnRadius: 20
   initialSpawnInterval: 5
@@ -3048,6 +3050,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1033919588}
+  weaponUnlock: {fileID: 0}
+  text1: {fileID: 0}
+  text2: {fileID: 0}
+  text3: {fileID: 0}
+  desc1: {fileID: 0}
+  desc2: {fileID: 0}
+  desc3: {fileID: 0}
+  img1: {fileID: 0}
+  img2: {fileID: 0}
+  img3: {fileID: 0}
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  button3: {fileID: 0}
+  weaponImages: []
+  weaponSelectedText: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &1068883311
 GameObject:
   m_ObjectHideFlags: 0
@@ -4581,6 +4599,7 @@ MonoBehaviour:
   pointsPerLevel: 300
   levelMultiplier: 1.2
   scoreText: {fileID: 439723843}
+  finalScoreText: {fileID: 0}
   levelText: {fileID: 1631031734}
   playerAttack: {fileID: 0}
   UpgradeButton1: {fileID: 1739895679}
@@ -4909,7 +4928,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1747017032}
-  maxExp: 300
 --- !u!1 &1752456073
 GameObject:
   m_ObjectHideFlags: 0
@@ -5169,6 +5187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiempoText: {fileID: 38733565}
+  finalTiempoText: {fileID: 0}
 --- !u!1 &1845886507
 GameObject:
   m_ObjectHideFlags: 0

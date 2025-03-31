@@ -33,7 +33,7 @@ public class LevelUpChoose : MonoBehaviour
     // Nuevo texto para mostrar la descripción al seleccionar un arma
     public TextMeshProUGUI weaponSelectedText;
 
-    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5" };
+    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5", "Movimiento" };
     private List<string> descriptions = new List<string>
     {
         "El espadon",
@@ -56,6 +56,8 @@ public class LevelUpChoose : MonoBehaviour
         buttonFunctions.Add(() => HandleButtonFunction(2));
         buttonFunctions.Add(() => HandleButtonFunction(3));
         buttonFunctions.Add(() => HandleButtonFunction(4));
+        buttonFunctions.Add(() => HandleButtonFunction(5));
+        buttonFunctions.Add(() => HandleButtonFunction(6));
     }
 
     void Update()
