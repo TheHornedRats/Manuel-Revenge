@@ -7,6 +7,8 @@ public class LevelUpChoose : MonoBehaviour
 {
     public GameObject panel;
     public WeaponUnlock weaponUnlock;
+    public PlayerHealth playerHealth;
+    public PlayerMovement playerMovement;
 
     // Referencias a los textos dentro del panel
     public TextMeshProUGUI text1;
@@ -30,14 +32,16 @@ public class LevelUpChoose : MonoBehaviour
 
     public List<Sprite> weaponImages; // Asignar en el Inspector
 
-    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5" };
+    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5", "Vida", "Movimiento" };
     private List<string> descriptions = new List<string>
     {
         "El espadon",
         "Dispara en función a donde apuntes con el ratón",
         "Dispara en posiciones aleatorias",
-        "Disapara al hacer click",
-        "Descripción de Arma 5"
+        "Dispara al hacer click",
+        "Descripción de Arma 5",
+        "Más vida",
+        "Más velocidad de movimiento"
     };
 
     private List<System.Action> buttonFunctions = new List<System.Action>();
@@ -53,6 +57,8 @@ public class LevelUpChoose : MonoBehaviour
         buttonFunctions.Add(() => HandleButtonFunction(2));
         buttonFunctions.Add(() => HandleButtonFunction(3));
         buttonFunctions.Add(() => HandleButtonFunction(4));
+        buttonFunctions.Add(() => HandleButtonFunction(5));
+        buttonFunctions.Add(() => HandleButtonFunction(6));
     }
 
     void Update()
@@ -95,7 +101,7 @@ public class LevelUpChoose : MonoBehaviour
 
     void AssignRandomWeapons()
     {
-        List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4 };
+        List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 6 };
         selectedWeaponIndexes.Clear(); // Limpiar la lista de índices seleccionados
 
         for (int i = 0; i < 3; i++)
@@ -143,6 +149,8 @@ public class LevelUpChoose : MonoBehaviour
             case 2: weaponToActivate = weaponUnlock.crucifixPrefab; break; // Crucifijo
             case 3: weaponToActivate = weaponUnlock.javelinPrefab; break; // Javalina
             case 4: weaponToActivate = weaponUnlock.weapon5Prefab; break; // Arma 5
+            case 5: playerHealth.maxHealth += 100; break; // Vida
+            case 6: playerMovement.speed += 1; break; // Velocidad
         }
 
         if (weaponToActivate != null)
