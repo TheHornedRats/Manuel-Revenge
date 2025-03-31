@@ -108,7 +108,7 @@ public class WeaponData : ScriptableObject
         switch (weaponType)
         {
             case WeaponType.Melee:
-                Destroy(attack, 0.3f);
+                Destroy(attack, 0.1f);
                 break;
 
             case WeaponType.Projectile:

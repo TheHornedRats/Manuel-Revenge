@@ -66,6 +66,8 @@ public class WeaponHitbox : MonoBehaviour
                     if (bleedEffect == null)
                     {
                         bleedEffect = enemy.gameObject.AddComponent<BleedEffect>();
+
+                    bleedEffect.ApplyEffect(enemy);
                     }
                     // Actualizamos (o asignamos) las propiedades del efecto
                     bleedEffect.duration = weaponData.statusEffectDuration;

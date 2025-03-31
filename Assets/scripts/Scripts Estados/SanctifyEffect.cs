@@ -14,28 +14,41 @@ public class SanctifyEffect : StatusEffect
     /// </summary>
     protected override void CreateParticleSystem()
     {
-        // Llama al método base que crea el GameObject y el ParticleSystem
         base.CreateParticleSystem();
-
-        // Cambia el color de inicio a algo distintivo, por ejemplo, amarillo
-        var main = effectParticles.main;
-        main.startColor = Color.yellow;
-
-        // Asegúrate de asignar un material válido para partículas
-        ParticleSystemRenderer psRenderer = effectParticles.GetComponent<ParticleSystemRenderer>();
-        if (psRenderer != null)
+        if (effectParticles != null)
         {
-            // Creamos un material en runtime con un shader de partículas
-            Material runtimeMat = new Material(Shader.Find("Particles/Standard Unlit"));
-            psRenderer.material = runtimeMat;
+            var main = effectParticles.main;
+            main.startColor = new Color(1f, 0.95f, 0.7f); // Dorado suave
+            main.startSize = 0.15f;
+            main.startLifetime = 0.8f;
+            main.startSpeed = 0.1f;
+            // main.duration = ... -> NO tocar duration en tiempo de ejecución
 
-            // Opcional: Ajustar la capa de sorting si estás en 2D
-            psRenderer.sortingLayerName = "Default";
-            psRenderer.sortingOrder = 20;
+            var shape = effectParticles.shape;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = 15f;
+            shape.radius = 0.1f;
+
+            var emission = effectParticles.emission;
+            emission.rateOverTime = 10f;
+
+            var colorOverLifetime = effectParticles.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            Gradient grad = new Gradient();
+            grad.SetKeys(
+                new GradientColorKey[] {
+                new GradientColorKey(new Color(1f, 1f, 0.7f), 0.0f),
+                new GradientColorKey(Color.clear, 1.0f)
+                },
+                new GradientAlphaKey[] {
+                new GradientAlphaKey(1f, 0f),
+                new GradientAlphaKey(0f, 1f)
+                }
+            );
+            colorOverLifetime.color = grad;
         }
-
-        Debug.Log("[Santificación] Particle System creado y configurado.");
     }
+
 
     protected override void OnEffectStart()
     {

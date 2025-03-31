@@ -4,12 +4,20 @@ public class BleedEffect : StatusEffect
 {
     protected override void CreateParticleSystem()
     {
-        // Llama al método base para crear el sistema
         base.CreateParticleSystem();
-        // Cambia el color a rojo
-        var main = effectParticles.main;
-        main.startColor = Color.magenta;
+        if (effectParticles != null)
+        {
+            var main = effectParticles.main;
+            main.startColor = Color.red;
+
+            var shape = effectParticles.shape;
+            shape.shapeType = ParticleSystemShapeType.Hemisphere;
+
+            var emission = effectParticles.emission;
+            emission.rateOverTime = 25f;
+        }
     }
+
 
     public float damagePerSecond;
     public int tickCount;

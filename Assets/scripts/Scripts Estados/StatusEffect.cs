@@ -27,28 +27,46 @@ public abstract class StatusEffect : MonoBehaviour
 
     protected virtual void CreateParticleSystem()
     {
-        // Creamos un GameObject para las partículas y lo hacemos hijo del enemigo
         GameObject psObject = new GameObject($"{this.GetType().Name}_Particles");
         psObject.transform.SetParent(enemyHealth.transform, false);
 
-        // Agregamos un ParticleSystem
         effectParticles = psObject.AddComponent<ParticleSystem>();
 
-        // Configuramos el módulo Main del ParticleSystem
-        var mainModule = effectParticles.main;
-        mainModule.duration = duration;
-        mainModule.loop = false;             // No se repite indefinidamente
-        mainModule.playOnAwake = false;      // No comienza automáticamente
-        mainModule.startColor = Color.white; // Color base (puedes cambiarlo o sobrescribirlo en cada efecto)
-        mainModule.startSize = 0.5f;         // Tamaño de las partículas
+        var main = effectParticles.main;
+        main.duration = duration;
+        main.loop = true;
+        main.startLifetime = 0.5f;
+        main.startSize = 0.3f;
+        main.startSpeed = 0.1f;
+        main.gravityModifier = 0;
+        main.simulationSpace = ParticleSystemSimulationSpace.World;
+        main.startColor = Color.white;
 
-        // Opcional: configura la emisión
-        var emissionModule = effectParticles.emission;
-        emissionModule.rateOverTime = 10f;
+        var emission = effectParticles.emission;
+        emission.rateOverTime = 15f;
 
-        // Inicia la emisión
+        var shape = effectParticles.shape;
+        shape.shapeType = ParticleSystemShapeType.Sphere;
+        shape.radius = 0.1f;
+
+        var colorOverLifetime = effectParticles.colorOverLifetime;
+        colorOverLifetime.enabled = true;
+        Gradient grad = new Gradient();
+        grad.SetKeys(
+            new GradientColorKey[] {
+            new GradientColorKey(main.startColor.color, 0.0f),
+            new GradientColorKey(Color.clear, 1.0f)
+            },
+            new GradientAlphaKey[] {
+            new GradientAlphaKey(1.0f, 0.0f),
+            new GradientAlphaKey(0.0f, 1.0f)
+            }
+        );
+        colorOverLifetime.color = grad;
+
         effectParticles.Play();
     }
+
 
     protected virtual void Update()
     {

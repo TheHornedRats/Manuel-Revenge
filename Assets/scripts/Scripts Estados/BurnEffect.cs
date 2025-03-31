@@ -8,16 +8,22 @@ public class BurnEffect : StatusEffect
         if (effectParticles != null)
         {
             var main = effectParticles.main;
-            main.startColor = Color.red;
+            main.startColor = new Color(1f, 0.4f, 0f); // Naranja fuego
 
-            // Eliminar cualquier intento de modificar duration
-            if (!effectParticles.isStopped)
-            {
-                Debug.LogWarning(" El sistema de partículas ya está reproduciéndose. No se puede modificar duration.");
-                return;
-            }
+            var shape = effectParticles.shape;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = 25;
+            shape.radius = 0.15f;
+
+            var sizeOverLifetime = effectParticles.sizeOverLifetime;
+            sizeOverLifetime.enabled = true;
+            AnimationCurve curve = new AnimationCurve();
+            curve.AddKey(0.0f, 1f);
+            curve.AddKey(1.0f, 0f);
+            sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, curve);
         }
     }
+
 
     public GameObject fireEffectPrefab;
     private GameObject fireEffectInstance;

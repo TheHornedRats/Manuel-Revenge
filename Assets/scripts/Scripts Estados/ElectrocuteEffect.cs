@@ -8,21 +8,50 @@ public class ElectrocuteEffect : StatusEffect
 
     protected override void CreateParticleSystem()
     {
-        // Llama al método base para crear el ParticleSystem
         base.CreateParticleSystem();
-        // Cambia el color a azul para representar electrocución
-        var main = effectParticles.main;
-        main.startColor = Color.blue;
-        Debug.Log("ElectrocuteEffect: Particle system created with blue color.");
-
-        // Opcional: asigna un material válido para partículas, si es necesario
-        ParticleSystemRenderer renderer = effectParticles.GetComponent<ParticleSystemRenderer>();
-        if (renderer != null && renderer.material == null)
+        if (effectParticles != null)
         {
-            // Asegúrate de tener un material en Resources o asigna uno por defecto
-            renderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
+            var main = effectParticles.main;
+            main.startColor = new Color(0.3f, 0.8f, 1f); // Azul eléctrico
+            main.startSize = 0.2f;
+            main.startSpeed = 1.5f;
+            main.startLifetime = 0.4f;
+
+            var emission = effectParticles.emission;
+            emission.rateOverTime = 30f;
+
+            var shape = effectParticles.shape;
+            shape.shapeType = ParticleSystemShapeType.Circle;
+            shape.radius = 0.2f;
+            shape.arcMode = ParticleSystemShapeMultiModeValue.Random;
+
+            var lights = effectParticles.lights;
+            lights.enabled = true;
+            lights.intensityMultiplier = 1f;
+            lights.rangeMultiplier = 0.5f;
+
+            var trails = effectParticles.trails;
+            trails.enabled = true;
+            trails.ribbonCount = 1;
+            trails.lifetime = 0.3f;
+
+            var colorOverLifetime = effectParticles.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            Gradient grad = new Gradient();
+            grad.SetKeys(
+                new GradientColorKey[] {
+                new GradientColorKey(new Color(0.5f, 1f, 1f), 0.0f),
+                new GradientColorKey(Color.clear, 1.0f)
+                },
+                new GradientAlphaKey[] {
+                new GradientAlphaKey(1f, 0f),
+                new GradientAlphaKey(0f, 1f)
+                }
+            );
+            colorOverLifetime.color = grad;
         }
     }
+
 
     protected override void OnEffectStart()
     {
