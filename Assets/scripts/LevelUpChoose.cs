@@ -30,6 +30,9 @@ public class LevelUpChoose : MonoBehaviour
 
     public List<Sprite> weaponImages; // Asignar en el Inspector
 
+    // Nuevo texto para mostrar la descripción al seleccionar un arma
+    public TextMeshProUGUI weaponSelectedText;
+
     private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5" };
     private List<string> descriptions = new List<string>
     {
@@ -157,10 +160,27 @@ public class LevelUpChoose : MonoBehaviour
             Debug.LogError("La referencia del arma es nula.");
         }
 
+        // Mostrar el texto de selección de arma después de unos segundos de haber hecho clic
+        ShowWeaponSelectedText(weapons[index]);
+
         // Cerrar el panel después de seleccionar un arma
         ClosePanel();
     }
 
+    // Función para mostrar el texto de selección de arma y luego ocultarlo
+    private void ShowWeaponSelectedText(string weaponName)
+    {
+        // Usamos formato enriquecido para cambiar el color del nombre del arma a amarillo y el resto a blanco
+        weaponSelectedText.text = "Seleccionaste: <color=yellow>" + weaponName + "</color>";
+        weaponSelectedText.gameObject.SetActive(true);
+
+        // Desactivar el texto después de 2 segundos
+        Invoke("HideWeaponSelectedText", 2f);
+    }
 
 
+    private void HideWeaponSelectedText()
+    {
+        weaponSelectedText.gameObject.SetActive(false);
+    }
 }
