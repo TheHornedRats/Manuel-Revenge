@@ -9,11 +9,9 @@ public class Buffs : MonoBehaviour
     public Button[] buffButtons;
     public TextMeshProUGUI[] buffTexts;
 
-    private string[] buffs =
+    public static string[] buffs = // Ahora es estático para que LevelUpChoose pueda acceder
     {
-        "Resistente (+Vida)", "Matón (+Ataque)", "Atleta (+Vel. Movimiento)", "Ágil (+Vel. Ataque)",
-        "Veterano (+Vida y +Ataque)", "Hábil (+Vel. Movimiento y +Ataque)", "Piernas Firmes (+Vida y +Vel. Movimiento)",
-        "Brazos Firmes (+Daño y +Vel. Ataque)", "Experto (Ralentiza enemigos atacados)", "Noqueador (Probabilidad de paralizar enemigos)"
+        "Resistente (+Vida)", "Matón (+Ataque)", "Atleta (+Vel. Movimiento)", "Ágil (+Vel. Ataque)"
     };
 
     private PlayerHealth playerHealth;
@@ -57,7 +55,7 @@ public class Buffs : MonoBehaviour
         }
     }
 
-    private void ApplyBuff(int index)
+    public void ApplyBuff(int index)
     {
         switch (index)
         {
@@ -75,32 +73,6 @@ public class Buffs : MonoBehaviour
             case 3:
                 playerAttack.attackInterval *= 0.9f;
                 break;
-            case 4:
-                playerHealth.maxHealth += 10;
-                playerAttack.baseFireballDamage += 3;
-                playerHealth.healthSlider.maxValue = playerHealth.maxHealth;
-                playerHealth.healthSlider.value = playerHealth.maxHealth;
-                break;
-            case 5:
-                playerMovement.speed += 0.5f;
-                playerAttack.attackInterval *= 0.95f;
-                break;
-            case 6:
-                playerHealth.maxHealth += 10;
-                playerMovement.speed += 0.5f;
-                playerHealth.healthSlider.maxValue = playerHealth.maxHealth;
-                playerHealth.healthSlider.value = playerHealth.maxHealth;
-                break;
-            case 7:
-                playerAttack.baseFireballDamage += 3;
-                playerAttack.attackInterval *= 0.95f;
-                break;
-            case 8:
-                playerAttack.enemyLayer |= (1 << LayerMask.NameToLayer("Slowed"));
-                break;
-            case 9:
-                playerAttack.enemyLayer |= (1 << LayerMask.NameToLayer("Stunned"));
-                break;
         }
         ResumeGame();
     }
@@ -116,4 +88,3 @@ public class Buffs : MonoBehaviour
         }
     }
 }
-

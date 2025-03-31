@@ -1,4 +1,4 @@
-using UnityEngine;
+锘縰sing UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -13,12 +13,12 @@ public class LevelUpChoose : MonoBehaviour
     public TextMeshProUGUI text2;
     public TextMeshProUGUI text3;
 
-    // Referencias a los textos adicionales (descripci髇)
+    // Referencias a los textos adicionales (descripci贸n)
     public TextMeshProUGUI desc1;
     public TextMeshProUGUI desc2;
     public TextMeshProUGUI desc3;
 
-    // Referencias a las im醙enes dentro del panel
+    // Referencias a las im谩genes dentro del panel
     public Image img1;
     public Image img2;
     public Image img3;
@@ -30,62 +30,81 @@ public class LevelUpChoose : MonoBehaviour
 
     public List<Sprite> weaponImages; // Asignar en el Inspector
 
-    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5" };
+    // Nuevo texto para mostrar la descripci贸n al seleccionar un arma
+    public TextMeshProUGUI weaponSelectedText;
+
+    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Arma 5", "Movimiento" };
     private List<string> descriptions = new List<string>
     {
-        "El espad髇",
-        "Dispara en funci髇 a donde apuntes con el rat髇",
+        "El espadon",
+        "Dispara en funci贸n a donde apuntes con el rat贸n",
         "Dispara en posiciones aleatorias",
-        "Dispara al hacer click",
-        "Descripci髇 de Arma 5"
+        "Disapara al hacer click",
+        "Descripci贸n de Arma 5"
     };
 
     private List<System.Action> buttonFunctions = new List<System.Action>();
     private List<int> selectedWeaponIndexes = new List<int>();
 
-    public AudioSource audioSource;
+    public AudioSource audioSource; // Referencia al AudioSource
 
     void Start()
     {
-        panel.SetActive(false);
+        panel.SetActive(false); // Asegura que el panel est茅 oculto al iniciar
         buttonFunctions.Add(() => HandleButtonFunction(0));
         buttonFunctions.Add(() => HandleButtonFunction(1));
         buttonFunctions.Add(() => HandleButtonFunction(2));
         buttonFunctions.Add(() => HandleButtonFunction(3));
         buttonFunctions.Add(() => HandleButtonFunction(4));
+        buttonFunctions.Add(() => HandleButtonFunction(5));
+        buttonFunctions.Add(() => HandleButtonFunction(6));
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) HandleButtonFunction(0);
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) HandleButtonFunction(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) HandleButtonFunction(2);
+        // Detecta las teclas num茅ricas 1, 2, 3
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            HandleButtonFunction(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            HandleButtonFunction(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            HandleButtonFunction(2);
+        }
     }
 
     public void ShowPanel()
     {
-        AssignRandomWeapons();
+        AssignRandomWeapons(); // Asigna los textos e im谩genes antes de mostrar el panel
         panel.SetActive(true);
-        Time.timeScale = 0;
+
+        // Eliminar esta l铆nea si no quieres pausar el juego
+        // Time.timeScale = 0; 
 
         if (audioSource != null)
         {
-            audioSource.Play();
+            audioSource.Play(); // Reproduce el sonido
         }
 
+        // Asigna una funci贸n aleatoria a cada bot贸n
         AssignRandomFunctionsToButtons();
     }
+
 
     public void ClosePanel()
     {
         panel.SetActive(false);
-        Time.timeScale = 1;
+        Time.timeScale = 1; // Reanuda el juego
     }
 
     void AssignRandomWeapons()
     {
         List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4 };
-        selectedWeaponIndexes.Clear();
+        selectedWeaponIndexes.Clear(); // Limpiar la lista de 铆ndices seleccionados
 
         for (int i = 0; i < 3; i++)
         {
@@ -94,6 +113,7 @@ public class LevelUpChoose : MonoBehaviour
             availableIndexes.RemoveAt(randomIndex);
         }
 
+        // Asigna los valores aleatorios a los textos, descripciones e im谩genes
         text1.text = weapons[selectedWeaponIndexes[0]];
         text2.text = weapons[selectedWeaponIndexes[1]];
         text3.text = weapons[selectedWeaponIndexes[2]];
@@ -118,22 +138,23 @@ public class LevelUpChoose : MonoBehaviour
         button3.onClick.AddListener(() => HandleButtonFunction(selectedWeaponIndexes[2]));
     }
 
+    // Funcionalidades para los botones
     public void HandleButtonFunction(int index)
     {
         GameObject weaponToActivate = null;
 
         switch (index)
         {
-            case 0: weaponToActivate = weaponUnlock.swordPrefab; break;
-            case 1: weaponToActivate = weaponUnlock.fireballPrefab; break;
-            case 2: weaponToActivate = weaponUnlock.crucifixPrefab; break;
-            case 3: weaponToActivate = weaponUnlock.javelinPrefab; break;
-            case 4: weaponToActivate = weaponUnlock.weapon5Prefab; break;
+            case 0: weaponToActivate = weaponUnlock.swordPrefab; break; // Espada
+            case 1: weaponToActivate = weaponUnlock.fireballPrefab; break; // Fireball
+            case 2: weaponToActivate = weaponUnlock.crucifixPrefab; break; // Crucifijo
+            case 3: weaponToActivate = weaponUnlock.javelinPrefab; break; // Javalina
+            case 4: weaponToActivate = weaponUnlock.weapon5Prefab; break; // Arma 5
         }
 
         if (weaponToActivate != null)
         {
-            Debug.Log("Activando arma desde panel de subida de nivel: " + weaponToActivate.name);
+            Debug.Log("Activando arma: " + weaponToActivate.name);
             weaponUnlock.ActivateWeapon(weaponToActivate);
         }
         else
@@ -141,25 +162,27 @@ public class LevelUpChoose : MonoBehaviour
             Debug.LogError("La referencia del arma es nula.");
         }
 
+        // Mostrar el texto de selecci贸n de arma despu茅s de unos segundos de haber hecho clic
+        ShowWeaponSelectedText(weapons[index]);
+
+        // Cerrar el panel despu茅s de seleccionar un arma
         ClosePanel();
     }
-}
 
-// Extensi髇 para barajar listas (por si deseas usarla despu閟)
-public static class ListExtensions
-{
-    private static System.Random rng = new System.Random();
-
-    public static void Shuffle<T>(this IList<T> list)
+    // Funci贸n para mostrar el texto de selecci贸n de arma y luego ocultarlo
+    private void ShowWeaponSelectedText(string weaponName)
     {
-        int n = list.Count;
-        while (n > 1)
-        {
-            n--;
-            int k = rng.Next(n + 1);
-            T value = list[k];
-            list[k] = list[n];
-            list[n] = value;
-        }
+        // Usamos formato enriquecido para cambiar el color del nombre del arma a amarillo y el resto a blanco
+        weaponSelectedText.text = "Seleccionaste: <color=yellow>" + weaponName + "</color>";
+        weaponSelectedText.gameObject.SetActive(true);
+
+        // Desactivar el texto despu茅s de 2 segundos
+        Invoke("HideWeaponSelectedText", 2f);
+    }
+
+
+    private void HideWeaponSelectedText()
+    {
+        weaponSelectedText.gameObject.SetActive(false);
     }
 }
