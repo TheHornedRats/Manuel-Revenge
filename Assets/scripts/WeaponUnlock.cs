@@ -8,6 +8,8 @@ public class WeaponUnlock : MonoBehaviour
     public GameObject crucifixPrefab; // Crucifijo
     public GameObject javelinPrefab;  // Javalina
     public GameObject weapon5Prefab;  // Test
+    public GameObject HpPrefab;  // Test
+    public GameObject MovementPrefab;  // Test
 
     private GameObject currentWeapon;
 
@@ -25,6 +27,8 @@ public class WeaponUnlock : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3)) ActivateWeapon(crucifixPrefab);
         else if (Input.GetKeyDown(KeyCode.Alpha4)) ActivateWeapon(javelinPrefab);
         else if (Input.GetKeyDown(KeyCode.Alpha5)) ActivateWeapon(weapon5Prefab);
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) ActivateWeapon(HpPrefab);
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) ActivateWeapon(MovementPrefab);
     }
 
     public void ActivateWeapon(GameObject weaponPrefab)
@@ -45,5 +49,7 @@ public class WeaponUnlock : MonoBehaviour
         if (crucifixPrefab != null) crucifixPrefab.SetActive(false);
         if (javelinPrefab != null) javelinPrefab.SetActive(false);
         if (weapon5Prefab != null) weapon5Prefab.SetActive(false);
+        if (HpPrefab != null) HpPrefab.SetActive(false);
+        if (MovementPrefab != null) MovementPrefab.SetActive(false);
     }
 }
