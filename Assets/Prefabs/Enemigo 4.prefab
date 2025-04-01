@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6117527990875597863}
   - component: {fileID: 6989639326869216412}
   - component: {fileID: -3819563168698776304}
-  - component: {fileID: 5261114266691593387}
   m_Layer: 6
   m_Name: Enemigo 4
   m_TagString: Enemy
@@ -209,19 +208,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 50
   damageInterval: 1
---- !u!114 &5261114266691593387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6552913883591398799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3e5b4a958bc11c4e8bd69049931e9e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftBound: -40
-  rightBound: 40
-  topBound: 15
-  bottomBound: -15
