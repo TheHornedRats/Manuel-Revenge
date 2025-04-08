@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/otras escenas (en teoria no se usan)/Menu.unity
     guid: a4b4333506fb1b448855ed4d6e3087ae
   - enabled: 1
-    path: Assets/Scenes/MARC.unity
+    path: Assets/Scenes/otras escenas (en teoria no se usan)/MARC.unity
     guid: 3a1f79be53864fa4ab53afb26fd160e5
   m_configObjects: {}
