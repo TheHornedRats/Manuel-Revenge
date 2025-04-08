@@ -4,32 +4,28 @@ using UnityEngine;
 public class WeaponHandler : MonoBehaviour
 {
     public List<WeaponData> weapons = new List<WeaponData>();
-    public WeaponData weaponData;
 
-    private Dictionary<string, int> weaponLevels = new Dictionary<string, int>();
-
-    public void ActivateOrUpgradeWeapon(WeaponData weaponData)
+    private void Start()
     {
-        if (weapons.Contains(weaponData))
+        if (weapons.Count == 0)
         {
-            //  Asegúrate de que existe en el diccionario antes de incrementar
-            if (!weaponLevels.ContainsKey(weaponData.weaponName))
-                weaponLevels[weaponData.weaponName] = 1;
-
-            weaponLevels[weaponData.weaponName]++;
-            int newLevel = weaponLevels[weaponData.weaponName];
-            weaponData.InitWeapon(newLevel);
-            Debug.Log($"{weaponData.weaponName} sube a nivel {newLevel}");
+            Debug.LogError("No hay armas en WeaponHandler.");
+            return;
         }
-        else
+
+        foreach (WeaponData weapon in weapons)
         {
-            weapons.Add(weaponData);
-            weaponLevels[weaponData.weaponName] = 1;
-            weaponData.InitWeapon(1);
-            Debug.Log($"{weaponData.weaponName} activada en nivel 1");
+            if (weapon != null)
+            {
+                Debug.Log("Arma añadida: " + weapon.weaponName);
+                weapon.InitWeapon(1);
+            }
+            else
+            {
+                Debug.LogError("Hay un espacio vacío en la lista de armas.");
+            }
         }
     }
-
 
     private void Update()
     {
@@ -41,5 +37,7 @@ public class WeaponHandler : MonoBehaviour
             }
         }
     }
-}
 
+
+
+}

@@ -1,42 +1,38 @@
 using UnityEngine;
-using System.Linq;
 
 public class ElectrocuteEffect : StatusEffect
 {
     public float chainDamage = 10f;
     public float chainRadius = 3f;
     public LayerMask enemyLayer;
-    public int maxChains = 5; // Limitar a 5 enemigos
 
     protected override void CreateParticleSystem()
     {
+        // Llama al método base para crear el ParticleSystem
         base.CreateParticleSystem();
-        if (effectParticles != null)
+        // Cambia el color a azul para representar electrocución
+        var main = effectParticles.main;
+        main.startColor = Color.blue;
+        Debug.Log("ElectrocuteEffect: Particle system created with blue color.");
+
+        // Opcional: asigna un material válido para partículas, si es necesario
+        ParticleSystemRenderer renderer = effectParticles.GetComponent<ParticleSystemRenderer>();
+        if (renderer != null && renderer.material == null)
         {
-            var main = effectParticles.main;
-            main.startColor = new Color(0.3f, 0.8f, 1f); // Azul eléctrico
+            // Asegúrate de tener un material en Resources o asigna uno por defecto
+            renderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
         }
     }
-
 
     protected override void OnEffectStart()
     {
         Debug.Log("ElectrocuteEffect: OnEffectStart called.");
-
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(
-            enemyHealth.transform.position,
-            chainRadius,
-            enemyLayer
-        );
-
-        int chainsDone = 0;
+        // Detecta enemigos en el radio de propagación
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(enemyHealth.transform.position, chainRadius, enemyLayer);
 
         foreach (Collider2D enemy in enemies)
         {
-            if (chainsDone >= maxChains)
-                break;
-
-            if (enemy.gameObject != enemyHealth.gameObject)
+            if (enemy.gameObject != enemyHealth.gameObject) // Evitar auto-daño
             {
                 EnemyHealth targetHealth = enemy.GetComponent<EnemyHealth>();
                 if (targetHealth != null)
@@ -44,18 +40,17 @@ public class ElectrocuteEffect : StatusEffect
                     targetHealth.TakeDamage(Mathf.RoundToInt(chainDamage));
                     Debug.Log($"{enemy.name} recibió daño por electrocución!");
 
+                    // Propagar efecto de electrocución a otros enemigos
                     if (enemy.GetComponent<ElectrocuteEffect>() == null)
                     {
                         ElectrocuteEffect newElectrocute = enemy.gameObject.AddComponent<ElectrocuteEffect>();
                         newElectrocute.duration = duration;
-                        newElectrocute.chainDamage = chainDamage * 0.7f;
+                        newElectrocute.chainDamage = chainDamage * 0.7f; // Reduce el daño en cada propagación
                         newElectrocute.chainRadius = chainRadius;
                         newElectrocute.enemyLayer = enemyLayer;
-                        newElectrocute.maxChains = maxChains;
-                        newElectrocute.ApplyEffect(targetHealth);
+                        // Llama a ApplyEffect para que el nuevo efecto cree sus partículas
+                        newElectrocute.ApplyEffect(enemy.GetComponent<EnemyHealth>());
                     }
-
-                    chainsDone++;
                 }
             }
         }

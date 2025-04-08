@@ -2,19 +2,28 @@ using UnityEngine;
 
 public abstract class StatusEffect : MonoBehaviour
 {
-    public float duration; // Duración total del efecto
+    public float duration;            // Duración total del efecto
     protected EnemyHealth enemyHealth;
     protected float elapsedTime = 0f; // Tiempo transcurrido desde que se aplicó el efecto
 
-    // Sistema de partículas generado dinámicamente
+    // Variable para almacenar el ParticleSystem creado por código
     protected ParticleSystem effectParticles;
 
     public void ApplyEffect(EnemyHealth target)
     {
+        if (target == null)
+        {
+            Debug.LogError(" ERROR: Intento de aplicar efecto a un EnemyHealth NULL.");
+            return;
+        }
+
         enemyHealth = target;
+        Debug.Log($" {this.GetType().Name} aplicado correctamente a {enemyHealth.name}");
+
         OnEffectStart();
         CreateParticleSystem();
     }
+
 
     protected virtual void CreateParticleSystem()
     {
@@ -22,47 +31,39 @@ public abstract class StatusEffect : MonoBehaviour
         GameObject psObject = new GameObject($"{this.GetType().Name}_Particles");
         psObject.transform.SetParent(enemyHealth.transform, false);
 
-        // Añadir componente ParticleSystem y su renderer
+        // Agregamos un ParticleSystem
         effectParticles = psObject.AddComponent<ParticleSystem>();
-        psObject.AddComponent<ParticleSystemRenderer>(); // Asegura que se vea
 
-        // Configuración básica
+        // Configuramos el módulo Main del ParticleSystem
         var mainModule = effectParticles.main;
         mainModule.duration = duration;
-        mainModule.loop = false;
-        mainModule.playOnAwake = false;
-        mainModule.startColor = Color.white;
-        mainModule.startSize = 0.5f;
+        mainModule.loop = false;             // No se repite indefinidamente
+        mainModule.playOnAwake = false;      // No comienza automáticamente
+        mainModule.startColor = Color.white; // Color base (puedes cambiarlo o sobrescribirlo en cada efecto)
+        mainModule.startSize = 0.5f;         // Tamaño de las partículas
 
+        // Opcional: configura la emisión
         var emissionModule = effectParticles.emission;
         emissionModule.rateOverTime = 10f;
 
-        // Asignar un material temporal para evitar el magenta
-        var renderer = effectParticles.GetComponent<ParticleSystemRenderer>();
-        if (renderer != null)
-        {
-            Shader particleShader = Shader.Find("Particles/Standard Unlit");
-            if (particleShader != null)
-            {
-                Material defaultMat = new Material(particleShader);
-                defaultMat.SetColor("_Color", Color.white); // Color base
-                renderer.material = defaultMat;
-            }
-            else
-            {
-                Debug.LogWarning("No se encontró el shader 'Particles/Standard Unlit'.");
-            }
-        }
-
-        // Iniciar la emisión
+        // Inicia la emisión
         effectParticles.Play();
     }
 
     protected virtual void Update()
     {
         elapsedTime += Time.deltaTime;
+
+
         OnEffectUpdate();
 
+        // Si el efecto tiene ticks de daño, aplica en intervalos
+        if (this is DamageOverTimeEffect dotEffect)
+        {
+            dotEffect.ApplyDamageTick();
+        }
+
+        // Si el efecto ha durado lo suficiente, finaliza y destruye el ParticleSystem
         if (elapsedTime >= duration)
         {
             OnEffectEnd();
@@ -74,7 +75,8 @@ public abstract class StatusEffect : MonoBehaviour
         }
     }
 
-    // Métodos sobrescribibles
+
+    // Métodos virtuales para que cada efecto pueda sobrescribir su comportamiento
     protected virtual void OnEffectStart() { }
     protected virtual void OnEffectUpdate() { }
     protected virtual void OnEffectEnd() { }

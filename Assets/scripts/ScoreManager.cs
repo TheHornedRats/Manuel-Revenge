@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
     public int score = 0;
     public int level = 1;
     public int pointsPerLevel = 100;
-    public float levelMultiplier = 1.4f;
+    public float levelMultiplier = 1.2f;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI finalScoreText;

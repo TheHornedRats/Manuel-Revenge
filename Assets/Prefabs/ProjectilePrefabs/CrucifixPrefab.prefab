@@ -14,14 +14,13 @@ GameObject:
   - component: {fileID: 1563573574130638327}
   - component: {fileID: 6341511930106459692}
   - component: {fileID: 6483158404386359988}
-  - component: {fileID: 6346651580473497101}
   m_Layer: 7
   m_Name: CrucifixPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7104507150012355457
 Transform:
   m_ObjectHideFlags: 0
@@ -31,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 7755434435846515150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 1, z: 1}
-  m_LocalScale: {x: 10, y: 10, z: 0}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 2.59, y: 2.8, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -78,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -359511342, guid: 0618f4eeabc84784ca03625d77332229, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 233975827, guid: e175eac1bd11c984d9aa571c413b38ae, type: 3}
+  m_Color: {r: 1, g: 0.97566605, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.58, y: 0.58}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -176,19 +175,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c1c380e79e4bfa4eb56c70087352e36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 8b5b1fbe12c7a96438672de9edf1987a, type: 2}
---- !u!114 &6346651580473497101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7755434435846515150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e3e78130833c64f92b314449ee62d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 8b5b1fbe12c7a96438672de9edf1987a, type: 2}
