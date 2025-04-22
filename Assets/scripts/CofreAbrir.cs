@@ -14,7 +14,8 @@ public class LevelUpTrigger : MonoBehaviour
             {
                 levelUpChoose.ShowPanel(); // Llama al método para mostrar el panel
                 Time.timeScale = 0; // Pausa el juego
-                // Si el panel es interactivo, solo pausar el fondo o elementos no interactivos.
+                                    // Si el panel es interactivo, solo pausar el fondo o elementos no interactivos.
+                Destroy(gameObject);
             }
             else
             {

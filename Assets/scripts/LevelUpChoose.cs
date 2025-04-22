@@ -89,10 +89,7 @@ public class LevelUpChoose : MonoBehaviour
         // Eliminar esta línea si no quieres pausar el juego
         // Time.timeScale = 0; 
 
-        if (audioSource != null)
-        {
-            audioSource.Play(); // Reproduce el sonido
-        }
+      
 
         // Asigna una función aleatoria a cada botón
         AssignRandomFunctionsToButtons();
@@ -107,7 +104,7 @@ public class LevelUpChoose : MonoBehaviour
 
     void AssignRandomWeapons()
     {
-        List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 6 };
+        List<int> availableIndexes = new List<int> { 0, 1, 2, 3, 4, 5, };
         selectedWeaponIndexes.Clear(); // Limpiar la lista de índices seleccionados
 
         for (int i = 0; i < 3; i++)

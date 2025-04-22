@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("MARC", LoadSceneMode.Single); //Cargar la escena principal y cerrar la otra
+        SceneManager.LoadScene("GeneralScene", LoadSceneMode.Single); //Cargar la escena principal y cerrar la otra
     }
 
     public void QuitGame()
