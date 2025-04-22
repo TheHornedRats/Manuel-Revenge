@@ -3,7 +3,8 @@ guid: 97a5a4c435eed0a45be38678618ffe3e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - electricArcPrefab: {fileID: 2102791010240444834, guid: 87e1f1f635def7d4b98626f9f32a0605, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -99,9 +99,14 @@ public class WeaponHitbox : MonoBehaviour
                     electrocute.chainDamage = weaponData.statusEffectDamage;
                     electrocute.chainRadius = 3f;
                     electrocute.enemyLayer = LayerMask.GetMask("Enemy");
-                    electrocute.ApplyEffect(enemy); // ¡Importante para crear el ParticleSystem!
+
+                    // Asigna el prefab aquí
+                    electrocute.electricArcPrefab = weaponData.electricArcPrefab;
+
+                    electrocute.ApplyEffect(enemy);
                 }
                 break;
+
 
 
             case "Santificación":

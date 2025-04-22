@@ -16,6 +16,7 @@ MonoBehaviour:
   weaponType: 3
   attackPrefab: {fileID: 7755434435846515150, guid: dc1b73674b3005a42a4e9702a40d0a17, type: 3}
   explosionEffectPrefab: {fileID: 0}
+  electricArcPrefab: {fileID: 2102791010240444834, guid: 87e1f1f635def7d4b98626f9f32a0605, type: 3}
   baseDamage: 12
   baseCooldown: 5
   projectileSpeed: 30

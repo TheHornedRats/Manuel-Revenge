@@ -10,6 +10,7 @@ public class WeaponData : ScriptableObject
     public WeaponType weaponType;
     public GameObject attackPrefab;
     public GameObject explosionEffectPrefab;
+    public GameObject electricArcPrefab;
 
     [Header("Estadísticas del Arma")]
     public float baseDamage = 10f;
