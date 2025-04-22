@@ -162,7 +162,7 @@ public class LevelUpChoose : MonoBehaviour
         }
         else
         {
-            Debug.LogError("La referencia del arma es nula.");
+            Debug.LogWarning("La referencia del arma es nula.");
         }
 
         // Mostrar el texto de selección de arma después de unos segundos de haber hecho clic

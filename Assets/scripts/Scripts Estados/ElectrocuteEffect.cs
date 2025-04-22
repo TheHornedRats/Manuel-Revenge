@@ -30,6 +30,9 @@ public class ElectrocuteEffect : StatusEffect
         // Detecta enemigos en el radio de propagación
         Collider2D[] enemies = Physics2D.OverlapCircleAll(enemyHealth.transform.position, chainRadius, enemyLayer);
 
+        int maxChains = 5;
+        int chainCount = 0;
+
         foreach (Collider2D enemy in enemies)
         {
             if (enemy.gameObject != enemyHealth.gameObject) // Evitar auto-daño
@@ -51,6 +54,10 @@ public class ElectrocuteEffect : StatusEffect
                         // Llama a ApplyEffect para que el nuevo efecto cree sus partículas
                         newElectrocute.ApplyEffect(enemy.GetComponent<EnemyHealth>());
                     }
+
+                    chainCount++;
+                    if (chainCount >= maxChains)
+                        break; // Detiene la propagación si se alcanzó el límite
                 }
             }
         }
