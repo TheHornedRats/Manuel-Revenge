@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;                 // Vida máxima del jugador
     private int currentHealth;                  // Vida actual del jugador
     public GameObject deathScreen;              // Pantalla de muerte
+    public GameObject uiScreen;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
         healthSlider.maxValue = maxHealth;      // Configura el valor máximo del slider
         healthSlider.value = currentHealth;     // Establece el valor actual del slider
         deathScreen.SetActive(false);           // Desactiva la pantalla de muerte al empezar
+        uiScreen.SetActive(true);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -63,6 +65,8 @@ public class PlayerHealth : MonoBehaviour
         if (deathScreen != null)
         {
             deathScreen.SetActive(true);  // Activa la pantalla de muerte
+            uiScreen.SetActive(false);
+
             Debug.Log("Pantalla de muerte");
         }
         else
