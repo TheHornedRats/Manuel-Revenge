@@ -28,12 +28,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8989224513304549000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -10.9, y: 4.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2249206565153328083
 SpriteRenderer:
@@ -144,7 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d281ccfec211e499ef7dd45f1e1d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelUpChoose: {fileID: 6815981662819612062, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
+  levelUpChoose: {fileID: 0}
+  nuevoSprite: {fileID: 1159943164, guid: 54e03d5aeb547da4fa256b2458ebaa3e, type: 3}
 --- !u!50 &266838793308574957
 Rigidbody2D:
   serializedVersion: 4

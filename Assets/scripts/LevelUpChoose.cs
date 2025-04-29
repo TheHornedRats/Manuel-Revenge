@@ -42,7 +42,6 @@ public class LevelUpChoose : MonoBehaviour
         "Dispara en función a donde apuntes con el ratón",
         "Dispara en posiciones aleatorias",
         "Disapara al hacer click",
-        "Descripción de Arma 5",
         "Más vida",
         "Más velocidad de movimiento"
     };
