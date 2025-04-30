@@ -29,14 +29,14 @@ public class Trucos : MonoBehaviour
 
     void Update()
     {
-        // Detectar teclas I, X, M, V
+        // Detectar teclas Y, U, I, O
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            TogglePlayerCollider();
+            OnAddScoreButtonClick();
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            OnAddScoreButtonClick();
+            TogglePlayerCollider();
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
