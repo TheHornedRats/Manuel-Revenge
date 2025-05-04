@@ -85,7 +85,7 @@ public class ScoreManager : MonoBehaviour
     private void UpdateUI()
     {
         if (scoreText != null)
-            scoreText.text = "Puntuación: " + score;
+            scoreText.text = "" + score;
         else
             Debug.LogWarning("ScoreText no asignado en el Inspector.");
 
