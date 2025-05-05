@@ -1,19 +1,22 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [Header("Salud")]
     public int maxHealth = 100;
     private int currentHealth;
+    private bool isDead = false;
+
+    [Header("Recompensa de Puntuación y Experiencia")]
     public int puntuacion;
     public GameObject xp5Prefab;
     public GameObject xp10Prefab;
     public GameObject xp20Prefab;
     public float dropRange = 1.0f;
-    private bool isDead = false;
 
-    public TextMeshPro comboTextPrefab;  // Para TextMeshPro en la UI
+    [Header("Combo")]
+    public TextMeshPro comboTextPrefab;
     private static int comboCount = 0;
     private static float lastKillTime;
     private static float comboResetTime = 3.0f;
@@ -25,7 +28,9 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log($"[DEBUG] {name} recibiendo {damage} de daño de {this.GetType().Name}"); // Mensaje de depuración
+        if (isDead) return;
+
+        Debug.Log($"[DEBUG] {name} recibiendo {damage} de daño por {this.GetType().Name}");
 
         currentHealth -= damage;
         Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
@@ -42,7 +47,6 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-
     public int GetHealth()
     {
         return currentHealth;
@@ -50,14 +54,14 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log(name + " ha muerto.");
         isDead = true;
+        Debug.Log($"{name} ha muerto.");
 
         UpdateCombo();
         DropXPItems();
 
-        Destroy(gameObject);
         ScoreManager.instance.AddScore(5);
+        Destroy(gameObject);
     }
 
     private void DropXPItems()
@@ -92,11 +96,9 @@ public class EnemyHealth : MonoBehaviour
 
         TextMeshPro comboTextInstance = Instantiate(comboTextPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
         comboTextInstance.text = $"Combo x{comboCount}";
-
         comboTextInstance.fontSize = Mathf.Clamp(3 + (comboCount * 0.5f), 3, 7);
         comboTextInstance.color = Color.Lerp(Color.white, Color.red, comboCount / 10f);
 
         Destroy(comboTextInstance.gameObject, 1.5f);
     }
-  
 }

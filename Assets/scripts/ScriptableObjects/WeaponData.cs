@@ -34,6 +34,7 @@ public class WeaponData : ScriptableObject
     
     [Header("Partículas de Efecto")]
     public GameObject burnParticlesPrefab;
+    public GameObject sanctifyParticlesPrefab;
 
     public void InitWeapon(int weaponLevel)
     {

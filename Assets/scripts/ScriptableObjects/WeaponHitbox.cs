@@ -24,9 +24,6 @@ public class WeaponHitbox : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
-            // Destruir el proyectil inmediatamente al colisionar
-            Destroy(gameObject);
-
             EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
             Rigidbody2D enemyRb = collision.GetComponent<Rigidbody2D>();
 
@@ -44,11 +41,14 @@ public class WeaponHitbox : MonoBehaviour
                 Debug.Log($"{collision.name} fue empalado y fuertemente empujado! Fuerza aplicada: {weaponData.knockbackForce * 5f}");
             }
 
-            // Para proyectiles con efecto de explosión, instanciar la explosión
+            // Para proyectiles con efecto de explosión
             if (weaponData.weaponType == WeaponType.Projectile && weaponData.explosionEffectPrefab != null)
             {
                 Instantiate(weaponData.explosionEffectPrefab, transform.position, Quaternion.identity);
             }
+
+            // Destruimos el proyectil al final, después de todo
+            Destroy(gameObject);
         }
     }
 
@@ -67,7 +67,7 @@ public class WeaponHitbox : MonoBehaviour
                     {
                         bleedEffect = enemy.gameObject.AddComponent<BleedEffect>();
                     }
-                    // Actualizamos (o asignamos) las propiedades del efecto
+
                     bleedEffect.duration = weaponData.statusEffectDuration;
                     bleedEffect.damagePerSecond = weaponData.statusEffectDamage;
                     bleedEffect.tickCount = weaponData.statusEffectTicks;
@@ -88,13 +88,10 @@ public class WeaponHitbox : MonoBehaviour
                     burnEffect.spreadChance = 0.3f;
                     burnEffect.spreadRadius = 1.5f;
 
-                    //  Asignación del prefab de partículas desde WeaponData
                     burnEffect.fireEffectPrefab = weaponData.burnParticlesPrefab;
-
-                    burnEffect.ApplyEffect(enemy); // ¡IMPORTANTE! Siempre después de configurar
+                    burnEffect.ApplyEffect(enemy);
                 }
                 break;
-
 
             case "Electrocución":
                 if (enemy.GetComponent<ElectrocuteEffect>() == null)
@@ -104,10 +101,9 @@ public class WeaponHitbox : MonoBehaviour
                     electrocute.chainDamage = weaponData.statusEffectDamage;
                     electrocute.chainRadius = 3f;
                     electrocute.enemyLayer = LayerMask.GetMask("Enemy");
-                    electrocute.ApplyEffect(enemy); // ¡Importante para crear el ParticleSystem!
+                    electrocute.ApplyEffect(enemy);
                 }
                 break;
-
 
             case "Santificación":
                 {
@@ -116,12 +112,11 @@ public class WeaponHitbox : MonoBehaviour
                     {
                         existingEffect = enemy.gameObject.AddComponent<SanctifyEffect>();
                         existingEffect.duration = weaponData.statusEffectDuration;
+                        existingEffect.sanctifyEffectPrefab = weaponData.sanctifyParticlesPrefab;
                         existingEffect.ApplyEffect(enemy);
                     }
                 }
                 break;
-
         }
     }
-
 }

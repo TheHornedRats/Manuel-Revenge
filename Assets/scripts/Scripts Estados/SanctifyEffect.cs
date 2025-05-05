@@ -2,19 +2,15 @@ using UnityEngine;
 
 public class SanctifyEffect : StatusEffect
 {
-    // Multiplicador para reducir el daño del enemigo
     private float reductionMultiplier = 0.7f;
-    // Porcentaje de curación para el jugador
     private float healPercentage = 0.1f;
-    // Almacenamos el daño original para restaurarlo al finalizar el efecto
     private int originalDamage = -1;
 
-
-
+    public GameObject sanctifyEffectPrefab;
+    private GameObject sanctifyEffectInstance;
 
     protected override void OnEffectStart()
     {
-        // Lógica de reducción de daño del enemigo
         EnemyAttack enemyAttack = enemyHealth.GetComponent<EnemyAttack>();
         if (enemyAttack != null)
         {
@@ -28,9 +24,18 @@ public class SanctifyEffect : StatusEffect
         {
             Debug.LogWarning($"[Santificación] {enemyHealth.name} NO tiene EnemyAttack.");
         }
+
+        if (sanctifyEffectPrefab != null)
+        {
+            sanctifyEffectInstance = Instantiate(sanctifyEffectPrefab, enemyHealth.transform.position, Quaternion.identity, enemyHealth.transform);
+            Debug.Log("[Santificación] Prefab de partículas instanciado.");
+        }
+        else
+        {
+            Debug.LogWarning("[Santificación] No se ha asignado un prefab visual para la santificación.");
+        }
     }
 
-    
     public void HealPlayer(int damageDealt)
     {
         if (damageDealt <= 0) return;
@@ -53,12 +58,16 @@ public class SanctifyEffect : StatusEffect
 
     protected override void OnEffectEnd()
     {
-        // Restaurar el daño original
         EnemyAttack enemyAttack = enemyHealth.GetComponent<EnemyAttack>();
         if (enemyAttack != null && originalDamage > 0)
         {
             enemyAttack.damage = originalDamage;
             Debug.Log($"{enemyHealth.name} ha recuperado su daño original: {originalDamage}");
+        }
+
+        if (sanctifyEffectInstance != null)
+        {
+            Destroy(sanctifyEffectInstance);
         }
     }
 }
