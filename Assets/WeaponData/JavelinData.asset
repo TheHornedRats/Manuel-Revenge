@@ -29,3 +29,6 @@ MonoBehaviour:
   statusEffectDamage: 1
   statusEffectTicks: 2
   knockbackForce: 5
+  burnParticlesPrefab: {fileID: 0}
+  sanctifyParticlesPrefab: {fileID: 0}
+  electrocuteParticlesPrefab: {fileID: 870358350188661871, guid: 89522171c3161aa4a98bb63d06f0a5a1, type: 3}
