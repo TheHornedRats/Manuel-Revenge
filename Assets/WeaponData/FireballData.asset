@@ -29,3 +29,4 @@ MonoBehaviour:
   statusEffectDamage: 2
   statusEffectTicks: 20
   knockbackForce: 5
+  burnParticlesPrefab: {fileID: 870358350188661871, guid: 5230e566ae4806f4b87d15ed01f80346, type: 3}

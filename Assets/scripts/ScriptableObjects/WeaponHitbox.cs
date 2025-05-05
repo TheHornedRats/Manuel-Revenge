@@ -81,15 +81,20 @@ public class WeaponHitbox : MonoBehaviour
                     {
                         burnEffect = enemy.gameObject.AddComponent<BurnEffect>();
                     }
-                    burnEffect.ApplyEffect(enemy); // IMPORTANTE: Ahora el efecto sabe a qué enemigo aplicarse.
 
                     burnEffect.duration = weaponData.statusEffectDuration;
                     burnEffect.damagePerSecond = weaponData.statusEffectDamage;
                     burnEffect.tickCount = weaponData.statusEffectTicks;
                     burnEffect.spreadChance = 0.3f;
                     burnEffect.spreadRadius = 1.5f;
+
+                    //  Asignación del prefab de partículas desde WeaponData
+                    burnEffect.fireEffectPrefab = weaponData.burnParticlesPrefab;
+
+                    burnEffect.ApplyEffect(enemy); // ¡IMPORTANTE! Siempre después de configurar
                 }
                 break;
+
 
             case "Electrocución":
                 if (enemy.GetComponent<ElectrocuteEffect>() == null)

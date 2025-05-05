@@ -2,22 +2,8 @@ using UnityEngine;
 
 public class BurnEffect : StatusEffect
 {
-    protected override void CreateParticleSystem()
-    {
-        base.CreateParticleSystem();
-        if (effectParticles != null)
-        {
-            var main = effectParticles.main;
-            main.startColor = Color.red;
-
-            // Eliminar cualquier intento de modificar duration
-            if (!effectParticles.isStopped)
-            {
-                Debug.LogWarning(" El sistema de partículas ya está reproduciéndose. No se puede modificar duration.");
-                return;
-            }
-        }
-    }
+    
+    
 
     public GameObject fireEffectPrefab;
     private GameObject fireEffectInstance;

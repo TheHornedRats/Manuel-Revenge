@@ -6,8 +6,7 @@ public abstract class StatusEffect : MonoBehaviour
     protected EnemyHealth enemyHealth;
     protected float elapsedTime = 0f; // Tiempo transcurrido desde que se aplicó el efecto
 
-    // Variable para almacenar el ParticleSystem creado por código
-    protected ParticleSystem effectParticles;
+  
 
     public void ApplyEffect(EnemyHealth target)
     {
@@ -20,36 +19,14 @@ public abstract class StatusEffect : MonoBehaviour
         enemyHealth = target;
         Debug.Log($" {this.GetType().Name} aplicado correctamente a {enemyHealth.name}");
 
-        OnEffectStart();
-        CreateParticleSystem();
+    
     }
 
 
-    protected virtual void CreateParticleSystem()
-    {
-        // Creamos un GameObject para las partículas y lo hacemos hijo del enemigo
-        GameObject psObject = new GameObject($"{this.GetType().Name}_Particles");
-        psObject.transform.SetParent(enemyHealth.transform, false);
+   
+       
 
-        // Agregamos un ParticleSystem
-        effectParticles = psObject.AddComponent<ParticleSystem>();
-
-        // Configuramos el módulo Main del ParticleSystem
-        var mainModule = effectParticles.main;
-        mainModule.duration = duration;
-        mainModule.loop = false;             // No se repite indefinidamente
-        mainModule.playOnAwake = false;      // No comienza automáticamente
-        mainModule.startColor = Color.white; // Color base (puedes cambiarlo o sobrescribirlo en cada efecto)
-        mainModule.startSize = 0.5f;         // Tamaño de las partículas
-
-        // Opcional: configura la emisión
-        var emissionModule = effectParticles.emission;
-        emissionModule.rateOverTime = 10f;
-
-        // Inicia la emisión
-        effectParticles.Play();
-    }
-
+       
     protected virtual void Update()
     {
         elapsedTime += Time.deltaTime;
@@ -63,16 +40,7 @@ public abstract class StatusEffect : MonoBehaviour
             dotEffect.ApplyDamageTick();
         }
 
-        // Si el efecto ha durado lo suficiente, finaliza y destruye el ParticleSystem
-        if (elapsedTime >= duration)
-        {
-            OnEffectEnd();
-            if (effectParticles != null)
-            {
-                Destroy(effectParticles.gameObject);
-            }
-            Destroy(this);
-        }
+       
     }
 
 

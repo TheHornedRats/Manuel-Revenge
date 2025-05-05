@@ -31,6 +31,9 @@ public class WeaponData : ScriptableObject
     public float knockbackForce = 5f;
 
     private float currentCooldown = 0f;
+    
+    [Header("Partículas de Efecto")]
+    public GameObject burnParticlesPrefab;
 
     public void InitWeapon(int weaponLevel)
     {
