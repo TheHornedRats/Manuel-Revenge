@@ -6,23 +6,7 @@ public class ElectrocuteEffect : StatusEffect
     public float chainRadius = 3f;
     public LayerMask enemyLayer;
 
-    protected override void CreateParticleSystem()
-    {
-        // Llama al método base para crear el ParticleSystem
-        base.CreateParticleSystem();
-        // Cambia el color a azul para representar electrocución
-        var main = effectParticles.main;
-        main.startColor = Color.blue;
-        Debug.Log("ElectrocuteEffect: Particle system created with blue color.");
-
-        // Opcional: asigna un material válido para partículas, si es necesario
-        ParticleSystemRenderer renderer = effectParticles.GetComponent<ParticleSystemRenderer>();
-        if (renderer != null && renderer.material == null)
-        {
-            // Asegúrate de tener un material en Resources o asigna uno por defecto
-            renderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
-        }
-    }
+  
 
     protected override void OnEffectStart()
     {
