@@ -8,15 +8,15 @@ public class EnemyFollow : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 movementOffset;
+    private SpriteRenderer spriteRenderer;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Movimiento individual leve para evitar formación perfecta
         movementOffset = Random.insideUnitCircle * 0.5f;
 
-        // Asegurar configuración de Rigidbody
         rb.gravityScale = 0;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
@@ -29,5 +29,11 @@ public class EnemyFollow : MonoBehaviour
         Vector2 direction = (targetPosition - rb.position).normalized;
 
         rb.velocity = direction * speed;
+
+        // Flip si se mueve hacia la derecha
+        if (direction.x != 0 && spriteRenderer != null)
+        {
+            spriteRenderer.flipX = direction.x > 0;
+        }
     }
 }
