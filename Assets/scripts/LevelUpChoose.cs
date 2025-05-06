@@ -41,7 +41,7 @@ public class LevelUpChoose : MonoBehaviour
 
     void Start()
     {
-        panel.SetActive(false);
+        //panel.SetActive(false);
     }
 
     void Update()
