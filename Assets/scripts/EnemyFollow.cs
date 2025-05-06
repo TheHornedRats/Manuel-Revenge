@@ -1,68 +1,33 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class EnemyFollow : MonoBehaviour
 {
-    public Transform player; // Referencia al jugador
-    public float speed = 2f; // Velocidad de movimiento del enemigo
-    private float originalSpeed;
+    public Transform player;
+    public float speed = 2f;
 
-    private bool isStunned = false;
-    private float stunDuration = 0f;
+    private Rigidbody2D rb;
+    private Vector2 movementOffset;
 
     private void Start()
     {
-        originalSpeed = speed; // Guardamos la velocidad original
+        rb = GetComponent<Rigidbody2D>();
+
+        // Movimiento individual leve para evitar formación perfecta
+        movementOffset = Random.insideUnitCircle * 0.5f;
+
+        // Asegurar configuración de Rigidbody
+        rb.gravityScale = 0;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (isStunned)
-        {
-            stunDuration -= Time.deltaTime;
-            if (stunDuration <= 0)
-            {
-                isStunned = false;
-                speed = originalSpeed;
-            }
-            return; // No se mueve mientras está aturdido
-        }
+        if (player == null) return;
 
-        // Comprueba que el jugador está asignado
-        if (player != null)
-        {
-            // Calcula la dirección hacia el jugador
-            Vector3 direction = (player.position - transform.position).normalized;
+        Vector2 targetPosition = (Vector2)player.position + movementOffset;
+        Vector2 direction = (targetPosition - rb.position).normalized;
 
-            // Mueve al enemigo hacia el jugador sin necesidad de rotarlo
-            transform.position += direction * speed * Time.deltaTime;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Ralentización
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Slowed"))
-        {
-            speed = originalSpeed * 0.5f; // Reduce la velocidad a la mitad
-        }
-
-        // Aturdimiento
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Stunned"))
-        {
-            isStunned = true;
-            stunDuration = 2f; // Duración del aturdimiento (2 segundos)
-            speed = 0f; // Detiene al enemigo
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        // Si deja de colisionar con la capa ralentizada, vuelve a la velocidad normal
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Slowed"))
-        {
-            speed = originalSpeed;
-        }
+        rb.velocity = direction * speed;
     }
 }
-
-
