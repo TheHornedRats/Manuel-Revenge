@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerHealth : MonoBehaviour
@@ -19,7 +18,9 @@ public class PlayerHealth : MonoBehaviour
     public Color vidaBajaColor = Color.red;
     public float umbralVidaBaja = 0.25f;
 
-    private Quaternion sliderInitialRotation;
+    public AudioClip damageSound;
+    public AudioClip deathSound; // <- Nuevo campo para el sonido de muerte
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -30,18 +31,9 @@ public class PlayerHealth : MonoBehaviour
         deathScreen.SetActive(false);
         uiScreen.SetActive(true);
 
-        sliderInitialRotation = healthSlider.transform.rotation;
+        audioSource = GetComponent<AudioSource>();
 
         ActualizarTextoVida();
-    }
-
-    void Update()
-    {
-        // Mantiene la barra sin rotación, aunque el personaje se gire
-        if (healthSlider != null)
-        {
-            healthSlider.transform.rotation = sliderInitialRotation;
-        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -57,6 +49,16 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         healthSlider.value = currentHealth;
+
+        if (damageSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(damageSound);
+        }
+        else
+        {
+            Debug.Log("Falta asignar 'damageSound' o 'AudioSource' en el objeto con PlayerHealth.");
+        }
+
         Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + currentHealth);
 
         ActualizarTextoVida();
@@ -73,7 +75,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         healthSlider.value = currentHealth;
 
-        Debug.Log($" El jugador ha sido curado por {amount} puntos de vida. Vida antes: {previousHealth}, Vida actual: {currentHealth}");
+        Debug.Log($"El jugador ha sido curado por {amount} puntos de vida. Vida antes: {previousHealth}, Vida actual: {currentHealth}");
 
         ActualizarTextoVida();
     }
@@ -85,22 +87,39 @@ public class PlayerHealth : MonoBehaviour
             vidaTexto.text = "Vida: " + currentHealth + " / " + maxHealth;
 
             float porcentaje = (float)currentHealth / maxHealth;
-            vidaTexto.color = (porcentaje <= umbralVidaBaja) ? vidaBajaColor : vidaNormalColor;
+            if (porcentaje <= umbralVidaBaja)
+            {
+                vidaTexto.color = vidaBajaColor;
+            }
+            else
+            {
+                vidaTexto.color = vidaNormalColor;
+            }
         }
     }
 
     private void Die()
     {
         Debug.Log(name + " ha muerto.");
+
+        if (deathSound != null)
+        {
+            GameObject tempGO = new GameObject("TempAudio"); // Objeto temporal
+            tempGO.transform.position = transform.position;
+
+            AudioSource tempSource = tempGO.AddComponent<AudioSource>();
+            tempSource.clip = deathSound;
+            tempSource.volume = 2.0f; // <- Puedes poner más de 1 aquí
+            tempSource.Play();
+
+            Destroy(tempGO, deathSound.length); // Eliminar al acabar el sonido
+        }
+
         if (deathScreen != null)
         {
             deathScreen.SetActive(true);
             uiScreen.SetActive(false);
             Debug.Log("Pantalla de muerte");
-        }
-        else
-        {
-            Debug.Log("Error, no se asigna pantalla muerte");
         }
 
         Time.timeScale = 0f;
