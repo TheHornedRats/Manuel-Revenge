@@ -1,33 +1,43 @@
-using System.Collections;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InfiniteMap : MonoBehaviour
 {
-    public GameObject chunkPrefab;  // Prefab del Chunk
-    public Camera mainCamera;       // Referencia a la cámara principal
-    public float chunkSize = 10f;   // Tamaño de cada Chunk
-    public float despawnDelay = 3f; // Tiempo antes de eliminar un chunk fuera de la vista
+    [Header("Variantes de Chunk")]
+    public List<GameObject> chunkPrefabs;
+
+    [Header("Obstáculos aleatorios")]
+    public List<GameObject> obstaclePrefabs;
+    public int minObstaclesPerChunk = 0;
+    public int maxObstaclesPerChunk = 3;
+
+    [Header("Cámara y tamaño")]
+    public Camera mainCamera;
+    public Transform player;
+    public float chunkSize = 10f;
+    public float despawnDelay = 3f;
 
     private Vector2Int lastChunkPosition;
-    private Dictionary<Vector2Int, GameObject> spawnedChunks = new Dictionary<Vector2Int, GameObject>(); // Chunks activos
-    private Dictionary<Vector2Int, float> chunksToDelete = new Dictionary<Vector2Int, float>(); // Chunks en proceso de eliminación
+    private Dictionary<Vector2Int, GameObject> spawnedChunks = new Dictionary<Vector2Int, GameObject>();
+    private Dictionary<Vector2Int, float> chunksToDelete = new Dictionary<Vector2Int, float>();
 
     void Start()
     {
         if (mainCamera == null) mainCamera = Camera.main;
-        lastChunkPosition = GetChunkPosition(mainCamera.transform.position);
-        GenerateChunksAroundCamera();
+        if (player == null) Debug.LogError(" No se ha asignado el jugador al InfiniteMap.");
+
+        lastChunkPosition = GetChunkPosition(player.position);
+        GenerateChunksAroundPlayer();
     }
 
     void LateUpdate()
     {
-        Vector2Int currentChunk = GetChunkPosition(mainCamera.transform.position);
+        Vector2Int currentChunk = GetChunkPosition(player.position);
 
         if (currentChunk != lastChunkPosition)
         {
             lastChunkPosition = currentChunk;
-            GenerateChunksAroundCamera();
+            GenerateChunksAroundPlayer();
             ScheduleChunkRemoval();
         }
 
@@ -42,7 +52,7 @@ public class InfiniteMap : MonoBehaviour
         );
     }
 
-    void GenerateChunksAroundCamera()
+    void GenerateChunksAroundPlayer()
     {
         float camHeight = 2f * mainCamera.orthographicSize;
         float camWidth = camHeight * mainCamera.aspect;
@@ -50,7 +60,7 @@ public class InfiniteMap : MonoBehaviour
         int chunksX = Mathf.CeilToInt(camWidth / chunkSize) + 3;
         int chunksY = Mathf.CeilToInt(camHeight / chunkSize) + 3;
 
-        Vector2Int centerChunk = GetChunkPosition(mainCamera.transform.position);
+        Vector2Int centerChunk = GetChunkPosition(player.position);
 
         for (int x = -chunksX / 2 - 1; x <= chunksX / 2 + 1; x++)
         {
@@ -74,8 +84,33 @@ public class InfiniteMap : MonoBehaviour
     void SpawnChunk(Vector2Int position)
     {
         Vector3 worldPosition = new Vector3(position.x * chunkSize, position.y * chunkSize, 0);
-        GameObject newChunk = Instantiate(chunkPrefab, worldPosition, Quaternion.identity);
+
+        // Seleccionar prefab aleatorio
+        GameObject prefab = chunkPrefabs[Random.Range(0, chunkPrefabs.Count)];
+        GameObject newChunk = Instantiate(prefab, worldPosition, Quaternion.identity);
         spawnedChunks.Add(position, newChunk);
+
+        // Generar obstáculos aleatorios dentro del chunk
+        if (obstaclePrefabs != null && obstaclePrefabs.Count > 0)
+        {
+            int count = Random.Range(minObstaclesPerChunk, maxObstaclesPerChunk + 1);
+
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 randomOffset = new Vector3(
+                    Random.Range(-chunkSize / 2f + 1f, chunkSize / 2f - 1f),
+                    Random.Range(-chunkSize / 2f + 1f, chunkSize / 2f - 1f),
+                    0f
+                );
+
+                GameObject obstacle = Instantiate(
+                    obstaclePrefabs[Random.Range(0, obstaclePrefabs.Count)],
+                    worldPosition + randomOffset,
+                    Quaternion.identity,
+                    newChunk.transform
+                );
+            }
+        }
     }
 
     void ScheduleChunkRemoval()
@@ -86,8 +121,7 @@ public class InfiniteMap : MonoBehaviour
         int chunksX = Mathf.CeilToInt(camWidth / chunkSize) + 5;
         int chunksY = Mathf.CeilToInt(camHeight / chunkSize) + 5;
 
-        Vector2Int centerChunk = GetChunkPosition(mainCamera.transform.position);
-
+        Vector2Int centerChunk = GetChunkPosition(player.position);
         List<Vector2Int> toRemove = new List<Vector2Int>();
 
         foreach (var chunk in spawnedChunks)
@@ -126,7 +160,7 @@ public class InfiniteMap : MonoBehaviour
         {
             if (spawnedChunks.ContainsKey(chunkPos))
             {
-                spawnedChunks[chunkPos].SetActive(false); // Desactiva en lugar de destruir
+                spawnedChunks[chunkPos].SetActive(false); // O Destroy si no quieres conservar memoria
                 spawnedChunks.Remove(chunkPos);
             }
             chunksToDelete.Remove(chunkPos);

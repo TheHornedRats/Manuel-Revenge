@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro; // Necesario para usar TextMeshProUGUI
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -13,11 +13,13 @@ public class PlayerHealth : MonoBehaviour
     private int currentHealth;
     public GameObject deathScreen;
     public GameObject uiScreen;
-    public TextMeshProUGUI vidaTexto; // Texto que muestra la vida
+    public TextMeshProUGUI vidaTexto;
 
     public Color vidaNormalColor = Color.white;
     public Color vidaBajaColor = Color.red;
-    public float umbralVidaBaja = 0.25f; // Porcentaje a partir del cual el texto cambia de color
+    public float umbralVidaBaja = 0.25f;
+
+    private Quaternion sliderInitialRotation;
 
     void Start()
     {
@@ -28,7 +30,18 @@ public class PlayerHealth : MonoBehaviour
         deathScreen.SetActive(false);
         uiScreen.SetActive(true);
 
+        sliderInitialRotation = healthSlider.transform.rotation;
+
         ActualizarTextoVida();
+    }
+
+    void Update()
+    {
+        // Mantiene la barra sin rotación, aunque el personaje se gire
+        if (healthSlider != null)
+        {
+            healthSlider.transform.rotation = sliderInitialRotation;
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -72,14 +85,7 @@ public class PlayerHealth : MonoBehaviour
             vidaTexto.text = "Vida: " + currentHealth + " / " + maxHealth;
 
             float porcentaje = (float)currentHealth / maxHealth;
-            if (porcentaje <= umbralVidaBaja)
-            {
-                vidaTexto.color = vidaBajaColor;
-            }
-            else
-            {
-                vidaTexto.color = vidaNormalColor;
-            }
+            vidaTexto.color = (porcentaje <= umbralVidaBaja) ? vidaBajaColor : vidaNormalColor;
         }
     }
 
