@@ -772,7 +772,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.3, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3726,7 +3726,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4661,8 +4661,8 @@ RectTransform:
   m_Father: {fileID: 1085547740}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.3, y: 0}
+  m_AnchorMax: {x: 0.3, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7288,7 +7288,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.3, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7800,8 +7800,8 @@ RectTransform:
   m_Father: {fileID: 638710750}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.3, y: 0}
+  m_AnchorMax: {x: 0.3, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7876,10 +7876,10 @@ RectTransform:
   m_Father: {fileID: 1861845505}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.096559666, y: 0.6454979}
-  m_AnchorMax: {x: 0.8398533, y: 0.763174}
-  m_AnchoredPosition: {x: -1.2999878, y: 0}
-  m_SizeDelta: {x: 1, y: -2}
+  m_AnchorMin: {x: 0.091000006, y: 0.317}
+  m_AnchorMax: {x: 0.8398533, y: 0.42800003}
+  m_AnchoredPosition: {x: 0.2000122, y: 0.19999695}
+  m_SizeDelta: {x: -2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1362925906
 MonoBehaviour:
@@ -8649,13 +8649,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: fb2df886f8bf0f249ad26a4528f2e537, type: 3}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+      - m_Target: {fileID: 11500000, guid: 2169ee6b0a1e5dd4ea1f6935f1e4c36b, type: 3}
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9750,10 +9750,10 @@ RectTransform:
   m_Father: {fileID: 1861845505}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.07985322, y: 0.545}
-  m_AnchorMax: {x: 0.9251468, y: 0.65300006}
-  m_AnchoredPosition: {x: -1, y: 0}
-  m_SizeDelta: {x: 272.50452, y: 25.885902}
+  m_AnchorMin: {x: 0.07985322, y: 0.21200001}
+  m_AnchorMax: {x: 0.9251468, y: 0.326}
+  m_AnchoredPosition: {x: -1, y: -0.2999878}
+  m_SizeDelta: {x: 272.50452, y: 22.885902}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1693619475
 MonoBehaviour:
@@ -9802,7 +9802,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -10762,8 +10762,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0544f2505ee3f44bba8f9c6ce9a104e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkPrefab: {fileID: 4684069897927677923, guid: 7256dba0374bebf4893cd621677a4851, type: 3}
+  chunkPrefabs: []
+  obstaclePrefabs: []
+  minObstaclesPerChunk: 0
+  maxObstaclesPerChunk: 3
   mainCamera: {fileID: 519420031}
+  player: {fileID: 0}
   chunkSize: 15
   despawnDelay: 3
 --- !u!4 &1928158525
@@ -12410,6 +12414,10 @@ PrefabInstance:
     - target: {fileID: 6346215216998267343, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
       value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584064792381305428, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6815981662819612062, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
       propertyPath: speedUI
