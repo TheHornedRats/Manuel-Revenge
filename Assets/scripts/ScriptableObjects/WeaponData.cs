@@ -96,6 +96,7 @@ public class WeaponData : ScriptableObject
         if (weaponName == "Crucifijo")
         {
             attackDirection = Random.insideUnitCircle.normalized;
+
         }
         else
         {
@@ -104,6 +105,7 @@ public class WeaponData : ScriptableObject
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 attackDirection = (mousePos - playerPos).normalized;
+           
             }
         }
 

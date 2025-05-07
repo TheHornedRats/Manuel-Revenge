@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
     private bool isDead = false;
+    private Animator animator;
 
     [Header("Recompensa de Puntuación y Experiencia")]
     public int puntuacion;
@@ -24,6 +25,7 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damage)
@@ -34,6 +36,9 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= damage;
         Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
+
+        if (animator != null)
+            animator.SetTrigger("Hurt");
 
         SanctifyEffect sanctifyEffect = GetComponent<SanctifyEffect>();
         if (sanctifyEffect != null)
@@ -57,11 +62,16 @@ public class EnemyHealth : MonoBehaviour
         isDead = true;
         Debug.Log($"{name} ha muerto.");
 
+        if (animator != null)
+            animator.SetTrigger("Die");
+
         UpdateCombo();
         DropXPItems();
 
         ScoreManager.instance.AddScore(5);
-        Destroy(gameObject);
+
+        // Espera a que la animación termine antes de destruir
+        Destroy(gameObject, 1f); // Ajusta según la duración de la animación
     }
 
     private void DropXPItems()

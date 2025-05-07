@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 6117527990875597863}
   - component: {fileID: 6989639326869216412}
   - component: {fileID: -3819563168698776304}
-  - component: {fileID: -8948065079445760954}
-  - component: {fileID: 7096946488793344436}
+  - component: {fileID: 6410618257802649599}
+  - component: {fileID: 7697357288571541304}
   m_Layer: 6
-  m_Name: Enemigo 3
+  m_Name: Enemigo 2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,11 +32,11 @@ Transform:
   m_GameObject: {fileID: 6552913883591398799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.865, y: -1.946, z: 0}
-  m_LocalScale: {x: 7.49, y: 7.49, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &621623707179278101
 SpriteRenderer:
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -30421664, guid: 19298ad017b90c243937b9d346dffdf2, type: 3}
+  m_Sprite: {fileID: 1283917226, guid: fc7c49ca01d4d9f408373c90ea032b43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -143,10 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78857a5f2308fc44988c7516f484fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 100
   puntuacion: 0
   xp5Prefab: {fileID: 1785084165971269622, guid: 41ec522568104394597ec504faa84723, type: 3}
-  xp10Prefab: {fileID: 1785084165971269622, guid: aa1f316760e09434cb2b2919c06e4ec4, type: 3}
+  xp10Prefab: {fileID: 5323331309410571035, guid: 6fd4f0c1c4ddd804b934d9ecc88aeb2e, type: 3}
   xp20Prefab: {fileID: 1785084165971269622, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
   dropRange: 1
   comboTextPrefab: {fileID: 0}
@@ -162,9 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0239c6320693d6b43b332337aac02a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 15
   damageInterval: 1
---- !u!58 &-8948065079445760954
+--- !u!58 &6410618257802649599
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,10 +196,10 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.03, y: 0}
   serializedVersion: 2
-  m_Radius: 0.24
---- !u!95 &7096946488793344436
+  m_Radius: 0.56081915
+--- !u!95 &7697357288571541304
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -209,7 +209,7 @@ Animator:
   m_GameObject: {fileID: 6552913883591398799}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d8fdc627be2e5e3478fb6891c7de8aac, type: 2}
+  m_Controller: {fileID: 9100000, guid: 61b59ae0f3a0b8042be6bb20bce53b44, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
