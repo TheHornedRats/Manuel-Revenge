@@ -72,6 +72,9 @@ public class LevelUpChoose : MonoBehaviour
         AssignRandomFunctionsToButtons();
         panel.SetActive(true);
         Time.timeScale = 0; // Pausa el juego si lo deseas
+
+        if (audioSource != null)
+            audioSource.Play(); // <-- reproducir sonido al abrir panel
     }
 
     public void ClosePanel()
