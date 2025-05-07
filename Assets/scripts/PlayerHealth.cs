@@ -1,25 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Necesario para usar UI
-using UnityEngine.SceneManagement; // Necesario para cargar escenas
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro; // Necesario para usar TextMeshProUGUI
 
 public class PlayerHealth : MonoBehaviour
 {
     public int damage;
-    public Slider healthSlider;                 // Referencia al Slider de la barra de vida
-    public int maxHealth = 100;                 // Vida máxima del jugador
-    private int currentHealth;                  // Vida actual del jugador
-    public GameObject deathScreen;              // Pantalla de muerte
+    public Slider healthSlider;
+    public int maxHealth = 100;
+    private int currentHealth;
+    public GameObject deathScreen;
     public GameObject uiScreen;
+    public TextMeshProUGUI vidaTexto; // Texto que muestra la vida
+
+    public Color vidaNormalColor = Color.white;
+    public Color vidaBajaColor = Color.red;
+    public float umbralVidaBaja = 0.25f; // Porcentaje a partir del cual el texto cambia de color
 
     void Start()
     {
-        currentHealth = maxHealth;              // Inicializa la vida al máximo
-        healthSlider.maxValue = maxHealth;      // Configura el valor máximo del slider
-        healthSlider.value = currentHealth;     // Establece el valor actual del slider
-        deathScreen.SetActive(false);           // Desactiva la pantalla de muerte al empezar
+        currentHealth = maxHealth;
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = currentHealth;
+
+        deathScreen.SetActive(false);
         uiScreen.SetActive(true);
+
+        ActualizarTextoVida();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -32,19 +41,14 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamagePlayer(int damage)
     {
-
         currentHealth -= damage;
-
-        currentHealth -= damage; // Reducimos `currentHealth` en lugar de `maxHealth`
-
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Asegura que la vida no sea menor a 0
-        healthSlider.value = currentHealth;  // Actualiza la barra de vida
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthSlider.value = currentHealth;
         Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + currentHealth);
 
-        if (currentHealth <= 0)  // Cambio aquí, comparar con currentHealth, no maxHealth
+        ActualizarTextoVida();
 
         if (currentHealth <= 0)
-
         {
             Die();
         }
@@ -52,11 +56,31 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(int amount)
     {
-        int previousHealth = currentHealth; // Guardamos la vida antes de curar
+        int previousHealth = currentHealth;
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        healthSlider.value = currentHealth; // Asegura que la UI de la barra de vida refleje el cambio
+        healthSlider.value = currentHealth;
 
         Debug.Log($" El jugador ha sido curado por {amount} puntos de vida. Vida antes: {previousHealth}, Vida actual: {currentHealth}");
+
+        ActualizarTextoVida();
+    }
+
+    private void ActualizarTextoVida()
+    {
+        if (vidaTexto != null)
+        {
+            vidaTexto.text = "Vida: " + currentHealth + " / " + maxHealth;
+
+            float porcentaje = (float)currentHealth / maxHealth;
+            if (porcentaje <= umbralVidaBaja)
+            {
+                vidaTexto.color = vidaBajaColor;
+            }
+            else
+            {
+                vidaTexto.color = vidaNormalColor;
+            }
+        }
     }
 
     private void Die()
@@ -64,9 +88,8 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log(name + " ha muerto.");
         if (deathScreen != null)
         {
-            deathScreen.SetActive(true);  // Activa la pantalla de muerte
+            deathScreen.SetActive(true);
             uiScreen.SetActive(false);
-
             Debug.Log("Pantalla de muerte");
         }
         else
@@ -74,8 +97,8 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Error, no se asigna pantalla muerte");
         }
 
-        Time.timeScale = 0f; // Detiene el tiempo
+        Time.timeScale = 0f;
         Camera.main.transform.SetParent(null);
-        gameObject.SetActive(false); // Desactiva al jugador (puedes modificar esto si prefieres destruirlo)
+        gameObject.SetActive(false);
     }
 }

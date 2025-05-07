@@ -18,7 +18,7 @@ public class LevelUpChoose : MonoBehaviour
     public TextMeshProUGUI weaponSelectedText;
     public AudioSource audioSource;
 
-    // Elementos de UI que se activarán al elegir cierta mejora
+    // UI visibles por mejora
     public GameObject swordUI;
     public GameObject fireballUI;
     public GameObject crucifixUI;
@@ -26,36 +26,52 @@ public class LevelUpChoose : MonoBehaviour
     public GameObject healthUI;
     public GameObject speedUI;
 
+    // Contadores de mejora (x2, x3, etc.)
+    public TextMeshProUGUI swordCountText;
+    public TextMeshProUGUI fireballCountText;
+    public TextMeshProUGUI crucifixCountText;
+    public TextMeshProUGUI javelinCountText;
+    public TextMeshProUGUI healthCountText;
+    public TextMeshProUGUI speedCountText;
+
+    private int[] upgradeCounts = new int[6] { 1, 0, 0, 0, 0, 0 };
     private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Vida", "Movimiento" };
     private List<string> descriptions = new List<string>
     {
-        "El espadon",
-        "Dispara en función a donde apuntes con el ratón",
+        "El espadón",
+        "Dispara donde apuntes con el ratón",
         "Dispara en posiciones aleatorias",
         "Dispara al hacer click",
-        "Más vida",
-        "Más velocidad de movimiento"
+        "Aumenta la vida máxima",
+        "Aumenta la velocidad"
     };
 
     private List<int> selectedWeaponIndexes = new List<int>();
 
     void Start()
     {
-        //panel.SetActive(false);
+        if (panel != null)
+            panel.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) HandleButtonFunction(selectedWeaponIndexes[0]);
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) HandleButtonFunction(selectedWeaponIndexes[1]);
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) HandleButtonFunction(selectedWeaponIndexes[2]);
+        if (panel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) HandleButtonFunction(selectedWeaponIndexes[0]);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) HandleButtonFunction(selectedWeaponIndexes[1]);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) HandleButtonFunction(selectedWeaponIndexes[2]);
+        }
     }
 
     public void ShowPanel()
     {
+        if (panel == null) return;
+
         AssignRandomWeapons();
-        panel.SetActive(true);
         AssignRandomFunctionsToButtons();
+        panel.SetActive(true);
+        Time.timeScale = 0; // Pausa el juego si lo deseas
     }
 
     public void ClosePanel()
@@ -71,9 +87,9 @@ public class LevelUpChoose : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            int randomIndex = Random.Range(0, availableIndexes.Count);
-            selectedWeaponIndexes.Add(availableIndexes[randomIndex]);
-            availableIndexes.RemoveAt(randomIndex);
+            int rand = Random.Range(0, availableIndexes.Count);
+            selectedWeaponIndexes.Add(availableIndexes[rand]);
+            availableIndexes.RemoveAt(rand);
         }
 
         text1.text = weapons[selectedWeaponIndexes[0]];
@@ -106,55 +122,49 @@ public class LevelUpChoose : MonoBehaviour
 
         switch (index)
         {
-            case 0: // Espada
-                weaponToActivate = weaponUnlock.swordPrefab;
-                if (swordUI != null) swordUI.SetActive(true);
-                break;
-
-            case 1: // Fireball
-                weaponToActivate = weaponUnlock.fireballPrefab;
-                if (fireballUI != null) fireballUI.SetActive(true);
-                break;
-
-            case 2: // Crucifijo
-                weaponToActivate = weaponUnlock.crucifixPrefab;
-                if (crucifixUI != null) crucifixUI.SetActive(true);
-                break;
-
-            case 3: // Javalina
-                weaponToActivate = weaponUnlock.javelinPrefab;
-                if (javelinUI != null) javelinUI.SetActive(true);
-                break;
-
-            case 4: // Vida
-                playerHealth.maxHealth += 100;
-                if (healthUI != null) healthUI.SetActive(true);
-                break;
-
-            case 5: // Movimiento
-                playerMovement.speed += 1;
-                if (speedUI != null) speedUI.SetActive(true);
-                break;
+            case 0: weaponToActivate = weaponUnlock.swordPrefab; swordUI?.SetActive(true); break;
+            case 1: weaponToActivate = weaponUnlock.fireballPrefab; fireballUI?.SetActive(true); break;
+            case 2: weaponToActivate = weaponUnlock.crucifixPrefab; crucifixUI?.SetActive(true); break;
+            case 3: weaponToActivate = weaponUnlock.javelinPrefab; javelinUI?.SetActive(true); break;
+            case 4: playerHealth.maxHealth += 100; healthUI?.SetActive(true); break;
+            case 5: playerMovement.speed += 1; speedUI?.SetActive(true); break;
         }
 
         if (weaponToActivate != null)
         {
-            Debug.Log("Activando arma: " + weaponToActivate.name);
             weaponUnlock.ActivateWeapon(weaponToActivate);
         }
+
+        upgradeCounts[index]++;
+        UpdateUpgradeCountUI(index);
 
         ShowWeaponSelectedText(weapons[index]);
         ClosePanel();
     }
 
-    private void ShowWeaponSelectedText(string weaponName)
+    void UpdateUpgradeCountUI(int index)
     {
-        weaponSelectedText.text = "Seleccionaste: <color=yellow>" + weaponName + "</color>";
+        string count = "x" + upgradeCounts[index];
+
+        switch (index)
+        {
+            case 0: if (swordCountText != null) swordCountText.text = count; break;
+            case 1: if (fireballCountText != null) fireballCountText.text = count; break;
+            case 2: if (crucifixCountText != null) crucifixCountText.text = count; break;
+            case 3: if (javelinCountText != null) javelinCountText.text = count; break;
+            case 4: if (healthCountText != null) healthCountText.text = count; break;
+            case 5: if (speedCountText != null) speedCountText.text = count; break;
+        }
+    }
+
+    void ShowWeaponSelectedText(string weaponName)
+    {
+        weaponSelectedText.text = $"Seleccionaste: <color=yellow>{weaponName}</color>";
         weaponSelectedText.gameObject.SetActive(true);
         Invoke("HideWeaponSelectedText", 2f);
     }
 
-    private void HideWeaponSelectedText()
+    void HideWeaponSelectedText()
     {
         weaponSelectedText.gameObject.SetActive(false);
     }
