@@ -21,6 +21,20 @@ public class FloatingDamageText : MonoBehaviour
     public void SetDamage(int damage)
     {
         textMesh.text = $"-{damage}";
+
+        // Cambiar color según el daño recibido
+        if (damage <= 25)
+        {
+            textMesh.color = Color.yellow;
+        }
+        else if (damage <= 50)
+        {
+            textMesh.color = new Color(1f, 0.5f, 0f); // naranja
+        }
+        else
+        {
+            textMesh.color = Color.red;
+        }
     }
 
     void Update()
