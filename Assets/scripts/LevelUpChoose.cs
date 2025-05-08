@@ -50,8 +50,10 @@ public class LevelUpChoose : MonoBehaviour
 
     void Start()
     {
-        if (panel != null)
-            panel.SetActive(false);
+        //if (panel != null)
+        //    panel.SetActive(false);
+        panel.SetActive(true);
+        panel.SetActive(false);
     }
 
     void Update()
