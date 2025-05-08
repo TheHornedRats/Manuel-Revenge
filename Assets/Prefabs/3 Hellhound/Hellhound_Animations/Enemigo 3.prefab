@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6552913883591398799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.865, y: -1.946, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 3.8, y: 3.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -143,10 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78857a5f2308fc44988c7516f484fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 120
   puntuacion: 0
-  xp5Prefab: {fileID: 1785084165971269622, guid: aa1f316760e09434cb2b2919c06e4ec4, type: 3}
-  xp10Prefab: {fileID: 1785084165971269622, guid: aa1f316760e09434cb2b2919c06e4ec4, type: 3}
+  xp5Prefab: {fileID: 1785084165971269622, guid: 41ec522568104394597ec504faa84723, type: 3}
+  xp10Prefab: {fileID: 1785084165971269622, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
   xp20Prefab: {fileID: 1785084165971269622, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
   dropRange: 1
   comboTextPrefab: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0239c6320693d6b43b332337aac02a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 18
   damageInterval: 1
 --- !u!58 &-8948065079445760954
 CircleCollider2D:

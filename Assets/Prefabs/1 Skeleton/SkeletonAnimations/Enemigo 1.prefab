@@ -146,7 +146,7 @@ MonoBehaviour:
   maxHealth: 20
   puntuacion: 0
   xp5Prefab: {fileID: 1785084165971269622, guid: 41ec522568104394597ec504faa84723, type: 3}
-  xp10Prefab: {fileID: 5323331309410571035, guid: 6fd4f0c1c4ddd804b934d9ecc88aeb2e, type: 3}
+  xp10Prefab: {fileID: 1785084165971269622, guid: aa1f316760e09434cb2b2919c06e4ec4, type: 3}
   xp20Prefab: {fileID: 5323331309410571035, guid: 6fd4f0c1c4ddd804b934d9ecc88aeb2e, type: 3}
   dropRange: 1
   comboTextPrefab: {fileID: 0}
