@@ -3715,7 +3715,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8768,8 +8768,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: fb2df886f8bf0f249ad26a4528f2e537, type: 3}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+      - m_Target: {fileID: 11500000, guid: 2169ee6b0a1e5dd4ea1f6935f1e4c36b, type: 3}
+        m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -9921,7 +9921,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

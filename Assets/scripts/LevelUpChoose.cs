@@ -41,7 +41,7 @@ public class LevelUpChoose : MonoBehaviour
         "El espadón",
         "Dispara donde apuntes con el ratón",
         "Dispara en posiciones aleatorias",
-        "Dispara al hacer click",
+        "Dispara al hacer click, necesita tiempo para recargarse",
         "Aumenta la vida máxima",
         "Aumenta la velocidad"
     };
@@ -50,10 +50,7 @@ public class LevelUpChoose : MonoBehaviour
 
     void Start()
     {
-        //if (panel != null)
-        //    panel.SetActive(false);
-        panel.SetActive(true);
-        panel.SetActive(false);
+        
     }
 
     void Update()
