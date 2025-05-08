@@ -126,4 +126,9 @@ public class PlayerHealth : MonoBehaviour
         Camera.main.transform.SetParent(null);
         gameObject.SetActive(false);
     }
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
 }
