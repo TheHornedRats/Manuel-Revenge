@@ -100,32 +100,23 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log(name + " ha muerto.");
-
-        if (deathSound != null)
-        {
-            GameObject tempGO = new GameObject("TempAudio"); // Objeto temporal
-            tempGO.transform.position = transform.position;
-
-            AudioSource tempSource = tempGO.AddComponent<AudioSource>();
-            tempSource.clip = deathSound;
-            tempSource.volume = 2.0f; // <- Puedes poner más de 1 aquí
-            tempSource.Play();
-
-            Destroy(tempGO, deathSound.length); // Eliminar al acabar el sonido
-        }
-
+        Debug.Log("El jugador ha muerto. Activando pantalla de muerte.");
         if (deathScreen != null)
         {
             deathScreen.SetActive(true);
             uiScreen.SetActive(false);
-            Debug.Log("Pantalla de muerte");
+            Debug.Log("Pantalla de muerte activada.");
+        }
+        else
+        {
+            Debug.LogWarning("deathScreen no asignado.");
         }
 
         Time.timeScale = 0f;
         Camera.main.transform.SetParent(null);
         gameObject.SetActive(false);
     }
+
     public int GetCurrentHealth()
     {
         return currentHealth;
