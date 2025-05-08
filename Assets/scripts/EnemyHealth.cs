@@ -37,9 +37,6 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
 
-        if (animator != null)
-            animator.SetTrigger("Hurt");
-
         SanctifyEffect sanctifyEffect = GetComponent<SanctifyEffect>();
         if (sanctifyEffect != null)
         {
@@ -48,10 +45,13 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0 && !isDead)
         {
-            Debug.Log($"[MUERTE] {name} activando Die()"); // <- Añade esto
             Die();
         }
-
+        else
+        {
+            if (animator != null)
+                animator.SetTrigger("Hurt");
+        }
     }
 
     public int GetHealth()
@@ -62,18 +62,18 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        Debug.Log($"{name} ha muerto.");      //La animacion de muerte está bug
+        Debug.Log($"{name} ha muerto.");
 
-        //if (animator != null)
-        //    animator.SetTrigger("Die");
+        if (animator != null)
+            animator.SetTrigger("Die");
 
         UpdateCombo();
         DropXPItems();
 
         ScoreManager.instance.AddScore(5);
 
-        // Espera a que la animación termine antes de destruir
-        Destroy(gameObject); // Ajusta según la duración de la animación
+        // Aquí se destruye al final de la animación si usas un evento, o tras un retraso:
+        Destroy(gameObject, 0.5f); // Ajusta según la duración real de la animación
     }
 
     private void DropXPItems()

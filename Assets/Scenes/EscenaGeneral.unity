@@ -5285,13 +5285,13 @@ MonoBehaviour:
     minSpawnTime: 1
     maxSpawnTime: 120
   - prefab: {fileID: 6552913883591398799, guid: a931dbc30e49d1e4b9438193ce223285, type: 3}
-    minSpawnTime: 1
+    minSpawnTime: 60
     maxSpawnTime: 180
   - prefab: {fileID: 6552913883591398799, guid: 0d64c51af7da8a24f92d84d494c2a1e5, type: 3}
-    minSpawnTime: 1
+    minSpawnTime: 120
     maxSpawnTime: 240
   - prefab: {fileID: 6552913883591398799, guid: 4620e40f6e4eb87479d471592ed56421, type: 3}
-    minSpawnTime: 1
+    minSpawnTime: 180
     maxSpawnTime: 300
   player: {fileID: 3672655057767452113}
   mainCamera: {fileID: 519420031}
