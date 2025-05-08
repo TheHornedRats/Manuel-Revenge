@@ -48,8 +48,10 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0 && !isDead)
         {
+            Debug.Log($"[MUERTE] {name} activando Die()"); // <- Añade esto
             Die();
         }
+
     }
 
     public int GetHealth()
@@ -60,10 +62,10 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        Debug.Log($"{name} ha muerto.");
+        Debug.Log($"{name} ha muerto.");      //La animacion de muerte está bug
 
-        if (animator != null)
-            animator.SetTrigger("Die");
+        //if (animator != null)
+        //    animator.SetTrigger("Die");
 
         UpdateCombo();
         DropXPItems();
@@ -71,7 +73,7 @@ public class EnemyHealth : MonoBehaviour
         ScoreManager.instance.AddScore(5);
 
         // Espera a que la animación termine antes de destruir
-        Destroy(gameObject, 1f); // Ajusta según la duración de la animación
+        Destroy(gameObject); // Ajusta según la duración de la animación
     }
 
     private void DropXPItems()
