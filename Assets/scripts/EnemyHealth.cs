@@ -22,11 +22,23 @@ public class EnemyHealth : MonoBehaviour
     private static float lastKillTime;
     private static float comboResetTime = 3.0f;
 
+    [Header("Texto de Daño")]
+    public FloatingDamageText damageTextPrefab;
+
+
     private void Start()
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
     }
+    private void ShowDamageText(int damage)
+    {
+        if (damageTextPrefab == null) return;
+
+        FloatingDamageText instance = Instantiate(damageTextPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+        instance.SetDamage(damage);
+    }
+
 
     public void TakeDamage(int damage)
     {
@@ -40,6 +52,11 @@ public class EnemyHealth : MonoBehaviour
         if (animator != null)
             animator.SetTrigger("Hurt");
 
+        // Mostrar texto de daño
+        ShowDamageText(damage);
+
+
+        // Si hay efecto de santificación, curar al jugador
         SanctifyEffect sanctifyEffect = GetComponent<SanctifyEffect>();
         if (sanctifyEffect != null)
         {
@@ -51,6 +68,7 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
     }
+
 
     public int GetHealth()
     {
