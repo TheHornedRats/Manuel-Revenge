@@ -5,9 +5,9 @@ public class EnemyHealth : MonoBehaviour
 {
     [Header("Salud")]
     public int maxHealth = 100;
-    private int currentHealth;
-    private bool isDead = false;
-    private Animator animator;
+    protected int currentHealth;         //  antes era private
+    protected bool isDead = false;       //  antes era private
+    protected Animator animator;         //  antes era private
 
     [Header("Recompensa de Puntuación y Experiencia")]
     public int puntuacion;
@@ -22,13 +22,13 @@ public class EnemyHealth : MonoBehaviour
     private static float lastKillTime;
     private static float comboResetTime = 3.0f;
 
-    private void Start()
+    protected virtual void Start()       //  antes era private
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (isDead) return;
 
@@ -59,7 +59,7 @@ public class EnemyHealth : MonoBehaviour
         return currentHealth;
     }
 
-    private void Die()
+    protected virtual void Die()        // para permitir override en jefes
     {
         isDead = true;
         Debug.Log($"{name} ha muerto.");
@@ -72,11 +72,10 @@ public class EnemyHealth : MonoBehaviour
 
         ScoreManager.instance.AddScore(5);
 
-        // Aquí se destruye al final de la animación si usas un evento, o tras un retraso:
-        Destroy(gameObject, 0.5f); // Ajusta según la duración real de la animación
+        Destroy(gameObject, 0.5f);
     }
 
-    private void DropXPItems()
+    protected void DropXPItems()
     {
         Vector3 dropPosition1 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
         Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
