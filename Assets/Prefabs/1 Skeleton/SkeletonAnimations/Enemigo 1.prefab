@@ -150,6 +150,7 @@ MonoBehaviour:
   xp20Prefab: {fileID: 5323331309410571035, guid: 6fd4f0c1c4ddd804b934d9ecc88aeb2e, type: 3}
   dropRange: 1
   comboTextPrefab: {fileID: 0}
+  damageTextPrefab: {fileID: 2684802765828184756, guid: 01955456c342e2b4584568970e2817b8, type: 3}
 --- !u!114 &-3819563168698776304
 MonoBehaviour:
   m_ObjectHideFlags: 0
