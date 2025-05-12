@@ -8,10 +8,19 @@ public class BossBeam : MonoBehaviour
 
     private float tickTimer;
 
-    private void Start()
+    void Start()
     {
         Destroy(gameObject, duration);
+
+        Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player != null)
+        {
+            Vector2 dir = (player.position - transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
+
 
     private void Update()
     {

@@ -8,11 +8,19 @@ public class BossHomingOrb : MonoBehaviour
 
     private Transform player;
 
-    private void Start()
+    void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         Destroy(gameObject, lifeTime);
+
+        if (player != null)
+        {
+            Vector2 dir = (player.position - transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
+
 
     private void Update()
     {
