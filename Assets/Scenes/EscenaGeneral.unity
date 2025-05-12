@@ -2014,12 +2014,12 @@ MonoBehaviour:
   player: {fileID: 3672655057767452113}
   bossPrefabs:
   - {fileID: 2735673697896273270, guid: 1989877b69ed5684ea6e57f0560dad23, type: 3}
-  - {fileID: 0}
+  - {fileID: 2528450588109223553, guid: 9b02080339e6211499962f03ce0148c8, type: 3}
   - {fileID: 0}
   spawnRadius: 15
   spawnTimes:
   - 2
-  - 600
+  - 1
   - 900
 --- !u!4 &246806706
 Transform:
@@ -3437,7 +3437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2701984800380586742, guid: 01955456c342e2b4584568970e2817b8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.6417811
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2701984800380586742, guid: 01955456c342e2b4584568970e2817b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
