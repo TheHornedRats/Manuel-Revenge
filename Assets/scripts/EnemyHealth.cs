@@ -5,9 +5,9 @@ public class EnemyHealth : MonoBehaviour
 {
     [Header("Salud")]
     public int maxHealth = 100;
-    protected int currentHealth;         //  antes era private
-    protected bool isDead = false;       //  antes era private
-    protected Animator animator;         //  antes era private
+    private int currentHealth;
+    private bool isDead = false;
+    private Animator animator;
 
     [Header("Recompensa de Puntuación y Experiencia")]
     public int puntuacion;
@@ -22,13 +22,25 @@ public class EnemyHealth : MonoBehaviour
     private static float lastKillTime;
     private static float comboResetTime = 3.0f;
 
-    protected virtual void Start()       //  antes era private
+    [Header("Texto de Daño")]
+    public FloatingDamageText damageTextPrefab;
+
+
+    private void Start()
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
     }
+    private void ShowDamageText(int damage)
+    {
+        if (damageTextPrefab == null) return;
 
-    public virtual void TakeDamage(int damage)
+        FloatingDamageText instance = Instantiate(damageTextPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+        instance.SetDamage(damage);
+    }
+
+
+    public void TakeDamage(int damage)
     {
         if (isDead) return;
 
@@ -37,6 +49,14 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
 
+        if (animator != null)
+            animator.SetTrigger("Hurt");
+
+        // Mostrar texto de daño
+        ShowDamageText(damage);
+
+
+        // Si hay efecto de santificación, curar al jugador
         SanctifyEffect sanctifyEffect = GetComponent<SanctifyEffect>();
         if (sanctifyEffect != null)
         {
@@ -47,19 +67,15 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
-        else
-        {
-            if (animator != null)
-                animator.SetTrigger("Hurt");
-        }
     }
+
 
     public int GetHealth()
     {
         return currentHealth;
     }
 
-    protected virtual void Die()        // para permitir override en jefes
+    private void Die()
     {
         isDead = true;
         Debug.Log($"{name} ha muerto.");
@@ -72,10 +88,11 @@ public class EnemyHealth : MonoBehaviour
 
         ScoreManager.instance.AddScore(5);
 
-        Destroy(gameObject, 0.5f);
+        // Espera a que la animación termine antes de destruir
+        Destroy(gameObject, 1f); // Ajusta según la duración de la animación
     }
 
-    protected void DropXPItems()
+    private void DropXPItems()
     {
         Vector3 dropPosition1 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0);
         Vector3 dropPosition2 = transform.position + new Vector3(Random.Range(-dropRange, dropRange), Random.Range(-dropRange, dropRange), 0.1f);
