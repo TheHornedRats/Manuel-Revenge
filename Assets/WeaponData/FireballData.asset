@@ -30,3 +30,6 @@ MonoBehaviour:
   statusEffectTicks: 20
   knockbackForce: 5
   burnParticlesPrefab: {fileID: 870358350188661871, guid: 5230e566ae4806f4b87d15ed01f80346, type: 3}
+  sanctifyParticlesPrefab: {fileID: 0}
+  electrocuteParticlesPrefab: {fileID: 0}
+  attackSound: {fileID: 0}

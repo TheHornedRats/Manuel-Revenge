@@ -37,6 +37,9 @@ public class WeaponData : ScriptableObject
     public GameObject sanctifyParticlesPrefab;
     public GameObject electrocuteParticlesPrefab;
 
+    [Header("Audio del Arma")]
+    public AudioClip attackSound;
+
     public void InitWeapon(int weaponLevel)
     {
         float damageFactor = Mathf.Pow(damageIncreasePerLevel, weaponLevel - 1);

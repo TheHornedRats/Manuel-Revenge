@@ -5,9 +5,9 @@ public class EnemyHealth : MonoBehaviour
 {
     [Header("Salud")]
     public int maxHealth = 100;
-    protected int currentHealth;         //  antes era private
-    protected bool isDead = false;       //  antes era private
-    protected Animator animator;         //  antes era private
+    protected int currentHealth;
+    protected bool isDead = false;
+    protected Animator animator;
 
     [Header("Recompensa de Puntuación y Experiencia")]
     public int puntuacion;
@@ -22,7 +22,10 @@ public class EnemyHealth : MonoBehaviour
     private static float lastKillTime;
     private static float comboResetTime = 3.0f;
 
-    protected virtual void Start()       //  antes era private
+    [Header("Texto de Daño")]
+    public GameObject damageTextPrefab;  // Prefab con TextMeshPro
+
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
@@ -36,6 +39,8 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= damage;
         Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
+
+        ShowDamageText(damage); // Mostrar texto de daño
 
         SanctifyEffect sanctifyEffect = GetComponent<SanctifyEffect>();
         if (sanctifyEffect != null)
@@ -59,7 +64,7 @@ public class EnemyHealth : MonoBehaviour
         return currentHealth;
     }
 
-    protected virtual void Die()        // para permitir override en jefes
+    protected virtual void Die()
     {
         isDead = true;
         Debug.Log($"{name} ha muerto.");
@@ -111,5 +116,30 @@ public class EnemyHealth : MonoBehaviour
         comboTextInstance.color = Color.Lerp(Color.white, Color.red, comboCount / 10f);
 
         Destroy(comboTextInstance.gameObject, 1.5f);
+    }
+
+    private void ShowDamageText(int damage)
+    {
+        if (damageTextPrefab == null) return;
+
+        Vector3 offset = new Vector3(Random.Range(-0.3f, 0.3f), 1.0f, 0);
+        GameObject instance = Instantiate(damageTextPrefab, transform.position + offset, Quaternion.identity);
+
+        TextMeshPro text = instance.GetComponent<TextMeshPro>();
+        if (text != null)
+        {
+            text.text = $"-{damage}";
+            text.fontSize = 4 + damage * 0.1f;
+            text.color = Color.red;
+        }
+
+        Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.gravityScale = 0;
+            rb.velocity = new Vector2(0, 1.5f);
+        }
+
+        Destroy(instance, 1.0f);
     }
 }
