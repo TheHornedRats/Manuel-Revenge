@@ -7,16 +7,19 @@ public class BossEnemy : EnemyHealth
     private float nextAbilityTime;
 
     [Header("Boss Abilities")]
-    public GameObject ability1Prefab; // Ataque cuerpo a cuerpo
-    public GameObject ability2Prefab; // Proyectil que ralentiza
-    public GameObject summon1Prefab;  // Invoca Enemigo 1 (instancia de objeto con script)
-    public GameObject summon2Prefab;  // Invoca Enemigo 2 (instancia de objeto con script)
+    public GameObject ability1Prefab; // Ráfaga de rayos
+    public GameObject ability2Prefab; // Rayo gordo
+    public GameObject summon1Prefab;  // Bolita teledirigida
+    public GameObject summon2Prefab;  // Rayo canalizado
 
     [SerializeField]
     private new Animator animator;
 
     private bool isAttacking = false;
     private float attackDuration = 0.6f;
+
+    private Rigidbody2D rb;
+    private Vector2 storedVelocity;
 
     protected override void Start()
     {
@@ -26,6 +29,7 @@ public class BossEnemy : EnemyHealth
         currentHealth = maxHealth;
 
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -42,7 +46,16 @@ public class BossEnemy : EnemyHealth
     private void UseRandomAbility()
     {
         isAttacking = true;
+
+        if (rb != null)
+        {
+            storedVelocity = rb.velocity;
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
+        }
+
         int abilityIndex = Random.Range(0, 4);
+        Quaternion facingRotation = Quaternion.Euler(0, 0, Mathf.Atan2(transform.right.y, transform.right.x) * Mathf.Rad2Deg);
 
         switch (abilityIndex)
         {
@@ -50,7 +63,8 @@ public class BossEnemy : EnemyHealth
                 if (ability1Prefab != null)
                 {
                     animator.SetTrigger("Attack1");
-                    Instantiate(ability1Prefab, transform.position, Quaternion.identity);
+                    Instantiate(ability1Prefab, transform.position, facingRotation);
+                    Invoke(nameof(ResetAttackState), attackDuration);
                 }
                 break;
 
@@ -58,7 +72,8 @@ public class BossEnemy : EnemyHealth
                 if (ability2Prefab != null)
                 {
                     animator.SetTrigger("Attack2");
-                    Instantiate(ability2Prefab, transform.position, Quaternion.identity);
+                    Instantiate(ability2Prefab, transform.position, facingRotation);
+                    Invoke(nameof(ResetAttackState), attackDuration);
                 }
                 break;
 
@@ -67,6 +82,7 @@ public class BossEnemy : EnemyHealth
                 {
                     animator.SetTrigger("Attack3");
                     Invoke(nameof(InvokeSummon1), 0.4f);
+                    Invoke(nameof(ResetAttackState), attackDuration);
                 }
                 break;
 
@@ -74,26 +90,33 @@ public class BossEnemy : EnemyHealth
                 if (summon2Prefab != null)
                 {
                     animator.SetTrigger("Attack4");
-                    Invoke(nameof(InvokeSummon2), 0.4f);
+                    Instantiate(summon2Prefab, transform.position, facingRotation);
+                    Invoke(nameof(ResetAttackState), 2.5f);
                 }
                 break;
         }
-
-        Invoke(nameof(ResetAttackState), attackDuration);
     }
 
     private void InvokeSummon1()
     {
-        Instantiate(summon1Prefab, transform.position, Quaternion.identity);
+        Quaternion facingRotation = Quaternion.Euler(0, 0, Mathf.Atan2(transform.right.y, transform.right.x) * Mathf.Rad2Deg);
+        Instantiate(summon1Prefab, transform.position, facingRotation);
     }
 
     private void InvokeSummon2()
     {
-        Instantiate(summon2Prefab, transform.position, Quaternion.identity);
+        Quaternion facingRotation = Quaternion.Euler(0, 0, Mathf.Atan2(transform.right.y, transform.right.x) * Mathf.Rad2Deg);
+        Instantiate(summon2Prefab, transform.position, facingRotation);
     }
 
     private void ResetAttackState()
     {
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.velocity = storedVelocity;
+        }
+
         isAttacking = false;
     }
 
@@ -121,6 +144,6 @@ public class BossEnemy : EnemyHealth
         DropXPItems();
         ScoreManager.instance.AddScore(5);
 
-        Destroy(gameObject, 0.6f); // tiempo estimado de la animación de muerte
+        Destroy(gameObject, 0.6f);
     }
 }

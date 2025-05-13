@@ -49,7 +49,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 3
   damagePerTick: 1
-  tickRate: 0.1
+  tickRate: 0.01
+  maxDistance: 20
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!120 &-8669741741070769259
 LineRenderer:
   serializedVersion: 2
@@ -71,7 +75,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: d83b3191efbe4af4389d9c552c82a489, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,14 +106,32 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.012046814
+        value: 0.38297844
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.3951807
+        value: 0.7074468
+        inSlope: -1.3584291
+        outSlope: -1.3584291
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.24528207
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.6626506
+        value: 0.71276593
+        inSlope: 2.5344768
+        outSlope: 2.5344768
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.24324308
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
