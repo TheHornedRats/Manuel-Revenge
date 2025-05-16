@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Collections;
 
 public class Trucos : MonoBehaviour
 {
@@ -7,15 +9,20 @@ public class Trucos : MonoBehaviour
     public Button addScoreButton;
     public Button spawnEnemyButton;
     public Button slowTimeButton;
+
     public GameObject enemigoPrefab;
     public Transform playerTransform;
 
-    bool timeReduced; // Esta variable mantiene el estado del tiempo
-
-    private ScoreManager scoreManager;
+    public TMP_Text healthText;
+    public TMP_Text scoreText;
+    public TMP_Text enemyText;
+    public TMP_Text timeText;
 
     public float minSpawnDistance = 3f;
     public float maxSpawnDistance = 6f;
+
+    bool timeReduced;
+    private ScoreManager scoreManager;
 
     void Start()
     {
@@ -25,27 +32,19 @@ public class Trucos : MonoBehaviour
         slowTimeButton.onClick.AddListener(SlowDownTime);
 
         scoreManager = ScoreManager.instance;
+
+        healthText.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        enemyText.gameObject.SetActive(false);
+        timeText.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        // Detectar teclas Y, U, I, O
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            OnAddScoreButtonClick();
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            TogglePlayerCollider();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            OnSpawnEnemyButtonClick();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            SlowDownTime();
-        }
+        if (Input.GetKeyDown(KeyCode.Y)) OnAddScoreButtonClick();
+        if (Input.GetKeyDown(KeyCode.U)) TogglePlayerCollider();
+        if (Input.GetKeyDown(KeyCode.I)) OnSpawnEnemyButtonClick();
+        if (Input.GetKeyDown(KeyCode.O)) SlowDownTime();
     }
 
     void TogglePlayerCollider()
@@ -55,7 +54,16 @@ public class Trucos : MonoBehaviour
         if (boxCollider != null)
         {
             boxCollider.enabled = !boxCollider.enabled;
-            Debug.Log("BoxCollider2D del jugador: " + (boxCollider.enabled ? "Activado" : "Desactivado"));
+
+            if (!boxCollider.enabled)
+            {
+                healthText.text = "Colisión DESACTIVADA";
+                healthText.gameObject.SetActive(true);
+            }
+            else
+            {
+                healthText.gameObject.SetActive(false);
+            }
         }
         else
         {
@@ -63,12 +71,15 @@ public class Trucos : MonoBehaviour
         }
     }
 
+
     void OnAddScoreButtonClick()
     {
         if (scoreManager != null)
         {
             scoreManager.AddScore(1000);
-            Debug.Log("Se han añadido 1000 puntos.");
+            scoreText.text = "¡Puntos añadidos!";
+            scoreText.gameObject.SetActive(true);
+            StartCoroutine(HideTextAfterSeconds(scoreText, 2f));
         }
         else
         {
@@ -82,7 +93,9 @@ public class Trucos : MonoBehaviour
         {
             Vector2 spawnPosition = GetSpawnPosition();
             Instantiate(enemigoPrefab, spawnPosition, Quaternion.identity);
-            Debug.Log("¡Enemigo spawneado lejos del jugador!");
+            enemyText.text = "¡Enemigo spawneado!";
+            enemyText.gameObject.SetActive(true);
+            StartCoroutine(HideTextAfterSeconds(enemyText, 2f));
         }
         else
         {
@@ -90,29 +103,34 @@ public class Trucos : MonoBehaviour
         }
     }
 
+    void SlowDownTime()
+    {
+        timeReduced = !timeReduced;
+
+        if (timeReduced)
+        {
+            Time.timeScale = 0.5f;
+            timeText.text = "Tiempo LENTO";
+            timeText.gameObject.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            timeText.gameObject.SetActive(false);
+        }
+    }
+
     Vector2 GetSpawnPosition()
     {
         float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
         float distance = Random.Range(minSpawnDistance, maxSpawnDistance);
-
         Vector2 spawnOffset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
         return (Vector2)playerTransform.position + spawnOffset;
     }
 
-    // Nuevo método para alternar la velocidad del tiempo
-    void SlowDownTime()
+    IEnumerator HideTextAfterSeconds(TMP_Text textElement, float delay)
     {
-        if (!timeReduced)
-        {
-            Time.timeScale = 0.5f; // Ralentiza el tiempo a la mitad
-            timeReduced = true;
-            Debug.Log("El tiempo ahora pasa a la mitad de velocidad.");
-        }
-        else
-        {
-            Time.timeScale = 1f; // Restablece la velocidad normal
-            timeReduced = false;
-            Debug.Log("El tiempo ha vuelto a la velocidad normal.");
-        }
+        yield return new WaitForSeconds(delay);
+        textElement.gameObject.SetActive(false);
     }
 }
