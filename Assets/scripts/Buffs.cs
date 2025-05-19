@@ -61,17 +61,21 @@ public class Buffs : MonoBehaviour
         {
             case 0:
                 playerHealth.maxHealth += 20;
+                playerHealth.Heal(20);
                 playerHealth.healthSlider.maxValue = playerHealth.maxHealth;
                 playerHealth.healthSlider.value = playerHealth.maxHealth;
                 break;
             case 1:
                 playerAttack.baseFireballDamage += 5;
+                playerHealth.Heal(20);
                 break;
             case 2:
                 playerMovement.speed += 1f;
+                playerHealth.Heal(20);
                 break;
             case 3:
                 playerAttack.attackInterval *= 0.9f;
+                playerHealth.Heal(20);
                 break;
         }
         ResumeGame();

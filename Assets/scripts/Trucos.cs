@@ -18,11 +18,14 @@ public class Trucos : MonoBehaviour
     public TMP_Text enemyText;
     public TMP_Text timeText;
 
+    public TMP_InputField commandInput; // <- NUEVO: consola de comandos
+
     public float minSpawnDistance = 3f;
     public float maxSpawnDistance = 6f;
 
-    bool timeReduced;
+    private bool timeReduced;
     private ScoreManager scoreManager;
+    private PlayerHealth playerHealth;
 
     void Start()
     {
@@ -32,6 +35,18 @@ public class Trucos : MonoBehaviour
         slowTimeButton.onClick.AddListener(SlowDownTime);
 
         scoreManager = ScoreManager.instance;
+
+        if (playerTransform != null)
+        {
+            playerHealth = playerTransform.GetComponent<PlayerHealth>();
+            if (playerHealth == null)
+                Debug.LogError("No se encontró el componente PlayerHealth en el jugador.");
+        }
+
+        if (commandInput != null)
+        {
+            commandInput.onSubmit.AddListener(HandleCommand); // <- NUEVO
+        }
 
         healthText.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(false);
@@ -59,6 +74,15 @@ public class Trucos : MonoBehaviour
             {
                 healthText.text = "Colisión DESACTIVADA";
                 healthText.gameObject.SetActive(true);
+
+                if (playerHealth != null)
+                {
+                    playerHealth.Heal(4);
+                }
+                else
+                {
+                    Debug.LogError("playerHealth no está asignado.");
+                }
             }
             else
             {
@@ -70,7 +94,6 @@ public class Trucos : MonoBehaviour
             Debug.LogError("No se encontró un BoxCollider2D en el jugador.");
         }
     }
-
 
     void OnAddScoreButtonClick()
     {
@@ -132,5 +155,43 @@ public class Trucos : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         textElement.gameObject.SetActive(false);
+    }
+
+    // NUEVO: Procesador de comandos
+    void HandleCommand(string command)
+    {
+        command = command.ToLower().Trim();
+
+        switch (command)
+        {
+            case "vida":
+                if (playerHealth != null)
+                {
+                    playerHealth.Heal(10);
+                    healthText.text = "¡Vida restaurada!";
+                    healthText.gameObject.SetActive(true);
+                    StartCoroutine(HideTextAfterSeconds(healthText, 2f));
+                }
+                break;
+
+            case "score":
+                OnAddScoreButtonClick();
+                break;
+
+            case "enemigo":
+                OnSpawnEnemyButtonClick();
+                break;
+
+            case "tiempo":
+                SlowDownTime();
+                break;
+
+            default:
+                Debug.Log("Comando no reconocido: " + command);
+                break;
+        }
+
+        commandInput.text = "";
+        commandInput.ActivateInputField(); // Reactivar para siguiente input
     }
 }
