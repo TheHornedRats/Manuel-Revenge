@@ -8,7 +8,7 @@ public class WeaponUnlock : MonoBehaviour
     public GameObject crucifixPrefab; // Crucifijo
     public GameObject javelinPrefab;  // Javalina
     public GameObject weapon5Prefab;  // Test
-    public GameObject HpPrefab;  // Test
+    public GameObject HpPrefab;  // vida
     public GameObject MovementPrefab;  // Test
 
     private GameObject currentWeapon;
