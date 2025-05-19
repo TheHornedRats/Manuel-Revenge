@@ -35,15 +35,15 @@ public class LevelUpChoose : MonoBehaviour
     public TextMeshProUGUI speedCountText;
 
     private int[] upgradeCounts = new int[6] { 1, 0, 0, 0, 0, 0 };
-    private List<string> weapons = new List<string> { "Espada", "Fireball", "Crucifijo", "Javalina", "Vida", "Movimiento" };
+    private List<string> weapons = new List<string> { "Sword", "Fireball", "Crucifix", "Javelin", "Health", "Movement" };
     private List<string> descriptions = new List<string>
     {
-        "El espadón",
-        "Dispara donde apuntes con el ratón",
-        "Dispara en posiciones aleatorias",
-        "Dispara al hacer click, necesita tiempo para recargarse",
-        "Aumenta la vida máxima",
-        "Aumenta la velocidad"
+        "The SWORD",
+        "Shoots where you aim with the mouse",
+        "Shoots at random positions",
+        "Shoots on click, takes time to reload",
+        "Increases maximum health",
+        "Increases speed"
     };
 
     private List<int> selectedWeaponIndexes = new List<int>();
@@ -161,7 +161,7 @@ public class LevelUpChoose : MonoBehaviour
 
     void ShowWeaponSelectedText(string weaponName)
     {
-        weaponSelectedText.text = $"Seleccionaste: <color=yellow>{weaponName}</color>";
+        weaponSelectedText.text = $"Selected: <color=yellow>{weaponName}</color>";
         weaponSelectedText.gameObject.SetActive(true);
         Invoke("HideWeaponSelectedText", 2f);
     }
