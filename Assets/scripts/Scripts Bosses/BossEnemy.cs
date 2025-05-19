@@ -4,7 +4,7 @@ public class BossEnemy : EnemyHealth
 {
     [Header("Boss Settings")]
     public float abilityCooldown = 5f;
-    private float nextAbilityTime;
+    protected float nextAbilityTime;
 
     [Header("Boss Abilities")]
     public GameObject ability1Prefab; // Ráfaga de rayos
@@ -15,11 +15,11 @@ public class BossEnemy : EnemyHealth
     [SerializeField]
     private new Animator animator;
 
-    private bool isAttacking = false;
-    private float attackDuration = 0.6f;
+    protected bool isAttacking = false;
+    protected float attackDuration = 0.6f;
 
-    private Rigidbody2D rb;
-    private Vector2 storedVelocity;
+    protected Rigidbody2D rb;
+    protected Vector2 storedVelocity;
 
     protected override void Start()
     {
@@ -43,7 +43,7 @@ public class BossEnemy : EnemyHealth
         }
     }
 
-    private void UseRandomAbility()
+    protected virtual void UseRandomAbility()
     {
         isAttacking = true;
 
@@ -97,19 +97,19 @@ public class BossEnemy : EnemyHealth
         }
     }
 
-    private void InvokeSummon1()
+    protected void InvokeSummon1()
     {
         Quaternion facingRotation = Quaternion.Euler(0, 0, Mathf.Atan2(transform.right.y, transform.right.x) * Mathf.Rad2Deg);
         Instantiate(summon1Prefab, transform.position, facingRotation);
     }
 
-    private void InvokeSummon2()
+    protected void InvokeSummon2()
     {
         Quaternion facingRotation = Quaternion.Euler(0, 0, Mathf.Atan2(transform.right.y, transform.right.x) * Mathf.Rad2Deg);
         Instantiate(summon2Prefab, transform.position, facingRotation);
     }
 
-    private void ResetAttackState()
+    protected void ResetAttackState()
     {
         if (rb != null)
         {

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 035cf470f1733254ab6e1bc04f8aae26
+guid: 73b6206a89b11b94ca6a1997bcf59a76
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -134,7 +134,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Elemental_hurt_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 61
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ce2db37ad3761a4e800c1007a3f99d4
+      internalID: 228748922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elemental_hurt_1
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 0
+        width: 61
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a76efbcf381d7b349b595bf6c2a68421
+      internalID: 1607526104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elemental_hurt_2
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 0
+        width: 61
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0414c51666e5bd74f93555dc5dd3fa65
+      internalID: 1176497128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elemental_hurt_3
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 0
+        width: 61
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a34b3dd281e1b34e9cfcceabfc02e8e
+      internalID: -1026205150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +229,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Elemental_hurt_0: 228748922
+      Elemental_hurt_1: 1607526104
+      Elemental_hurt_2: 1176497128
+      Elemental_hurt_3: -1026205150
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
