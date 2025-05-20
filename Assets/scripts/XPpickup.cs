@@ -1,12 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class XPpickup : MonoBehaviour
 {
     public int XPobtenida = 5;
-    public AudioClip pickupSound; // Sonido que se reproducirá al recoger
+    public AudioClip pickupSound;
     private AudioSource audioSource;
+    private bool isMovingToPlayer = false;
+    private Transform targetPlayer;
+
+    public float moveSpeed = 5f;
 
     private void Start()
     {
@@ -15,23 +18,37 @@ public class XPpickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name == "Manuel")
+        if (!isMovingToPlayer && other.gameObject.name == "Manuel")
         {
-            // Reproducir sonido si está asignado
-            if (pickupSound != null && audioSource != null)
-            {
-                audioSource.PlayOneShot(pickupSound);
-            }
-            else
-            {
-                Debug.LogWarning("Falta AudioSource o pickupSound en XPpickup.");
-            }
-
-            ScoreManager.instance.AddScore(XPobtenida);
-
-            // Destruir después de un pequeño retraso para permitir que el sonido suene
-            Destroy(gameObject, 0.1f);
+            isMovingToPlayer = true;
+            targetPlayer = other.transform;
+            GetComponent<Collider2D>().enabled = false; // Evitar múltiples colisiones
+            StartCoroutine(MoveToPlayer());
         }
     }
-}
 
+    private IEnumerator MoveToPlayer()
+    {
+        while (Vector2.Distance(transform.position, targetPlayer.position) > 0.1f)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, targetPlayer.position, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Reproducir sonido si está asignado
+        if (pickupSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(pickupSound);
+        }
+        else
+        {
+            Debug.LogWarning("Falta AudioSource o pickupSound en XPpickup.");
+        }
+
+        // Añadir experiencia
+        ScoreManager.instance.AddScore(XPobtenida);
+
+        // Esperar un poco para que suene el audio (si lo necesitas)
+        Destroy(gameObject, 0.1f);
+    }
+}

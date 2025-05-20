@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XPobtenida: 5
   pickupSound: {fileID: 8300000, guid: 1b6c4708cb94fbf4a8b50a961188e9b5, type: 3}
+  moveSpeed: 14
 --- !u!61 &2131401303620973462
 BoxCollider2D:
   m_ObjectHideFlags: 0

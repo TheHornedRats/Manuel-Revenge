@@ -1,63 +1,44 @@
-//using UnityEngine;
-
-//public class PlayerMovement : MonoBehaviour
-//{
-//    public float speed = 5f; // Velocidad de movimiento del jugador
-
-//    private void Update()
-//    {
-//        // Captura la entrada del teclado
-//        float horizontal = Input.GetAxis("Horizontal");
-
-//        if (moveInput > 0)
-//        {
-//            transform.localScale = new Vector3(1, 1, 1); // Mirar a la derecha (escala normal)
-//        }
-//        else if (moveInput < 0)
-//        {
-//            transform.localScale = new Vector3(-1, 1, 1); // Mirar a la izquierda (invertir en X)
-//        }
-
-//        float vertical = Input.GetAxis("Vertical");  
-//        // Calcula la dirección de movimiento
-//        Vector3 direction = new Vector3(horizontal, vertical, 0f).normalized;
-
-//        // Si hay movimiento, aplica la traslación
-//        if (direction.magnitude >= 0.1f)
-//        {
-//            transform.Translate(direction * speed * Time.deltaTime, Space.World);
-//        }
-//    }
-//}
-
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f; // Velocidad de movimiento del jugador
+    public float speed = 5f;
+    public Transform cameraTransform;
+    public float maxCameraOffset = 2f;       // Límite máximo de distancia cámara-jugador
+    public float cameraMoveSpeed = 7f;       // Velocidad a la que la cámara se mueve
 
-    private void Update()
+    private Vector3 targetCameraPosition;
+
+    void Update()
     {
-        // Captura la entrada del teclado
-        float horizontal = Input.GetAxis("Horizontal");
+        // Entrada del jugador
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
-        if (horizontal > 0) // Cambié "moveInput" por "horizontal"
+        Vector3 inputDirection = new Vector3(horizontal, vertical, 0f).normalized;
+
+        // Movimiento del jugador
+        if (inputDirection.magnitude > 0.1f)
         {
-            transform.localScale = new Vector3(1, 1, 1); // Mirar a la derecha (escala normal)
-        }
-        else if (horizontal < 0) // Cambié "moveInput" por "horizontal"
-        {
-            transform.localScale = new Vector3(-1, 1, 1); // Mirar a la izquierda (invertir en X)
+            transform.Translate(inputDirection * speed * Time.deltaTime, Space.World);
         }
 
-        float vertical = Input.GetAxis("Vertical");
-        // Calcula la dirección de movimiento
-        Vector3 direction = new Vector3(horizontal, vertical, 0f).normalized;
+        // Flip visual
+        if (horizontal > 0)
+            transform.localScale = new Vector3(1, 1, 1);
+        else if (horizontal < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
 
-        // Si hay movimiento, aplica la traslación
-        if (direction.magnitude >= 0.1f)
-        {
-            transform.Translate(direction * speed * Time.deltaTime, Space.World);
-        }
+        // Calcular posición objetivo de la cámara con offset limitado
+        Vector3 offset = inputDirection * maxCameraOffset;
+        targetCameraPosition = transform.position + offset;
+        targetCameraPosition.z = cameraTransform.position.z;
+
+        // Mover la cámara rápidamente hacia la posición objetivo (más rápido que el jugador)
+        cameraTransform.position = Vector3.MoveTowards(
+            cameraTransform.position,
+            targetCameraPosition,
+            cameraMoveSpeed * Time.deltaTime
+        );
     }
 }
