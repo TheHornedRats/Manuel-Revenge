@@ -146,10 +146,11 @@ MonoBehaviour:
   maxHealth: 200
   puntuacion: 0
   xp5Prefab: {fileID: 1585143518705127342, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
-  xp10Prefab: {fileID: 1585143518705127342, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
-  xp20Prefab: {fileID: 1585143518705127342, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
+  xp10Prefab: {fileID: 1585143518705127342, guid: f6c66dc55133b0e4abee427d1b20fc37, type: 3}
+  xp20Prefab: {fileID: 1585143518705127342, guid: f6c66dc55133b0e4abee427d1b20fc37, type: 3}
   dropRange: 1
   comboTextPrefab: {fileID: 0}
+  damageTextPrefab: {fileID: 0}
 --- !u!114 &-3819563168698776304
 MonoBehaviour:
   m_ObjectHideFlags: 0
