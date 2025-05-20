@@ -16,18 +16,20 @@ MonoBehaviour:
   weaponType: 2
   attackPrefab: {fileID: 7755434435846515150, guid: 640738e2788d40f41a3485fef96cd1b8, type: 3}
   explosionEffectPrefab: {fileID: 0}
-  baseDamage: 15
+  baseDamage: 20
   baseCooldown: 1.5
   projectileSpeed: 8
   explosionRadius: 2
   maxLevel: 5
-  damageIncreasePerLevel: 1.2
-  cooldownReductionPerLevel: 0.9
+  damageIncreasePerLevel: 2
+  cooldownReductionPerLevel: 0.2
   appliesStatusEffect: 1
   statusEffect: "Santificaci\xF3n"
-  statusEffectDuration: 5
+  statusEffectDuration: 15
   statusEffectDamage: 0
-  statusEffectTicks: 5
+  statusEffectTicks: 15
   knockbackForce: 0
   burnParticlesPrefab: {fileID: 0}
   sanctifyParticlesPrefab: {fileID: 870358350188661871, guid: 3e5b7c394885fc14b96fb8fd48e74e9e, type: 3}
+  electrocuteParticlesPrefab: {fileID: 0}
+  attackSound: {fileID: 0}

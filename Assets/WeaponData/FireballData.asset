@@ -19,10 +19,10 @@ MonoBehaviour:
   baseDamage: 25
   baseCooldown: 1
   projectileSpeed: 8
-  explosionRadius: 2
+  explosionRadius: 4
   maxLevel: 5
-  damageIncreasePerLevel: 1.2
-  cooldownReductionPerLevel: 0.9
+  damageIncreasePerLevel: 2.5
+  cooldownReductionPerLevel: 0.2
   appliesStatusEffect: 1
   statusEffect: Fuego
   statusEffectDuration: 20

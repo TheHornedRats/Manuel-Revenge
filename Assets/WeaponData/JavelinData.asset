@@ -16,19 +16,20 @@ MonoBehaviour:
   weaponType: 3
   attackPrefab: {fileID: 7755434435846515150, guid: dc1b73674b3005a42a4e9702a40d0a17, type: 3}
   explosionEffectPrefab: {fileID: 0}
-  baseDamage: 12
+  baseDamage: 40
   baseCooldown: 5
-  projectileSpeed: 30
+  projectileSpeed: 20
   explosionRadius: 2
   maxLevel: 5
   damageIncreasePerLevel: 1.2
-  cooldownReductionPerLevel: 0.9
+  cooldownReductionPerLevel: 0.25
   appliesStatusEffect: 1
   statusEffect: "Electrocuci\xF3n"
-  statusEffectDuration: 5
+  statusEffectDuration: 15
   statusEffectDamage: 1
-  statusEffectTicks: 2
-  knockbackForce: 5
+  statusEffectTicks: 0
+  knockbackForce: 0
   burnParticlesPrefab: {fileID: 0}
   sanctifyParticlesPrefab: {fileID: 0}
   electrocuteParticlesPrefab: {fileID: 870358350188661871, guid: 89522171c3161aa4a98bb63d06f0a5a1, type: 3}
+  attackSound: {fileID: 0}

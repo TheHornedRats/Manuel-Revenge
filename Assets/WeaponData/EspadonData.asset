@@ -21,8 +21,8 @@ MonoBehaviour:
   projectileSpeed: 8
   explosionRadius: 2
   maxLevel: 5
-  damageIncreasePerLevel: 1.2
-  cooldownReductionPerLevel: 0.9
+  damageIncreasePerLevel: 5
+  cooldownReductionPerLevel: 0.2
   appliesStatusEffect: 1
   statusEffect: Sangrado
   statusEffectDuration: 5

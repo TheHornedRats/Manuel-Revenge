@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 2528450588109223553}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.669407, y: -5.2121954, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 29
@@ -215,6 +215,7 @@ MonoBehaviour:
   xp20Prefab: {fileID: 1585143518705127342, guid: 7df50cb36a079cf48bfaf56c4f23641f, type: 3}
   dropRange: 1
   comboTextPrefab: {fileID: 0}
+  damageTextPrefab: {fileID: 0}
   abilityCooldown: 5
   ability1Prefab: {fileID: 4569544987278836385, guid: 929979a3c11a5944d8ace0c461a635ae, type: 3}
   ability2Prefab: {fileID: 7114174873681609047, guid: 28fa80890c0b4b7469de533a25279a38, type: 3}
