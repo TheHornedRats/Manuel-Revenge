@@ -29,6 +29,7 @@ public class Trucos : MonoBehaviour
     private bool isImmortal = false;
     private ScoreManager scoreManager;
     private PlayerHealth playerHealth;
+    private PlayerMovement playerMovement;
 
     void Start()
     {
@@ -43,6 +44,8 @@ public class Trucos : MonoBehaviour
         if (playerTransform != null)
         {
             playerHealth = playerTransform.GetComponent<PlayerHealth>();
+            playerMovement = playerTransform.GetComponent<PlayerMovement>();
+
             if (playerHealth == null)
                 Debug.LogError("No se encontró el componente PlayerHealth en el jugador.");
         }
@@ -91,7 +94,7 @@ public class Trucos : MonoBehaviour
         {
             Vector2 spawnPosition = GetSpawnPosition();
             Instantiate(enemigoPrefab, spawnPosition, Quaternion.identity);
-            enemyText.text = "¡Enemy Spanwed!";
+            enemyText.text = "¡Enemy Spawned!";
             enemyText.gameObject.SetActive(true);
             StartCoroutine(HideTextAfterSeconds(enemyText, 2f));
         }
@@ -161,31 +164,74 @@ public class Trucos : MonoBehaviour
     {
         command = command.ToLower().Trim();
 
-        switch (command)
+        if (command.StartsWith("add_health_"))
         {
-            case "health":
-                AddHealth();
-                break;
-
-            case "score":
-                OnAddScoreButtonClick();
-                break;
-
-            case "enemy":
-                OnSpawnEnemyButtonClick();
-                break;
-
-            case "time":
-                SlowDownTime();
-                break;
-
-            case "immortality":
-                ActivateImmortality();
-                break;
-
-            default:
-                Debug.Log("Comando no reconocido: " + command);
-                break;
+            string valueStr = command.Substring("add_health_".Length);
+            if (int.TryParse(valueStr, out int amount) && playerHealth != null)
+            {
+                playerHealth.Heal(amount);
+                healthText.text = $"¡Added {amount} Health!";
+                healthText.gameObject.SetActive(true);
+                StartCoroutine(HideTextAfterSeconds(healthText, 2f));
+            }
+        }
+        else if (command.StartsWith("max_health_"))
+        {
+            string valueStr = command.Substring("max_health_".Length);
+            if (int.TryParse(valueStr, out int newMax) && playerHealth != null)
+            {
+                playerHealth.maxHealth = newMax;
+                playerHealth.Heal(0); // para actualizar UI
+                healthText.text = $"¡Max Health set to {newMax}!";
+                healthText.gameObject.SetActive(true);
+                StartCoroutine(HideTextAfterSeconds(healthText, 2f));
+            }
+        }
+        else if (command.StartsWith("set_speed_"))
+        {
+            string valueStr = command.Substring("set_speed_".Length);
+            if (float.TryParse(valueStr, out float newSpeed) && playerMovement != null)
+            {
+                playerMovement.speed = newSpeed;
+                timeText.text = $"¡Speed set to {newSpeed}!";
+                timeText.gameObject.SetActive(true);
+                StartCoroutine(HideTextAfterSeconds(timeText, 2f));
+            }
+        }
+        else if (command.StartsWith("add_xp_"))
+        {
+            string valueStr = command.Substring("add_xp_".Length);
+            if (int.TryParse(valueStr, out int xpAmount) && scoreManager != null)
+            {
+                scoreManager.AddScore(xpAmount);
+                scoreText.text = $"¡XP +{xpAmount}!";
+                scoreText.gameObject.SetActive(true);
+                StartCoroutine(HideTextAfterSeconds(scoreText, 2f));
+            }
+        }
+        else
+        {
+            switch (command)
+            {
+                case "health":
+                    AddHealth();
+                    break;
+                case "score":
+                    OnAddScoreButtonClick();
+                    break;
+                case "enemy":
+                    OnSpawnEnemyButtonClick();
+                    break;
+                case "time":
+                    SlowDownTime();
+                    break;
+                case "immortality":
+                    ActivateImmortality();
+                    break;
+                default:
+                    Debug.Log("Comando no reconocido: " + command);
+                    break;
+            }
         }
 
         commandInput.text = "";

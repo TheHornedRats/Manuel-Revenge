@@ -20,7 +20,7 @@ public class TrucosMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             if (isOpen)
                 {trucosMenuUI.SetActive(false);
