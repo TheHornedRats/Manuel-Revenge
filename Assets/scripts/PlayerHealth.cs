@@ -18,9 +18,12 @@ public class PlayerHealth : MonoBehaviour
     public Color vidaBajaColor = Color.red;
     public float umbralVidaBaja = 0.25f;
 
-    public AudioClip damageSound;
-    public AudioClip deathSound; // <- Nuevo campo para el sonido de muerte
+    public AudioClip damageSound1; // Referencia al primer sonido de daño
+    public AudioClip damageSound2; // Referencia al segundo sonido de daño
+    public AudioClip deathSound;
+
     private AudioSource audioSource;
+    private bool usarPrimerSonido = true; // Alternador
 
     void Start()
     {
@@ -32,7 +35,6 @@ public class PlayerHealth : MonoBehaviour
         uiScreen.SetActive(true);
 
         audioSource = GetComponent<AudioSource>();
-
         ActualizarTextoVida();
     }
 
@@ -50,13 +52,23 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         healthSlider.value = currentHealth;
 
-        if (damageSound != null && audioSource != null)
+        // Alternar entre sonidos de daño
+        if (audioSource != null)
         {
-            audioSource.PlayOneShot(damageSound);
+            if (usarPrimerSonido && damageSound1 != null)
+            {
+                audioSource.PlayOneShot(damageSound1);
+            }
+            else if (!usarPrimerSonido && damageSound2 != null)
+            {
+                audioSource.PlayOneShot(damageSound2);
+            }
+
+            usarPrimerSonido = !usarPrimerSonido; //Cambia para la próxima vez
         }
         else
         {
-            Debug.Log("Falta asignar 'damageSound' o 'AudioSource' en el objeto con PlayerHealth.");
+            Debug.LogWarning("Falta el AudioSource en PlayerHealth.");
         }
 
         Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + currentHealth);
@@ -87,20 +99,19 @@ public class PlayerHealth : MonoBehaviour
             vidaTexto.text = "Vida: " + currentHealth + " / " + maxHealth;
 
             float porcentaje = (float)currentHealth / maxHealth;
-            if (porcentaje <= umbralVidaBaja)
-            {
-                vidaTexto.color = vidaBajaColor;
-            }
-            else
-            {
-                vidaTexto.color = vidaNormalColor;
-            }
+            vidaTexto.color = porcentaje <= umbralVidaBaja ? vidaBajaColor : vidaNormalColor;
         }
     }
 
     private void Die()
     {
         Debug.Log("El jugador ha muerto. Activando pantalla de muerte.");
+
+        if (audioSource != null && deathSound != null)
+        {
+            audioSource.PlayOneShot(deathSound);
+        }
+
         if (deathScreen != null)
         {
             deathScreen.SetActive(true);
