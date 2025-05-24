@@ -4,8 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public Transform cameraTransform;
-    public float maxCameraOffset = 2f;       // Límite máximo de distancia cámara-jugador
-    public float cameraMoveSpeed = 7f;       // Velocidad a la que la cámara se mueve
+    public float maxCameraOffset = 2f;
+    public float cameraMoveSpeed = 7f;
+
+    public AudioSource sonidoMovimiento; //Referencia al AudioSource para el sonido de movimiento
 
     private Vector3 targetCameraPosition;
 
@@ -21,6 +23,20 @@ public class PlayerMovement : MonoBehaviour
         if (inputDirection.magnitude > 0.1f)
         {
             transform.Translate(inputDirection * speed * Time.deltaTime, Space.World);
+
+            // Reproducir sonido si no se está reproduciendo ya
+            if (sonidoMovimiento != null && !sonidoMovimiento.isPlaying)
+            {
+                sonidoMovimiento.Play();
+            }
+        }
+        else
+        {
+            // Detener sonido si el jugador no se está moviendo
+            if (sonidoMovimiento != null && sonidoMovimiento.isPlaying)
+            {
+                sonidoMovimiento.Stop();
+            }
         }
 
         // Flip visual
@@ -34,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         targetCameraPosition = transform.position + offset;
         targetCameraPosition.z = cameraTransform.position.z;
 
-        // Mover la cámara rápidamente hacia la posición objetivo (más rápido que el jugador)
+        // Mover la cámara hacia la posición objetivo
         cameraTransform.position = Vector3.MoveTowards(
             cameraTransform.position,
             targetCameraPosition,

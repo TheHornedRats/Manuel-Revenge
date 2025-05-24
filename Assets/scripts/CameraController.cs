@@ -8,13 +8,19 @@ public class CamaraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        // Calcula la posición deseada de la cámara
         Vector3 posicionDeseada = objetivo.position + desplazamiento;
 
-        // Suaviza el movimiento hacia la posición deseada
-        Vector3 posicionSuavizada = Vector3.Lerp(transform.position, posicionDeseada, velocidadCamara);
+        // Suaviza solo X e Y
+        Vector3 posicionSuavizada = Vector3.Lerp(
+            new Vector3(transform.position.x, transform.position.y, 0),
+            new Vector3(posicionDeseada.x, posicionDeseada.y, 0),
+            velocidadCamara
+        );
 
-        // Actualiza la posición de la cámara
+        // Fija el valor de Z manualmente (por ejemplo, -10 si es una cámara 2D)
+        posicionSuavizada.z = transform.position.z; // o un valor fijo como -10
+
         transform.position = posicionSuavizada;
     }
+
 }
