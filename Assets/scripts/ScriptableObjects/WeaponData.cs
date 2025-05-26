@@ -5,6 +5,12 @@ public enum WeaponType { Melee, Projectile, ExpandingWave, Javelin }
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/WeaponData")]
 public class WeaponData : ScriptableObject
 {
+    [Header("Audio del Arma")]
+    public AudioClip meleeAttackSound;
+    public AudioClip projectileAttackSound;
+    public AudioClip waveAttackSound;
+    public AudioClip javelinAttackSound;
+
     [Header("Información del Arma")]
     public string weaponName;
     public WeaponType weaponType;
@@ -37,8 +43,6 @@ public class WeaponData : ScriptableObject
     public GameObject sanctifyParticlesPrefab;
     public GameObject electrocuteParticlesPrefab;
 
-    [Header("Audio del Arma")]
-    public AudioClip attackSound;
 
     public void InitWeapon(int weaponLevel)
     {
@@ -95,20 +99,16 @@ public class WeaponData : ScriptableObject
 
         Vector3 attackDirection = Vector3.right;
 
-        // Si es Crucifijo, se asigna una dirección aleatoria
         if (weaponName == "Crucifijo")
         {
             attackDirection = Random.insideUnitCircle.normalized;
-
         }
         else
         {
-            // Para los demás, se apunta hacia el mouse
             if (Input.mousePosition != null)
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 attackDirection = (mousePos - playerPos).normalized;
-           
             }
         }
 
@@ -118,10 +118,15 @@ public class WeaponData : ScriptableObject
         switch (weaponType)
         {
             case WeaponType.Melee:
+                if (meleeAttackSound != null)
+                    AudioSource.PlayClipAtPoint(meleeAttackSound, playerPos);
                 Destroy(attack, 0.3f);
                 break;
 
             case WeaponType.Projectile:
+                if (projectileAttackSound != null)
+                    AudioSource.PlayClipAtPoint(projectileAttackSound, playerPos);
+
                 Rigidbody2D rb = attack.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
@@ -133,6 +138,9 @@ public class WeaponData : ScriptableObject
                 break;
 
             case WeaponType.ExpandingWave:
+                if (waveAttackSound != null)
+                    AudioSource.PlayClipAtPoint(waveAttackSound, playerPos);
+
                 ExpandingWave expandingWave = attack.GetComponent<ExpandingWave>();
                 if (expandingWave != null)
                 {
@@ -145,6 +153,9 @@ public class WeaponData : ScriptableObject
                 break;
 
             case WeaponType.Javelin:
+                if (javelinAttackSound != null)
+                    AudioSource.PlayClipAtPoint(javelinAttackSound, playerPos);
+
                 Rigidbody2D javelinRb = attack.GetComponent<Rigidbody2D>();
                 if (javelinRb != null)
                 {
@@ -155,7 +166,6 @@ public class WeaponData : ScriptableObject
                 break;
         }
 
-        // Reinicia el cooldown para permitir nuevos disparos
         currentCooldown = baseCooldown;
     }
 }
