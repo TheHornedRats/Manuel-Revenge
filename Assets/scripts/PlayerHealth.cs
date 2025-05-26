@@ -96,7 +96,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (vidaTexto != null)
         {
-            vidaTexto.text = "Vida: " + currentHealth + " / " + maxHealth;
+            vidaTexto.text = "Health: " + currentHealth + " / " + maxHealth;
 
             float porcentaje = (float)currentHealth / maxHealth;
             vidaTexto.color = porcentaje <= umbralVidaBaja ? vidaBajaColor : vidaNormalColor;

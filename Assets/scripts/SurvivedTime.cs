@@ -12,6 +12,6 @@ public class SurvivedTime : MonoBehaviour
         int minutos = Mathf.FloorToInt(tiempoJugado / 60);
         int segundos = Mathf.FloorToInt(tiempoJugado % 60);
         tiempoText.text = $"{minutos:D2}:{segundos:D2}";
-        finalTiempoText.text = $"TIEMPO SOBREVIVIDO: {minutos:D2}:{segundos:D2}";
+        finalTiempoText.text = $"SURVIVED TIME: {minutos:D2}:{segundos:D2}";
     }
 }

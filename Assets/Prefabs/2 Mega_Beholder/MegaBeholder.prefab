@@ -214,8 +214,8 @@ MonoBehaviour:
   xp10Prefab: {fileID: 1585143518705127342, guid: f6c66dc55133b0e4abee427d1b20fc37, type: 3}
   xp20Prefab: {fileID: 1585143518705127342, guid: f6c66dc55133b0e4abee427d1b20fc37, type: 3}
   dropRange: 1
-  comboTextPrefab: {fileID: 0}
-  damageTextPrefab: {fileID: 0}
+  comboTextPrefab: {fileID: 375881067238031453, guid: 816a22dcc27085d498192d6f84f36070, type: 3}
+  damageTextPrefab: {fileID: 4855697854584164209, guid: 5d33f2cd6fe994d48acb292deadc1034, type: 3}
   abilityCooldown: 5
   ability1Prefab: {fileID: 4569544987278836385, guid: 929979a3c11a5944d8ace0c461a635ae, type: 3}
   ability2Prefab: {fileID: 7114174873681609047, guid: 28fa80890c0b4b7469de533a25279a38, type: 3}

@@ -130,7 +130,8 @@ public class EnemyHealth : MonoBehaviour
         {
             text.text = $"-{damage}";
             text.fontSize = 4 + damage * 0.1f;
-            text.color = Color.red;
+            text.color = new Color(1f, 0.843f, 0f);
+            ;
         }
 
         Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();

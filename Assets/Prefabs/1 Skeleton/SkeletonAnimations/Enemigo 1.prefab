@@ -149,7 +149,7 @@ MonoBehaviour:
   xp10Prefab: {fileID: 5323331309410571035, guid: 6fd4f0c1c4ddd804b934d9ecc88aeb2e, type: 3}
   xp20Prefab: {fileID: 5323331309410571035, guid: 6fd4f0c1c4ddd804b934d9ecc88aeb2e, type: 3}
   dropRange: 1
-  comboTextPrefab: {fileID: 0}
+  comboTextPrefab: {fileID: 375881067238031453, guid: 816a22dcc27085d498192d6f84f36070, type: 3}
   damageTextPrefab: {fileID: 4855697854584164209, guid: 5d33f2cd6fe994d48acb292deadc1034, type: 3}
 --- !u!114 &-3819563168698776304
 MonoBehaviour:
