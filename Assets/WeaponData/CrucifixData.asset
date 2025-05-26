@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: CrucifixData
   m_EditorClassIdentifier: 
   meleeAttackSound: {fileID: 8300000, guid: 09353f2514379fd4bb37bd53de416fbb, type: 3}
-  projectileAttackSound: {fileID: 0}
+  projectileAttackSound: {fileID: 8300000, guid: 5129b4ef83c1f72409445c084f5b3d3e, type: 3}
   waveAttackSound: {fileID: 0}
-  javelinAttackSound: {fileID: 0}
+  javelinAttackSound: {fileID: 8300000, guid: 680c5da3475880640961536acd6464e5, type: 3}
   weaponName: Crucifijo
   weaponType: 2
   attackPrefab: {fileID: 7755434435846515150, guid: 640738e2788d40f41a3485fef96cd1b8, type: 3}

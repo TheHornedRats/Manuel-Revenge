@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EspadonData
   m_EditorClassIdentifier: 
   meleeAttackSound: {fileID: 8300000, guid: 09353f2514379fd4bb37bd53de416fbb, type: 3}
-  projectileAttackSound: {fileID: 0}
+  projectileAttackSound: {fileID: 8300000, guid: 5129b4ef83c1f72409445c084f5b3d3e, type: 3}
   waveAttackSound: {fileID: 0}
-  javelinAttackSound: {fileID: 0}
+  javelinAttackSound: {fileID: 8300000, guid: 680c5da3475880640961536acd6464e5, type: 3}
   weaponName: Espadon
   weaponType: 0
   attackPrefab: {fileID: 3370492357764059366, guid: 2d2d51dff485d3e48b27f6f1a23b6465, type: 3}
