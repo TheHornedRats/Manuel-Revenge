@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b8ce6228505bd42a3c5a8f1dc0e04a, type: 3}
   m_Name: CrucifixData
   m_EditorClassIdentifier: 
+  meleeAttackSound: {fileID: 8300000, guid: 09353f2514379fd4bb37bd53de416fbb, type: 3}
+  projectileAttackSound: {fileID: 8300000, guid: 5129b4ef83c1f72409445c084f5b3d3e, type: 3}
+  waveAttackSound: {fileID: 0}
+  javelinAttackSound: {fileID: 8300000, guid: 680c5da3475880640961536acd6464e5, type: 3}
   weaponName: Crucifijo
   weaponType: 2
   attackPrefab: {fileID: 7755434435846515150, guid: 640738e2788d40f41a3485fef96cd1b8, type: 3}
@@ -32,4 +36,3 @@ MonoBehaviour:
   burnParticlesPrefab: {fileID: 0}
   sanctifyParticlesPrefab: {fileID: 870358350188661871, guid: 3e5b7c394885fc14b96fb8fd48e74e9e, type: 3}
   electrocuteParticlesPrefab: {fileID: 0}
-  attackSound: {fileID: 0}
