@@ -1647,7 +1647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &218546482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12995,12 +12995,12 @@ MonoBehaviour:
   immortalityButton: {fileID: 1928815436}
   enemigoPrefab: {fileID: 6552913883591398799, guid: 4620e40f6e4eb87479d471592ed56421, type: 3}
   playerTransform: {fileID: 6485718365216572431}
-  healthText: {fileID: 0}
-  scoreText: {fileID: 0}
-  enemyText: {fileID: 0}
-  timeText: {fileID: 0}
-  immortalityText: {fileID: 0}
-  commandInput: {fileID: 0}
+  healthText: {fileID: 1179541596169355472}
+  scoreText: {fileID: 1127619450041716097}
+  enemyText: {fileID: 4153650958713122924}
+  timeText: {fileID: 4888443463735122286}
+  immortalityText: {fileID: 1084739099}
+  commandInput: {fileID: 2237573356020384520}
   minSpawnDistance: 3
   maxSpawnDistance: 6
 --- !u!222 &3418909325753148730
@@ -15694,7 +15694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4802649891480444804, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.4999962
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4864973073116937707, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
       propertyPath: m_Sprite
