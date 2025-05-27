@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class BossEnemy : EnemyHealth
@@ -11,8 +12,7 @@ public class BossEnemy : EnemyHealth
     public GameObject ability2Prefab; // Rayo gordo
     public GameObject summon1Prefab;  // Bolita teledirigida
     public GameObject summon2Prefab;  // Rayo canalizado
-
-    [SerializeField]
+   
     private new Animator animator;
 
     protected bool isAttacking = false;
@@ -125,6 +125,8 @@ public class BossEnemy : EnemyHealth
         if (isDead) return;
 
         currentHealth -= damage;
+        ShowDamageText(damage);
+        
 
         if (currentHealth <= 0)
         {
@@ -142,8 +144,10 @@ public class BossEnemy : EnemyHealth
         animator?.SetTrigger("Die");
 
         DropXPItems();
-        ScoreManager.instance.AddScore(5);
+        UpdateCombo();
+
 
         Destroy(gameObject, 0.6f);
     }
+   
 }
