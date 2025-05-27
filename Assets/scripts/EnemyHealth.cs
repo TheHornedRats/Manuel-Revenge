@@ -18,12 +18,12 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("Combo")]
     public TextMeshPro comboTextPrefab;
-    private static int comboCount = 0;
-    private static float lastKillTime;
-    private static float comboResetTime = 3.0f;
+    protected static int comboCount = 0;
+    protected static float lastKillTime;
+    protected static float comboResetTime = 3.0f;
 
     [Header("Texto de Daño")]
-    public GameObject damageTextPrefab;  // Prefab con TextMeshPro
+    public GameObject damageTextPrefab;  
 
     protected virtual void Start()
     {
@@ -40,7 +40,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
 
-        ShowDamageText(damage); // Mostrar texto de daño
+        ShowDamageText(damage); 
 
         SanctifyEffect sanctifyEffect = GetComponent<SanctifyEffect>();
         if (sanctifyEffect != null)
@@ -75,8 +75,6 @@ public class EnemyHealth : MonoBehaviour
         UpdateCombo();
         DropXPItems();
 
-        ScoreManager.instance.AddScore(5);
-
         Destroy(gameObject, 0.5f);
     }
 
@@ -91,7 +89,7 @@ public class EnemyHealth : MonoBehaviour
         Instantiate(xp20Prefab, dropPosition3, Quaternion.identity);
     }
 
-    private void UpdateCombo()
+    protected void UpdateCombo()
     {
         if (Time.time - lastKillTime > comboResetTime)
         {
@@ -106,19 +104,19 @@ public class EnemyHealth : MonoBehaviour
         ShowComboText();
     }
 
-    private void ShowComboText()
+    protected void ShowComboText()
     {
         if (comboTextPrefab == null) return;
 
         TextMeshPro comboTextInstance = Instantiate(comboTextPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
-        comboTextInstance.text = $"Combo x{comboCount}";
+        comboTextInstance.text = $" x{comboCount}";
         comboTextInstance.fontSize = Mathf.Clamp(3 + (comboCount * 0.5f), 3, 7);
         comboTextInstance.color = Color.Lerp(Color.white, Color.red, comboCount / 10f);
 
         Destroy(comboTextInstance.gameObject, 1.5f);
     }
 
-    private void ShowDamageText(int damage)
+    protected void ShowDamageText(int damage)
     {
         if (damageTextPrefab == null) return;
 

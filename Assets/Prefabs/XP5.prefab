@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3901b6dee6af14c4ba71fa8ba180af9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XPobtenida: 5
+  XPobtenida: 50
   pickupSound: {fileID: 8300000, guid: 1b6c4708cb94fbf4a8b50a961188e9b5, type: 3}
   moveSpeed: 14
 --- !u!61 &6396828154071964361
