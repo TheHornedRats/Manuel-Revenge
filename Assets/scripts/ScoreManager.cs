@@ -85,17 +85,17 @@ public class ScoreManager : MonoBehaviour
     private void UpdateUI()
     {
         if (scoreText != null)
-            scoreText.text = "" + score;
+            scoreText.text = "Score: " + score;
         else
             Debug.LogWarning("ScoreText no asignado en el Inspector.");
 
         if (levelText != null)
-            levelText.text = "Nivel: " + level;
+            levelText.text = "Level: " + level;
         else
             Debug.LogWarning("LevelText no asignado en el Inspector.");
 
         if (finalScoreText != null)
-            finalScoreText.text = "Puntuación: " + score;
+            finalScoreText.text = "Score: " + score;
         else
             Debug.LogWarning("ScoreText no asignado en el Inspector.");
     }
