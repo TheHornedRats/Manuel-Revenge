@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   XPobtenida: 400
-  pickupSound: {fileID: 8300000, guid: 1b6c4708cb94fbf4a8b50a961188e9b5, type: 3}
+  pickupSound: {fileID: 8300000, guid: 5137fdd2740a920468c51b190f8676c6, type: 3}
   moveSpeed: 14
 --- !u!61 &2131401303620973462
 BoxCollider2D:
@@ -159,7 +159,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

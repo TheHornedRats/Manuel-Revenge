@@ -14,6 +14,12 @@ public class XPpickup : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        // Aplicar pitch aleatorio al aparecer (rango entre 0.9 y 1.1 por ejemplo)
+        if (audioSource != null)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
