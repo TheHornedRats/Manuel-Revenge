@@ -67,6 +67,14 @@ public class EnemyHealth : MonoBehaviour
     protected virtual void Die()
     {
         isDead = true;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
         Debug.Log($"{name} ha muerto.");
 
         if (animator != null)

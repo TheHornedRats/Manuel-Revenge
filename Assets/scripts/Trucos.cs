@@ -7,9 +7,9 @@ public class Trucos : MonoBehaviour
 {
     public Button changeHealthButton;
     public Button addScoreButton;
-    public Button spawnEnemyButton;
-    public Button slowTimeButton;
-    public Button immortalityButton;
+    public Button spawnBoss1Button;
+    public Button spawnBoss2Button;
+    public Button spawnBoss3Button;
 
     public GameObject enemigoPrefab;
     public Transform playerTransform;
@@ -31,13 +31,17 @@ public class Trucos : MonoBehaviour
     private PlayerHealth playerHealth;
     private PlayerMovement playerMovement;
 
+    public GameObject boss1Prefab;
+    public GameObject boss2Prefab;
+    public GameObject boss3Prefab;
+
     void Start()
     {
         changeHealthButton.onClick.AddListener(AddHealth);
         addScoreButton.onClick.AddListener(OnAddScoreButtonClick);
-        spawnEnemyButton.onClick.AddListener(OnSpawnEnemyButtonClick);
-        slowTimeButton.onClick.AddListener(SlowDownTime);
-        immortalityButton.onClick.AddListener(ActivateImmortality);
+        spawnBoss1Button.onClick.AddListener(SpawnBoss1);
+        spawnBoss2Button.onClick.AddListener(SpawnBoss2);
+        spawnBoss3Button.onClick.AddListener(SpawnBoss3);
 
         scoreManager = ScoreManager.instance;
 
@@ -148,7 +152,7 @@ public class Trucos : MonoBehaviour
 
     Vector2 GetSpawnPosition()
     {
-        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        float angle = Random.Range(75f, 500f) * Mathf.Deg2Rad;
         float distance = Random.Range(minSpawnDistance, maxSpawnDistance);
         Vector2 spawnOffset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
         return (Vector2)playerTransform.position + spawnOffset;
@@ -158,6 +162,54 @@ public class Trucos : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         textElement.gameObject.SetActive(false);
+    }
+
+    public void SpawnBoss1()
+    {
+        if (boss1Prefab != null && playerTransform != null)
+        {
+            Vector2 spawnPosition = GetSpawnPosition();
+            Instantiate(boss1Prefab, spawnPosition, Quaternion.identity);
+            enemyText.text = "¡Boss 1 Spawned!";
+            enemyText.gameObject.SetActive(true);
+            StartCoroutine(HideTextAfterSeconds(enemyText, 2f));
+        }
+        else
+        {
+            Debug.LogError("Boss1 Prefab o PlayerTransform no asignado.");
+        }
+    }
+
+    public void SpawnBoss2()
+    {
+        if (boss2Prefab != null && playerTransform != null)
+        {
+            Vector2 spawnPosition = GetSpawnPosition();
+            Instantiate(boss2Prefab, spawnPosition, Quaternion.identity);
+            enemyText.text = "¡Boss 2 Spawned!";
+            enemyText.gameObject.SetActive(true);
+            StartCoroutine(HideTextAfterSeconds(enemyText, 2f));
+        }
+        else
+        {
+            Debug.LogError("Boss2 Prefab o PlayerTransform no asignado.");
+        }
+    }
+
+    public void SpawnBoss3()
+    {
+        if (boss3Prefab != null && playerTransform != null)
+        {
+            Vector2 spawnPosition = GetSpawnPosition();
+            Instantiate(boss3Prefab, spawnPosition, Quaternion.identity);
+            enemyText.text = "¡Boss 3 Spawned!";
+            enemyText.gameObject.SetActive(true);
+            StartCoroutine(HideTextAfterSeconds(enemyText, 2f));
+        }
+        else
+        {
+            Debug.LogError("Boss3 Prefab o PlayerTransform no asignado.");
+        }
     }
 
     void HandleCommand(string command)
@@ -227,6 +279,15 @@ public class Trucos : MonoBehaviour
                     break;
                 case "immortality":
                     ActivateImmortality();
+                    break;
+                case "boss1":
+                    SpawnBoss1();
+                    break;
+                case "boss2":
+                    SpawnBoss2();
+                    break;
+                case "boss3":
+                    SpawnBoss3();
                     break;
                 default:
                     Debug.Log("Comando no reconocido: " + command);

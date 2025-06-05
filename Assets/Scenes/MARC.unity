@@ -9310,7 +9310,10 @@ MonoBehaviour:
   musicSlider: {fileID: 659559984}
   sfxSlider: {fileID: 1693619475}
   musicSource: {fileID: 1249863214}
-  sfxSources: []
+  sfxSources:
+  - {fileID: 7610035087467085615}
+  - {fileID: 1614794017538196938}
+  - {fileID: 8680992912001135379}
 --- !u!114 &1821248917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11692,6 +11695,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40ac658f4f1b329469baa1c6a8604626, type: 3}
+--- !u!82 &1614794017538196938 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 462300177545655062, guid: 40ac658f4f1b329469baa1c6a8604626, type: 3}
+  m_PrefabInstance: {fileID: 1614794017538196937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1695705112807529261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12711,9 +12719,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeHealthButton: {fileID: 6260457779096980610}
   addScoreButton: {fileID: 8536927021453295277}
-  spawnEnemyButton: {fileID: 1922441553324201912}
-  slowTimeButton: {fileID: 102993781545279352}
-  immortalityButton: {fileID: 1928815436}
+  spawnBoss1Button: {fileID: 0}
+  spawnBoss2Button: {fileID: 0}
+  spawnBoss3Button: {fileID: 0}
   enemigoPrefab: {fileID: 6552913883591398799, guid: 4620e40f6e4eb87479d471592ed56421, type: 3}
   playerTransform: {fileID: 6485718365216572431}
   healthText: {fileID: 1179541596169355472}
@@ -12724,6 +12732,9 @@ MonoBehaviour:
   commandInput: {fileID: 2237573356020384520}
   minSpawnDistance: 3
   maxSpawnDistance: 6
+  boss1Prefab: {fileID: 0}
+  boss2Prefab: {fileID: 0}
+  boss3Prefab: {fileID: 0}
 --- !u!222 &3418909325753148730
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15792,6 +15803,11 @@ PrefabInstance:
       addedObject: {fileID: 599060250}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
+--- !u!82 &8680992912001135379 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6584064792381305428, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
+  m_PrefabInstance: {fileID: 8680992912001135378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8687940947100451783
 RectTransform:
   m_ObjectHideFlags: 0
