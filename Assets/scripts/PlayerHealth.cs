@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -10,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public Slider healthSlider;
     public int maxHealth = 100;
     private int currentHealth;
+
     public GameObject deathScreen;
     public GameObject uiScreen;
     public TextMeshProUGUI vidaTexto;
@@ -18,12 +18,26 @@ public class PlayerHealth : MonoBehaviour
     public Color vidaBajaColor = Color.red;
     public float umbralVidaBaja = 0.25f;
 
-    public AudioClip damageSound1; // Referencia al primer sonido de daño
-    public AudioClip damageSound2; // Referencia al segundo sonido de daño
+    public AudioClip damageSound1;
+    public AudioClip damageSound2;
     public AudioClip deathSound;
 
     private AudioSource audioSource;
-    private bool usarPrimerSonido = true; // Alternador
+    private bool usarPrimerSonido = true;
+
+    // Sprite flash
+    private SpriteRenderer spriteRenderer;
+    public float flashDuration = 0.1f;
+    public Color flashColor = Color.red;
+    private Color originalColor;
+
+    // Cámara
+    private CameraShake cameraShake;
+
+    // Imagen UI efecto daño
+    public Image externalDamageEffect;
+    public float externalEffectDuration = 0.3f;
+    public AnimationCurve fadeCurve; // opcional para suavizar la transparencia
 
     void Start()
     {
@@ -35,6 +49,21 @@ public class PlayerHealth : MonoBehaviour
         uiScreen.SetActive(true);
 
         audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
+
+        cameraShake = Camera.main?.GetComponent<CameraShake>();
+
+        // Asegurar que la imagen UI empieza invisible
+        if (externalDamageEffect != null)
+        {
+            Color c = externalDamageEffect.color;
+            c.a = 0f;
+            externalDamageEffect.color = c;
+        }
+
         ActualizarTextoVida();
     }
 
@@ -52,26 +81,30 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         healthSlider.value = currentHealth;
 
-        // Alternar entre sonidos de daño
+        // Sonido daño alternado
         if (audioSource != null)
         {
             if (usarPrimerSonido && damageSound1 != null)
-            {
                 audioSource.PlayOneShot(damageSound1);
-            }
             else if (!usarPrimerSonido && damageSound2 != null)
-            {
                 audioSource.PlayOneShot(damageSound2);
-            }
 
-            usarPrimerSonido = !usarPrimerSonido; //Cambia para la próxima vez
-        }
-        else
-        {
-            Debug.LogWarning("Falta el AudioSource en PlayerHealth.");
+            usarPrimerSonido = !usarPrimerSonido;
         }
 
         Debug.Log(name + " tomó " + damage + " de daño. Salud restante: " + currentHealth);
+
+        // Flash rojo
+        if (spriteRenderer != null)
+            StartCoroutine(FlashRed());
+
+        // Efecto externo UI
+        if (externalDamageEffect != null)
+            StartCoroutine(ShowExternalDamageEffect());
+
+        // Sacudida cámara
+        if (cameraShake != null)
+            cameraShake.Shake();
 
         ActualizarTextoVida();
 
@@ -80,6 +113,57 @@ public class PlayerHealth : MonoBehaviour
             Die();
         }
     }
+
+    private IEnumerator FlashRed()
+    {
+        spriteRenderer.color = flashColor;
+        yield return new WaitForSeconds(flashDuration);
+        spriteRenderer.color = originalColor;
+    }
+
+    private IEnumerator ShowExternalDamageEffect()
+    {
+        float elapsed = 0f;
+        Color color = externalDamageEffect.color;
+
+        // Aseguramos que empieza transparente
+        color.a = 0f;
+        externalDamageEffect.color = color;
+
+        // Fade in (0 -> 1)
+        while (elapsed < externalEffectDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / externalEffectDuration);
+
+            color.a = Mathf.Lerp(0f, 0.3f, t);
+            externalDamageEffect.color = color;
+
+            yield return null;
+        }
+
+        // Pausa breve al máximo alpha, opcional
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        elapsed = 0f;
+
+        // Fade out (1 -> 0)
+        while (elapsed < externalEffectDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / externalEffectDuration);
+
+            color.a = Mathf.Lerp(0.3f, 0f, t);
+            externalDamageEffect.color = color;
+
+            yield return null;
+        }
+
+        // Al final, aseguramos alpha 0
+        color.a = 0f;
+        externalDamageEffect.color = color;
+    }
+
 
     public void Heal(int amount)
     {
@@ -118,10 +202,6 @@ public class PlayerHealth : MonoBehaviour
             uiScreen.SetActive(false);
             Debug.Log("Pantalla de muerte activada.");
         }
-        else
-        {
-            Debug.LogWarning("deathScreen no asignado.");
-        }
 
         Time.timeScale = 0f;
         Camera.main.transform.SetParent(null);
@@ -132,5 +212,4 @@ public class PlayerHealth : MonoBehaviour
     {
         return currentHealth;
     }
-
 }
