@@ -83,8 +83,12 @@ public class EnemyHealth : MonoBehaviour
         UpdateCombo();
         DropXPItems();
 
+        // Recompensa de monedas al morir
+        MoneyManager.Instance?.AddCoins(25);
+
         Destroy(gameObject, 0.5f);
     }
+
 
     protected void DropXPItems()
     {

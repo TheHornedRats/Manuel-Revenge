@@ -38,7 +38,7 @@ public class Trucos : MonoBehaviour
     void Start()
     {
         changeHealthButton.onClick.AddListener(AddHealth);
-        addScoreButton.onClick.AddListener(OnAddScoreButtonClick);
+        addScoreButton.onClick.AddListener(AddXP);
         spawnBoss1Button.onClick.AddListener(SpawnBoss1);
         spawnBoss2Button.onClick.AddListener(SpawnBoss2);
         spawnBoss3Button.onClick.AddListener(SpawnBoss3);
@@ -66,7 +66,7 @@ public class Trucos : MonoBehaviour
         immortalityText.gameObject.SetActive(false);
     }
 
-    void AddHealth()
+    public void AddHealth()
     {
         if (playerHealth != null)
         {
@@ -77,7 +77,19 @@ public class Trucos : MonoBehaviour
         }
     }
 
-    void OnAddScoreButtonClick()
+    public void AddSpeed()
+    {
+        if (playerMovement != null)
+        {
+            playerMovement.speed += 5f;
+            timeText.text = $"¡Speed increased to {playerMovement.speed}!";
+            timeText.gameObject.SetActive(true);
+            StartCoroutine(HideTextAfterSeconds(timeText, 2f));
+        }
+    }
+
+
+    public void AddXP()
     {
         if (scoreManager != null)
         {
@@ -269,7 +281,10 @@ public class Trucos : MonoBehaviour
                     AddHealth();
                     break;
                 case "score":
-                    OnAddScoreButtonClick();
+                    AddXP();
+                    break;
+                case "speed":
+                    AddSpeed();
                     break;
                 case "enemy":
                     OnSpawnEnemyButtonClick();
