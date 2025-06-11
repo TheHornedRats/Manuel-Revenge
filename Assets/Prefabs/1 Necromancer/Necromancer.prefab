@@ -202,12 +202,12 @@ MonoBehaviour:
   dropRange: 1
   comboTextPrefab: {fileID: 375881067238031453, guid: 816a22dcc27085d498192d6f84f36070, type: 3}
   damageTextPrefab: {fileID: 4855697854584164209, guid: 5d33f2cd6fe994d48acb292deadc1034, type: 3}
+  coinReward: 50
   abilityCooldown: 5
   ability1Prefab: {fileID: 5376653811226049598, guid: 0b8aa7463b50ae14a989264ac7fc576f, type: 3}
   ability2Prefab: {fileID: 5376653811226049598, guid: 3c3e6660d3c155a4aa09a4aa82f03117, type: 3}
   summon1Prefab: {fileID: 5376653811226049598, guid: bfd8d836bd1ed734ab2c2d977fac4802, type: 3}
   summon2Prefab: {fileID: 5376653811226049598, guid: 870b0162c20250946adb3d34e263e04a, type: 3}
-  animator: {fileID: 0}
 --- !u!114 &2852409607168774178
 MonoBehaviour:
   m_ObjectHideFlags: 0

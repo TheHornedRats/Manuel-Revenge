@@ -9,12 +9,30 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI[] itemCountTexts;
     public Trucos trucos;
 
+    void Start()
+    {
+        for (int i = 0; i < itemCounts.Length; i++)
+        {
+            UpdateItemUI(i);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I)) BuyItem(0);
+        if (Input.GetKeyDown(KeyCode.K)) BuyItem(1);
+        if (Input.GetKeyDown(KeyCode.M)) BuyItem(2);
+    }
+
     public void BuyItem(int index)
     {
+        Debug.Log($"Intentando comprar ítem {index}");
+
         if (index < 0 || index >= itemPrices.Length) return;
 
         if (MoneyManager.Instance.SpendCoins(itemPrices[index]))
         {
+            Debug.Log("Compra realizada.");
             itemCounts[index]++;
             UpdateItemUI(index);
         }
@@ -35,24 +53,27 @@ public class ShopManager : MonoBehaviour
             {
                 case 0:
                     trucos.AddHealth();
+                    Debug.Log("a");
                     break;
                 case 1:
                     trucos.AddSpeed();
+                    Debug.Log("b");
                     break;
                 case 2:
                     trucos.AddXP();
+                    Debug.Log("c");
                     break;
                 default:
                     Debug.LogWarning("Ítem no definido para activar.");
                     break;
             }
 
-            return true; // uso exitoso
+            return true;
         }
         else
         {
             Debug.Log("No tienes suficientes pociones de este tipo.");
-            return false; // uso fallido
+            return false;
         }
     }
 

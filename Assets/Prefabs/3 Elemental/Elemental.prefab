@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac9d7a6615c8c54eb4b4cc6c3b3511e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 250
   puntuacion: 0
   xp5Prefab: {fileID: 1585143518705127342, guid: f6c66dc55133b0e4abee427d1b20fc37, type: 3}
   xp10Prefab: {fileID: 1585143518705127342, guid: f6c66dc55133b0e4abee427d1b20fc37, type: 3}
@@ -216,12 +216,12 @@ MonoBehaviour:
   dropRange: 1
   comboTextPrefab: {fileID: 375881067238031453, guid: 816a22dcc27085d498192d6f84f36070, type: 3}
   damageTextPrefab: {fileID: 4855697854584164209, guid: 5d33f2cd6fe994d48acb292deadc1034, type: 3}
+  coinReward: 50
   abilityCooldown: 5
   ability1Prefab: {fileID: 1030293940442176208, guid: 83ff32ed488460a4a9bae2b036e46240, type: 3}
   ability2Prefab: {fileID: 335638219112752894, guid: 4a897d390aa3bf24a8179c2f616cdba9, type: 3}
   summon1Prefab: {fileID: 9059046833298263341, guid: 40782ec4e87b9a54da71d72e3f57304c, type: 3}
   summon2Prefab: {fileID: 1030293940442176208, guid: 83ff32ed488460a4a9bae2b036e46240, type: 3}
-  animator: {fileID: 0}
   meteorShotPrefab: {fileID: 1030293940442176208, guid: 83ff32ed488460a4a9bae2b036e46240, type: 3}
   fireRingPrefab: {fileID: 335638219112752894, guid: 4a897d390aa3bf24a8179c2f616cdba9, type: 3}
   fireTornadoPrefab: {fileID: 9059046833298263341, guid: 40782ec4e87b9a54da71d72e3f57304c, type: 3}

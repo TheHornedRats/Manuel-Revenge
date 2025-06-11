@@ -23,7 +23,10 @@ public class EnemyHealth : MonoBehaviour
     protected static float comboResetTime = 3.0f;
 
     [Header("Texto de Daño")]
-    public GameObject damageTextPrefab;  
+    public GameObject damageTextPrefab;
+
+    [Header("Recompensa de Monedas")]
+    public int coinReward = 25;
 
     protected virtual void Start()
     {
@@ -84,7 +87,7 @@ public class EnemyHealth : MonoBehaviour
         DropXPItems();
 
         // Recompensa de monedas al morir
-        MoneyManager.Instance?.AddCoins(25);
+        MoneyManager.Instance?.AddCoins(coinReward);
 
         Destroy(gameObject, 0.5f);
     }

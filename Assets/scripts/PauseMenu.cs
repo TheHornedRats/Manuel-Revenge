@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject Settings;
 
     private RectTransform pauseRectTransform;
-    private Vector2 hiddenPosition = new Vector2(-800f, 0); // Ajusta según tu resolución y UI
+    private Vector2 hiddenPosition = new Vector2(-800f, 0);
     private Vector2 visiblePosition = Vector2.zero;
 
     public float slideDuration = 0.3f;

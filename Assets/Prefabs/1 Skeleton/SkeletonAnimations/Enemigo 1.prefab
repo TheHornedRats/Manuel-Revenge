@@ -151,6 +151,7 @@ MonoBehaviour:
   dropRange: 1
   comboTextPrefab: {fileID: 375881067238031453, guid: 816a22dcc27085d498192d6f84f36070, type: 3}
   damageTextPrefab: {fileID: 4855697854584164209, guid: 5d33f2cd6fe994d48acb292deadc1034, type: 3}
+  coinReward: 5
 --- !u!114 &-3819563168698776304
 MonoBehaviour:
   m_ObjectHideFlags: 0

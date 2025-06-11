@@ -17,6 +17,7 @@ public class MoneyManager : MonoBehaviour
     public void AddCoins(int amount)
     {
         currentCoins += amount;
+        Debug.Log("Monedas añadidas. Total: " + currentCoins);
         UpdateUI();
     }
 
@@ -25,11 +26,14 @@ public class MoneyManager : MonoBehaviour
         if (currentCoins >= amount)
         {
             currentCoins -= amount;
+            Debug.Log("Monedas gastadas. Total: " + currentCoins);
             UpdateUI();
             return true;
         }
+        Debug.Log("No hay suficientes monedas.");
         return false;
     }
+
 
     void UpdateUI()
     {
