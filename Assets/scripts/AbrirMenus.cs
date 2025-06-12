@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AbrirCreditos : MonoBehaviour
+public class AbrirMenus : MonoBehaviour
 {
     public Button boton;            // Referencia al botón
     public Button botonCerrar;      // Boton para cerrar
