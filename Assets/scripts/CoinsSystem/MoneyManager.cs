@@ -38,6 +38,6 @@ public class MoneyManager : MonoBehaviour
     void UpdateUI()
     {
         if (coinText != null)
-            coinText.text = "Coins: " + currentCoins.ToString();
+            coinText.text = currentCoins.ToString();
     }
 }

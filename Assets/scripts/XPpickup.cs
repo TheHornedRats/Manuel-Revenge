@@ -35,13 +35,23 @@ public class XPpickup : MonoBehaviour
 
     private IEnumerator MoveToPlayer()
     {
-        while (Vector2.Distance(transform.position, targetPlayer.position) > 0.1f)
+        float closeEnoughDistance = 0.1f;
+        float followTimeLimit = 3f; // evitar bucles infinitos
+        float timer = 0f;
+
+        while (timer < followTimeLimit)
         {
+            if (targetPlayer == null) yield break;
+
             transform.position = Vector2.MoveTowards(transform.position, targetPlayer.position, moveSpeed * Time.deltaTime);
+
+            if (Vector2.Distance(transform.position, targetPlayer.position) < closeEnoughDistance)
+                break;
+
+            timer += Time.deltaTime;
             yield return null;
         }
 
-        // Reproducir sonido si está asignado
         if (pickupSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(pickupSound);
@@ -51,10 +61,9 @@ public class XPpickup : MonoBehaviour
             Debug.LogWarning("Falta AudioSource o pickupSound en XPpickup.");
         }
 
-        // Añadir experiencia
         ScoreManager.instance.AddScore(XPobtenida);
 
-        // Esperar un poco para que suene el audio (si lo necesitas)
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject, 0.1f); // esperar que suene el audio
     }
+
 }
