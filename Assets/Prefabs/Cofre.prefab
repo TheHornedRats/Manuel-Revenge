@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1374516037929871422}
   - component: {fileID: 2249206565153328083}
   - component: {fileID: 4269275490312018602}
-  - component: {fileID: 8301958983659196296}
   - component: {fileID: 266838793308574957}
   - component: {fileID: 3921653497602350865}
+  - component: {fileID: -7713461042989592186}
   m_Layer: 0
   m_Name: Cofre
   m_TagString: LevelUpTrigger
@@ -133,21 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3125, y: 1.125}
   m_EdgeRadius: 0
---- !u!114 &8301958983659196296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8989224513304549000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d281ccfec211e499ef7dd45f1e1d8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelUpChoose: {fileID: 6815981662819612062, guid: d17584ff19f4c924abea5d2b620c7ee2, type: 3}
-  nuevoSprite: {fileID: 1159943164, guid: 54e03d5aeb547da4fa256b2458ebaa3e, type: 3}
-  sonidoApertura: {fileID: 0}
 --- !u!50 &266838793308574957
 Rigidbody2D:
   serializedVersion: 4
@@ -271,3 +256,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-7713461042989592186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989224513304549000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b45c7144a88f6a042bfbd536e7304d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nuevoSprite: {fileID: 1159943164, guid: 54e03d5aeb547da4fa256b2458ebaa3e, type: 3}
+  sonidoApertura: {fileID: 0}

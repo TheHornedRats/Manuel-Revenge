@@ -1,95 +1,66 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class ChestSpawner : MonoBehaviour
 {
-    public GameObject chestPrefab;              // Prefab del cofre
-    public Transform player;                   // Referencia al transform del jugador
-    public float spawnInterval = 10f;          // Intervalo de aparición en segundos
-    public float minDistance = 30f;            // Distancia mínima para spawnear el cofre
-    public float maxDistance = 60f;            // Distancia máxima para spawnear el cofre
+    public GameObject cofrePrefab;
+    public Transform jugador;
+    public float maxDistancia = 25f;
+    public float maxDistanciaDespawn = 30f;
+    public int maxCofres = 5;
+    public float tiempoEntreSpawns = 2f;
 
-    public Buffs buffsManager;                 // Referencia directa al script Buffs
+    private List<GameObject> cofresActivos = new List<GameObject>();
+    private float temporizador;
 
-    public GameObject pauseMenuUI;             // Panel para mostrar los botones
-    public Button[] optionButtons;             // Botones para seleccionar buffs
-    public TextMeshProUGUI[] optionTexts;      // Textos para los botones de buffs
-
-    private bool isPaused = false;
-    private Collider2D currentChest;
-
-    private void Start()
+    void Update()
     {
-        InvokeRepeating(nameof(SpawnChest), 0f, spawnInterval);
-    }
+        temporizador += Time.deltaTime;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (cofresActivos.Count < maxCofres && temporizador >= tiempoEntreSpawns)
         {
-            if (currentChest != null)
+            Vector2 posicion = GenerarPosicionAleatoria();
+            if (posicion != Vector2.zero)
             {
-                Debug.Log("Has abierto el cofre");
-                PauseGameWithOptions();
+                GameObject nuevoCofre = Instantiate(cofrePrefab, posicion, Quaternion.identity);
+                cofresActivos.Add(nuevoCofre);
+            }
+            temporizador = 0f;
+        }
+
+        for (int i = cofresActivos.Count - 1; i >= 0; i--)
+        {
+            if (Vector2.Distance(cofresActivos[i].transform.position, jugador.position) > maxDistanciaDespawn)
+            {
+                Destroy(cofresActivos[i]);
+                cofresActivos.RemoveAt(i);
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    Vector2 GenerarPosicionAleatoria()
     {
-        if (collision.CompareTag("Chest"))
+        for (int i = 0; i < 30; i++) // Máx 30 intentos
         {
-            currentChest = collision;
-        }
-    }
+            Vector2 direccion = Random.insideUnitCircle.normalized;
+            float distancia = Random.Range(5f, maxDistancia);
+            Vector2 posicion = (Vector2)jugador.position + direccion * distancia;
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision == currentChest)
-        {
-            currentChest = null;
-        }
-    }
-
-    public void SpawnChest()
-    {
-        if (chestPrefab == null || player == null)
-        {
-            Debug.LogWarning("Falta asignar el prefab del cofre o la referencia al jugador.");
-            return;
+            if (!EstaDentroDeVista(posicion))
+            {
+                return posicion;
+            }
         }
 
-        float distance = Random.Range(minDistance, maxDistance);
-        Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        Vector3 spawnPosition = player.position + (Vector3)(randomDirection * distance);
-
-        Instantiate(chestPrefab, spawnPosition, Quaternion.identity);
+        Debug.LogWarning("No se pudo generar una posición válida fuera de la cámara.");
+        return Vector2.zero;
     }
 
-    void PauseGameWithOptions()
+    bool EstaDentroDeVista(Vector2 posicion)
     {
-        if (buffsManager == null)
-        {
-            Debug.LogWarning("El script Buffs no está asignado. Arrástralo directamente al Inspector.");
-            return;
-        }
-
-        Time.timeScale = 0f;
-        isPaused = true;
-        pauseMenuUI.SetActive(true);
-
-        buffsManager.ShowBuffOptions();
-    }
-
-    public void ResumeGame()
-    {
-        Time.timeScale = 1f;
-        isPaused = false;
-        pauseMenuUI.SetActive(false);
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(posicion);
+        return viewportPos.x >= 0f && viewportPos.x <= 1f &&
+               viewportPos.y >= 0f && viewportPos.y <= 1f &&
+               viewportPos.z >= 0f; // Está delante de la cámara
     }
 }
-
-

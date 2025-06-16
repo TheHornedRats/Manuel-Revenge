@@ -15,7 +15,6 @@ public class XPpickup : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
-        // Aplicar pitch aleatorio al aparecer (rango entre 0.9 y 1.1 por ejemplo)
         if (audioSource != null)
         {
             audioSource.pitch = Random.Range(0.95f, 1.05f);
@@ -28,15 +27,21 @@ public class XPpickup : MonoBehaviour
         {
             isMovingToPlayer = true;
             targetPlayer = other.transform;
-            GetComponent<Collider2D>().enabled = false; // Evitar múltiples colisiones
+            GetComponent<Collider2D>().enabled = false;
             StartCoroutine(MoveToPlayer());
         }
     }
 
     private IEnumerator MoveToPlayer()
     {
+        // Colocarse delante visualmente
+        foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.sortingOrder = 100;
+        }
+
         float closeEnoughDistance = 0.1f;
-        float followTimeLimit = 3f; // evitar bucles infinitos
+        float followTimeLimit = 3f;
         float timer = 0f;
 
         while (timer < followTimeLimit)
@@ -62,8 +67,6 @@ public class XPpickup : MonoBehaviour
         }
 
         ScoreManager.instance.AddScore(XPobtenida);
-
-        Destroy(gameObject, 0.1f); // esperar que suene el audio
+        Destroy(gameObject, 0.1f);
     }
-
 }

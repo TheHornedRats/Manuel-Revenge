@@ -8,7 +8,7 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI[] itemCountTexts;
     public Trucos trucos;
 
-    // 🎵 Audio
+    // Audio
     public AudioClip[] potionSounds; // Asigna 3 clips desde el Inspector
     private AudioSource audioSource;
 
@@ -49,7 +49,7 @@ public class ShopManager : MonoBehaviour
                     break;
             }
 
-            PlayRandomPotionSound(); // 🔊 Sonido al usar ítem
+            PlayRandomPotionSound(); // Sonido al usar ítem
 
             return true;
         }
@@ -71,7 +71,7 @@ public class ShopManager : MonoBehaviour
         return 0;
     }
 
-    // 🔊 Método para reproducir un sonido aleatorio
+    // Método para reproducir un sonido aleatorio
     void PlayRandomPotionSound()
     {
         if (potionSounds != null && potionSounds.Length > 0 && audioSource != null)

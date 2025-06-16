@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5d7a6dd433761304a9585e41c908d2f8
+guid: 7bd033278bfa4f049b72326fefdad2be
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,55 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: slider_components_0
+      name: swordSprite_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 0
-        width: 7
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 79af3bc7e6769ab4ab384451dcf20b61
-      internalID: -1245734606
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: slider_components_1
-      rect:
-        serializedVersion: 2
-        x: 22
-        y: 0
-        width: 7
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7d029f12bc32c1b42976887029db4c7d
-      internalID: 388936856
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: slider_components_2
-      rect:
-        serializedVersion: 2
-        x: 37
+        x: 4
         y: 2
-        width: 7
-        height: 9
+        width: 15
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +124,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dc5078f83f44d942bc3a75a8b5fef0e
-      internalID: -362916743
+      spriteID: 009477f9e7f0ecb4da1a871763cf57f8
+      internalID: 1903805177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: swordSprite_1
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 2
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14047dadda586ae448564854a4d9264b
+      internalID: 1058239070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: swordSprite_2
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 2
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd9589a5e1c4fe644bcc65a526d20150
+      internalID: 788231748
       vertices: []
       indices: 
       edges: []
@@ -183,9 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      slider_components_0: -1245734606
-      slider_components_1: 388936856
-      slider_components_2: -362916743
+      swordSprite_0: 1903805177
+      swordSprite_1: 1058239070
+      swordSprite_2: 788231748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

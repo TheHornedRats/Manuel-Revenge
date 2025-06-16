@@ -24,7 +24,7 @@ public class InfiniteMap : MonoBehaviour
     void Start()
     {
         if (mainCamera == null) mainCamera = Camera.main;
-        if (player == null) Debug.LogError(" No se ha asignado el jugador al InfiniteMap.");
+        if (player == null) Debug.LogError("No se ha asignado el jugador al InfiniteMap.");
 
         lastChunkPosition = GetChunkPosition(player.position);
         GenerateChunksAroundPlayer();
@@ -83,12 +83,17 @@ public class InfiniteMap : MonoBehaviour
 
     void SpawnChunk(Vector2Int position)
     {
-        Vector3 worldPosition = new Vector3(position.x * chunkSize, position.y * chunkSize, 0);
+        Vector3 worldPosition = new Vector3(position.x * chunkSize, position.y * chunkSize, 0f); // z=0, y controlamos con sortingOrder
 
-        // Seleccionar prefab aleatorio
         GameObject prefab = chunkPrefabs[Random.Range(0, chunkPrefabs.Count)];
         GameObject newChunk = Instantiate(prefab, worldPosition, Quaternion.identity);
         spawnedChunks.Add(position, newChunk);
+
+        // Establecer orden de renderizado para TODOS los SpriteRenderer del chunk (incluidos hijos)
+        foreach (var sr in newChunk.GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.sortingOrder = -100;
+        }
 
         // Generar obstáculos aleatorios dentro del chunk
         if (obstaclePrefabs != null && obstaclePrefabs.Count > 0)
@@ -109,6 +114,12 @@ public class InfiniteMap : MonoBehaviour
                     Quaternion.identity,
                     newChunk.transform
                 );
+
+                // Aplicar sortingOrder a todos los sprites del obstáculo también
+                foreach (var sr in obstacle.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    sr.sortingOrder = -50; // por encima del suelo pero por debajo del jugador
+                }
             }
         }
     }
@@ -160,7 +171,7 @@ public class InfiniteMap : MonoBehaviour
         {
             if (spawnedChunks.ContainsKey(chunkPos))
             {
-                spawnedChunks[chunkPos].SetActive(false); // O Destroy si no quieres conservar memoria
+                spawnedChunks[chunkPos].SetActive(false);
                 spawnedChunks.Remove(chunkPos);
             }
             chunksToDelete.Remove(chunkPos);

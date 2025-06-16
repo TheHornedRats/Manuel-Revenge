@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6482669315410278886}
   - component: {fileID: 72008411632040977}
   - component: {fileID: 8516848921303716566}
-  - component: {fileID: 4550915703182295460}
+  - component: {fileID: -1863574744113756012}
   m_Layer: 3
   m_Name: EspadonPrefab
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3370492357764059366}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.169, y: -0.2955, z: 0.164829}
-  m_LocalScale: {x: 30, y: 10, z: 1}
+  m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -71,14 +71,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.08, y: 0.04}
-    newSize: {x: 0.32, y: 0.16}
+    oldSize: {x: 0.15, y: 0.23}
+    newSize: {x: 0.15, y: 0.19}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.33746153, y: 0.14745674}
+  m_Size: {x: 0.33, y: 0.3}
   m_EdgeRadius: 0
 --- !u!212 &72008411632040977
 SpriteRenderer:
@@ -121,12 +121,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1435944372, guid: 86367c78323b9b7488afdfc0005262e4, type: 3}
+  m_Sprite: {fileID: 1058239070, guid: 7bd033278bfa4f049b72326fefdad2be, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.16}
+  m_Size: {x: 0.15, y: 0.19}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 34e7a7508b5484e40ab8f5faaa35ff31, type: 2}
---- !u!95 &4550915703182295460
+--- !u!95 &-1863574744113756012
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -155,7 +155,7 @@ Animator:
   m_GameObject: {fileID: 3370492357764059366}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5a05dd2fcf4027344b6c69c2d71f1e2a, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

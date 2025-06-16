@@ -81,7 +81,7 @@ public class Trucos : MonoBehaviour
     {
         if (playerMovement != null)
         {
-            playerMovement.speed += 5f;
+            playerMovement.speed += 2f;
             timeText.text = $"¡Speed increased to {playerMovement.speed}!";
             timeText.gameObject.SetActive(true);
             StartCoroutine(HideTextAfterSeconds(timeText, 2f));
