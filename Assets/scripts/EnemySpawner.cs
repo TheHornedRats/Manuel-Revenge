@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnemySpawnEntry
 {
     public GameObject prefab;
-    public float minSpawnTime = 0f;  // en segundos
+    public float cost = 1f;
+    public float minSpawnTime = 0f;
     public float maxSpawnTime = 600f;
 }
 
@@ -21,54 +22,83 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRadius = 20f;
     public float spawnThickness = 4f;
 
-    public float initialSpawnInterval = 5f;
+    public float maxGameTime = 900f;
+    public float waveInterval = 3f;
+    private float waveTimer;
+
+    public AnimationCurve budgetCurve;
+    public float baseWavePoints = 5f;
+    public float budgetMultiplier = 1f;
+
+    public AnimationCurve intervalCurve;
     public float minSpawnInterval = 0.5f;
-    public float accelerationRate = 0.99f;
-
-    public int minGroupSize = 2;
-    public int maxGroupSize = 5;
-
-    private float currentSpawnInterval;
-    private float spawnTimer;
+    public float maxSpawnInterval = 5f;
 
     private void Start()
     {
-        currentSpawnInterval = initialSpawnInterval;
-        spawnTimer = currentSpawnInterval;
+        waveTimer = waveInterval;
     }
 
     private void Update()
     {
-        spawnTimer -= Time.deltaTime;
+        waveTimer -= Time.deltaTime;
 
-        if (spawnTimer <= 0f)
+        if (waveTimer <= 0f)
         {
-            SpawnEnemyGroup();
-            spawnTimer = currentSpawnInterval;
-            currentSpawnInterval = Mathf.Max(minSpawnInterval, currentSpawnInterval * accelerationRate);
+            SpawnEnemyWave();
+            waveTimer = waveInterval;
         }
     }
 
-    private void SpawnEnemyGroup()
+    private void SpawnEnemyWave()
     {
-        int groupSize = Random.Range(minGroupSize, maxGroupSize + 1);
-        Vector3 baseSpawnPosition = GetSpawnPositionOutsideCamera();
         float gameTime = Time.time;
+        float timePercent = Mathf.Clamp01(gameTime / maxGameTime);
 
-        for (int i = 0; i < groupSize; i++)
+        float intervalFactor = intervalCurve.Evaluate(timePercent);
+        waveInterval = Mathf.Lerp(maxSpawnInterval, minSpawnInterval, intervalFactor);
+
+        float budgetFactor = budgetCurve.Evaluate(timePercent);
+        float currentBudget = baseWavePoints * budgetFactor * budgetMultiplier;
+
+        List<GameObject> enemiesToSpawn = GenerateEnemyWave(currentBudget, gameTime);
+
+        Vector3 baseSpawnPosition = GetSpawnPositionOutsideCamera();
+
+        foreach (var enemyPrefab in enemiesToSpawn)
         {
             Vector3 spawnOffset = Random.insideUnitCircle.normalized * Random.Range(3f, 7f);
             Vector3 spawnPosition = baseSpawnPosition + spawnOffset;
 
-            GameObject enemyPrefab = GetWeightedEnemy(gameTime);
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
             EnemyFollow enemyScript = enemy.GetComponent<EnemyFollow>();
             if (enemyScript != null && player != null)
             {
                 enemyScript.player = player;
             }
         }
+    }
+
+    private List<GameObject> GenerateEnemyWave(float budget, float gameTime)
+    {
+        List<GameObject> wave = new List<GameObject>();
+        List<EnemySpawnEntry> validEnemies = spawnableEnemies.FindAll(e => gameTime >= e.minSpawnTime && gameTime <= e.maxSpawnTime);
+
+        while (budget > 0f && validEnemies.Count > 0)
+        {
+            EnemySpawnEntry entry = validEnemies[Random.Range(0, validEnemies.Count)];
+            if (entry.cost <= budget)
+            {
+                wave.Add(entry.prefab);
+                budget -= entry.cost;
+            }
+            else
+            {
+                validEnemies.Remove(entry);
+            }
+        }
+
+        return wave;
     }
 
     private Vector3 GetSpawnPositionOutsideCamera()
@@ -89,45 +119,5 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector3 viewportPoint = mainCamera.WorldToViewportPoint(position);
         return viewportPoint.x > 0 && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 1;
-    }
-
-    private GameObject GetWeightedEnemy(float gameTime)
-    {
-        List<float> weights = new List<float>();
-        float totalWeight = 0f;
-
-        foreach (var entry in spawnableEnemies)
-        {
-            if (gameTime >= entry.minSpawnTime && gameTime <= entry.maxSpawnTime)
-            {
-                float t = Mathf.InverseLerp(entry.minSpawnTime, entry.maxSpawnTime, gameTime);
-                float weight = Mathf.Pow(t, 2); // Cuadrado para ponderación suave
-                weights.Add(weight);
-                totalWeight += weight;
-            }
-            else
-            {
-                weights.Add(0f);
-            }
-        }
-
-        if (totalWeight == 0f && spawnableEnemies.Count > 0)
-        {
-            return spawnableEnemies[0].prefab;
-        }
-
-        float rand = Random.value * totalWeight;
-        float cumulative = 0f;
-
-        for (int i = 0; i < spawnableEnemies.Count; i++)
-        {
-            cumulative += weights[i];
-            if (rand <= cumulative)
-            {
-                return spawnableEnemies[i].prefab;
-            }
-        }
-
-        return spawnableEnemies[0].prefab; // Fallback por seguridad
     }
 }
