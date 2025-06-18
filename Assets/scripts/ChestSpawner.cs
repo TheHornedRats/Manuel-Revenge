@@ -23,6 +23,14 @@ public class ChestSpawner : MonoBehaviour
             if (posicion != Vector2.zero)
             {
                 GameObject nuevoCofre = Instantiate(cofrePrefab, posicion, Quaternion.identity);
+
+                // Asegurarse de que el cofre aparece delante
+                SpriteRenderer sr = nuevoCofre.GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.sortingOrder = 10; // Valor alto para que esté delante de otros sprites
+                }
+
                 cofresActivos.Add(nuevoCofre);
             }
             temporizador = 0f;
