@@ -28,7 +28,7 @@ public class EnemyFollow : MonoBehaviour
         Vector2 targetPosition = (Vector2)player.position + movementOffset;
         Vector2 direction = (targetPosition - rb.position).normalized;
 
-        rb.velocity = direction * speed;
+        rb.linearVelocity = direction * speed;
 
         // Flip si se mueve hacia la derecha
         if (direction.x != 0 && spriteRenderer != null)

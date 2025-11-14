@@ -8,7 +8,7 @@ public class BossEnemy : EnemyHealth
     protected float nextAbilityTime;
 
     [Header("Boss Abilities")]
-    public GameObject ability1Prefab; // Ráfaga de rayos
+    public GameObject ability1Prefab; // Rï¿½faga de rayos
     public GameObject ability2Prefab; // Rayo gordo
     public GameObject summon1Prefab;  // Bolita teledirigida
     public GameObject summon2Prefab;  // Rayo canalizado
@@ -49,8 +49,8 @@ public class BossEnemy : EnemyHealth
 
         if (rb != null)
         {
-            storedVelocity = rb.velocity;
-            rb.velocity = Vector2.zero;
+            storedVelocity = rb.linearVelocity;
+            rb.linearVelocity = Vector2.zero;
             rb.isKinematic = true;
         }
 
@@ -114,7 +114,7 @@ public class BossEnemy : EnemyHealth
         if (rb != null)
         {
             rb.isKinematic = false;
-            rb.velocity = storedVelocity;
+            rb.linearVelocity = storedVelocity;
         }
 
         isAttacking = false;

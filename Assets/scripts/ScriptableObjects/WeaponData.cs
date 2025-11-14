@@ -11,19 +11,19 @@ public class WeaponData : ScriptableObject
     public AudioClip waveAttackSound;
     public AudioClip javelinAttackSound;
 
-    [Header("Información del Arma")]
+    [Header("Informaciï¿½n del Arma")]
     public string weaponName;
     public WeaponType weaponType;
     public GameObject attackPrefab;
     public GameObject explosionEffectPrefab;
 
-    [Header("Estadísticas del Arma")]
+    [Header("Estadï¿½sticas del Arma")]
     public float baseDamage = 10f;
     public float baseCooldown = 1f;
     public float projectileSpeed = 8f;
     public float explosionRadius = 2f;
 
-    [Header("Evolución del Arma")]
+    [Header("Evoluciï¿½n del Arma")]
     public int maxLevel = 5;
     public float damageIncreasePerLevel = 1.2f;
     public float cooldownReductionPerLevel = 0.9f;
@@ -38,7 +38,7 @@ public class WeaponData : ScriptableObject
 
     private float currentCooldown = 0f;
     
-    [Header("Partículas de Efecto")]
+    [Header("Partï¿½culas de Efecto")]
     public GameObject burnParticlesPrefab;
     public GameObject sanctifyParticlesPrefab;
     public GameObject electrocuteParticlesPrefab;
@@ -70,7 +70,7 @@ public class WeaponData : ScriptableObject
                 PerformAttack(playerPosition);
             }
         }
-        // Para el Crucifijo: Se dispara automáticamente cuando el cooldown llega a 0.
+        // Para el Crucifijo: Se dispara automï¿½ticamente cuando el cooldown llega a 0.
         else if (weaponName == "Crucifijo")
         {
             if (CanAttack())
@@ -113,7 +113,7 @@ public class WeaponData : ScriptableObject
         }
 
         GameObject attack = Instantiate(attackPrefab, playerPos, Quaternion.identity);
-        Debug.Log(weaponName + " atacó.");
+        Debug.Log(weaponName + " atacï¿½.");
 
         switch (weaponType)
         {
@@ -130,7 +130,7 @@ public class WeaponData : ScriptableObject
                 Rigidbody2D rb = attack.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
-                    rb.velocity = attackDirection * projectileSpeed;
+                    rb.linearVelocity = attackDirection * projectileSpeed;
                     float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
                     attack.transform.rotation = Quaternion.Euler(0, 0, angle);
                 }
@@ -159,7 +159,7 @@ public class WeaponData : ScriptableObject
                 Rigidbody2D javelinRb = attack.GetComponent<Rigidbody2D>();
                 if (javelinRb != null)
                 {
-                    javelinRb.velocity = attackDirection * projectileSpeed;
+                    javelinRb.linearVelocity = attackDirection * projectileSpeed;
                     attack.transform.right = attackDirection;
                 }
                 Destroy(attack, 4f);

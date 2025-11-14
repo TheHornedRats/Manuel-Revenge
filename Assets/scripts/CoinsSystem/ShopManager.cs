@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ShopManager : MonoBehaviour
@@ -13,22 +14,54 @@ public class ShopManager : MonoBehaviour
     public AudioClip[] potionSounds;
     private AudioSource audioSource;
 
-    // Mensajes individuales por ítem si no hay dinero
-    public TextMeshProUGUI[] noMoneyTexts; // Asigna 3 desde el Inspector
+    // Mensajes si no hay dinero
+    public TextMeshProUGUI[] noMoneyTexts;
+
+    // Mensajes si no tienes pociones
+    public TextMeshProUGUI[] noPotionTexts;
+
+    // Panels que cambian de color según dinero
+    public Image[] panelImages;
+
+    // Colores para indicar si puedes o no comprar
+    public Color canBuyColor = Color.green;
+    public Color cannotBuyColor = Color.red;
+
+    // 🔹 NUEVO: Botones de uso para cada ítem
+    public Button[] useItemButtons;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
 
-        // Asegurarse que los textos están ocultos al iniciar
         if (noMoneyTexts != null)
-        {
             foreach (var text in noMoneyTexts)
+                if (text != null) text.gameObject.SetActive(false);
+
+        if (noPotionTexts != null)
+            foreach (var text in noPotionTexts)
+                if (text != null) text.gameObject.SetActive(false);
+
+        // 🔹 Asignar listeners a los botones de uso
+        if (useItemButtons != null)
+        {
+            for (int i = 0; i < useItemButtons.Length; i++)
             {
-                if (text != null)
-                    text.gameObject.SetActive(false);
+                int index = i; // Captura del índice local
+                if (useItemButtons[index] != null)
+                {
+                    useItemButtons[index].onClick.RemoveAllListeners();
+                    useItemButtons[index].onClick.AddListener(() => UseItem(index));
+                }
             }
         }
+
+        UpdateAllPanelColors();
+    }
+
+    void Update()
+    {
+        UpdateAllPanelColors();
     }
 
     public void BuyItem(int index)
@@ -39,6 +72,7 @@ public class ShopManager : MonoBehaviour
         {
             itemCounts[index]++;
             UpdateItemUI(index);
+            UpdatePanelColor(index);
         }
         else
         {
@@ -49,6 +83,8 @@ public class ShopManager : MonoBehaviour
 
     public bool UseItem(int index)
     {
+        if (index < 0 || index >= itemCounts.Length) return false;
+
         if (itemCounts[index] > 0)
         {
             itemCounts[index]--;
@@ -64,22 +100,18 @@ public class ShopManager : MonoBehaviour
             PlayRandomPotionSound();
             return true;
         }
+        else
+        {
+            if (noPotionTexts != null && index < noPotionTexts.Length && noPotionTexts[index] != null)
+                StartCoroutine(ShowNoPotionText(index));
+        }
         return false;
     }
 
     void UpdateItemUI(int index)
     {
         if (itemCountTexts != null && index < itemCountTexts.Length)
-        {
             itemCountTexts[index].text = "x" + itemCounts[index];
-        }
-    }
-
-    public int GetItemCount(int index)
-    {
-        if (index >= 0 && index < itemCounts.Length)
-            return itemCounts[index];
-        return 0;
     }
 
     void PlayRandomPotionSound()
@@ -91,11 +123,41 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    // Mostrar mensaje correspondiente al botón sin dinero durante 2 segundos
     IEnumerator ShowNoMoneyText(int index)
     {
         noMoneyTexts[index].gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         noMoneyTexts[index].gameObject.SetActive(false);
+    }
+
+    IEnumerator ShowNoPotionText(int index)
+    {
+        noPotionTexts[index].gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        noPotionTexts[index].gameObject.SetActive(false);
+    }
+
+    public int GetItemCount(int index)
+    {
+        if (index >= 0 && index < itemCounts.Length)
+            return itemCounts[index];
+        return 0;
+    }
+
+    void UpdatePanelColor(int index)
+    {
+        if (panelImages != null && index < panelImages.Length && panelImages[index] != null)
+        {
+            if (MoneyManager.Instance.HasEnoughCoins(itemPrices[index]))
+                panelImages[index].color = canBuyColor;
+            else
+                panelImages[index].color = cannotBuyColor;
+        }
+    }
+
+    public void UpdateAllPanelColors()
+    {
+        for (int i = 0; i < itemPrices.Length; i++)
+            UpdatePanelColor(i);
     }
 }

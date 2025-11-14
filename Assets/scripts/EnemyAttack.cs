@@ -7,9 +7,12 @@ public class EnemyAttack : MonoBehaviour
     public int damage;
     public float damageInterval = 1f; // Tiempo en segundos entre cada daño
     private bool isAttacking = false;
+    private bool canAttack = true;  // Nuevo flag para controlar si puede atacar
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!canAttack) return;  // Si no puede atacar, ignorar
+
         if (collision.CompareTag("Player"))
         {
             PlayerHealth ph = collision.GetComponent<PlayerHealth>();
@@ -23,7 +26,6 @@ public class EnemyAttack : MonoBehaviour
             }
         }
     }
-
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -41,5 +43,13 @@ public class EnemyAttack : MonoBehaviour
             playerHealth.TakeDamagePlayer(damage);
             yield return new WaitForSeconds(damageInterval);
         }
+    }
+
+    // Nuevo método para desactivar el ataque
+    public void DisableAttack()
+    {
+        canAttack = false;
+        isAttacking = false; // Parar cualquier daño en curso
+        StopAllCoroutines(); // Parar posibles corutinas activas
     }
 }

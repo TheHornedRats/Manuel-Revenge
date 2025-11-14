@@ -11,29 +11,36 @@ public class TrucosMenu : MonoBehaviour
 
     void Start()
     {
-        trucosMenuUI.SetActive(false); // Asegurar que el menú de pausa esté oculto al inicio
+        trucosMenuUI.SetActive(false);
         isOpen = false;
         isPaused = false;
-        Time.timeScale = 1f; // Asegurar que el juego comienza en tiempo normal
+        Time.timeScale = 1f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            if (isOpen)
-                {trucosMenuUI.SetActive(false);
-                isOpen = false;
-                Time.timeScale = 1f;
-                isPaused = false;
-            }
-            else
-                {trucosMenuUI.SetActive(true);
-                isOpen = true;
-                Time.timeScale = 0f;
-                isPaused = true;
-            }
+            ToggleMenu();
+        }
+    }
+
+    // Método público para usar desde el botón UI
+    public void ToggleMenu()
+    {
+        if (isOpen)
+        {
+            trucosMenuUI.SetActive(false);
+            isOpen = false;
+            Time.timeScale = 1f;
+            isPaused = false;
+        }
+        else
+        {
+            trucosMenuUI.SetActive(true);
+            isOpen = true;
+            Time.timeScale = 0f;
+            isPaused = true;
         }
     }
 }

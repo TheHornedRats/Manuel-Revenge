@@ -12,7 +12,7 @@ public class textoColorines : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        weaponSelectedText.text = "<color=yellow>ESC </color>" + "To pause";
+        weaponSelectedText.text = "<color=yellow>Q </color>" + "To pause";
     }
 
     // Update is called once per frame

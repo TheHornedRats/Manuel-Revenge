@@ -34,7 +34,7 @@ public class BossLightningBurst : MonoBehaviour
             GameObject bolt = Instantiate(lightningBoltPrefab, transform.position, Quaternion.identity);
             Rigidbody2D rb = bolt.GetComponent<Rigidbody2D>();
             if (rb != null)
-                rb.velocity = transform.right * boltSpeed;
+                rb.linearVelocity = transform.right * boltSpeed;
 
             yield return new WaitForSeconds(timeBetweenBolts);
         }

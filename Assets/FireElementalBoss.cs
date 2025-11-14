@@ -3,9 +3,9 @@ using UnityEngine;
 public class FireElementalBoss : BossEnemy
 {
     [Header("Fire Elemental AOE Abilities")]
-    public GameObject meteorShotPrefab;        // Ataque 1: meteorito rápido
+    public GameObject meteorShotPrefab;        // Ataque 1: meteorito rï¿½pido
     public GameObject fireRingPrefab;          // Ataque 2: anillo de fuego
-    public GameObject fireTornadoPrefab;       // Ataque 3: pilares móviles
+    public GameObject fireTornadoPrefab;       // Ataque 3: pilares mï¿½viles
 
     [Header("Meteor Shot Settings")]
     public float meteorSpeed = 20f;
@@ -19,8 +19,8 @@ public class FireElementalBoss : BossEnemy
 
         if (rb != null)
         {
-            storedVelocity = rb.velocity;
-            rb.velocity = Vector2.zero;
+            storedVelocity = rb.linearVelocity;
+            rb.linearVelocity = Vector2.zero;
             rb.isKinematic = true;
         }
 

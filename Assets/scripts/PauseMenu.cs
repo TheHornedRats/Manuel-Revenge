@@ -27,13 +27,18 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (isPaused)
-                Resume();
-            else
-                Pause();
+            TogglePause();
         }
+    }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+            Resume();
+        else
+            Pause();
     }
 
     public void Resume()
@@ -62,7 +67,7 @@ public class PauseMenu : MonoBehaviour
         {
             float t = elapsed / slideDuration;
             pauseRectTransform.anchoredPosition = Vector2.Lerp(start, end, t);
-            elapsed += Time.unscaledDeltaTime; // usar deltaTime sin escalado
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
 

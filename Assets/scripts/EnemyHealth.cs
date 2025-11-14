@@ -9,7 +9,7 @@ public class EnemyHealth : MonoBehaviour
     protected bool isDead = false;
     protected Animator animator;
 
-    [Header("Recompensa de Puntuación y Experiencia")]
+    [Header("Recompensa de Puntuaciï¿½n y Experiencia")]
     public int puntuacion;
     public GameObject xp5Prefab;
     public GameObject xp10Prefab;
@@ -22,7 +22,7 @@ public class EnemyHealth : MonoBehaviour
     protected static float lastKillTime;
     protected static float comboResetTime = 3.0f;
 
-    [Header("Texto de Daño")]
+    [Header("Texto de Daï¿½o")]
     public GameObject damageTextPrefab;
 
     [Header("Recompensa de Monedas")]
@@ -38,10 +38,10 @@ public class EnemyHealth : MonoBehaviour
     {
         if (isDead) return;
 
-        Debug.Log($"[DEBUG] {name} recibiendo {damage} de daño por {this.GetType().Name}");
+        Debug.Log($"[DEBUG] {name} recibiendo {damage} de daï¿½o por {this.GetType().Name}");
 
         currentHealth -= damage;
-        Debug.Log($"[DAÑO] {name} sufrió {damage} de daño. Salud restante: {currentHealth}");
+        Debug.Log($"[DAï¿½O] {name} sufriï¿½ {damage} de daï¿½o. Salud restante: {currentHealth}");
 
         ShowDamageText(damage); 
 
@@ -74,8 +74,9 @@ public class EnemyHealth : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.isKinematic = true;
         }
 
         Debug.Log($"{name} ha muerto.");
@@ -83,15 +84,20 @@ public class EnemyHealth : MonoBehaviour
         if (animator != null)
             animator.SetTrigger("Die");
 
+        // Desactivar ataque al morir
+        EnemyAttack enemyAttack = GetComponent<EnemyAttack>();
+        if (enemyAttack != null)
+        {
+            enemyAttack.DisableAttack();
+        }
+
         UpdateCombo();
         DropXPItems();
 
-        // Recompensa de monedas al morir
         MoneyManager.Instance?.AddCoins(coinReward);
 
         Destroy(gameObject, 0.5f);
     }
-
 
     protected void DropXPItems()
     {
@@ -151,7 +157,7 @@ public class EnemyHealth : MonoBehaviour
         if (rb != null)
         {
             rb.gravityScale = 0;
-            rb.velocity = new Vector2(0, 1.5f);
+            rb.linearVelocity = new Vector2(0, 1.5f);
         }
 
         Destroy(instance, 1.0f);

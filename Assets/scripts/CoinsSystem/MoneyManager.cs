@@ -34,6 +34,10 @@ public class MoneyManager : MonoBehaviour
         return false;
     }
 
+    public bool HasEnoughCoins(int amount)
+    {
+        return currentCoins >= amount;
+    }
 
     void UpdateUI()
     {
